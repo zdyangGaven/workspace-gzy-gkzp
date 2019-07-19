@@ -1,4 +1,4 @@
-package com.nsoft.eut.gzygkzp;
+package com.nsoft.gkzp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
