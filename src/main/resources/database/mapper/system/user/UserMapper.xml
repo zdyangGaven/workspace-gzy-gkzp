@@ -10,4 +10,13 @@
     </select>
 
 
+    <resultMap id="userMap" type="com.nsoft.gkzp.system.user.entity.User">
+        <result property="userName" column="username"/>
+        <result property="password" column="password"/>
+    </resultMap>
+    <select id="selectUsers" resultMap="userMap">
+        SELECT * FROM User
+    </select>
+
+
 </mapper>

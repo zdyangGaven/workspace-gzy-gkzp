@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -26,6 +27,16 @@ public class UserController {
             return "index";
         }
         return "login";
-
     }
+
+    @RequestMapping("/user/getUsers")
+    public List<User> getUsers(){
+
+        return userService.selectUsers();
+    }
+
+
+
+
+
 }

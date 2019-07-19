@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * User 实体映射器接口
  * @author zdyang
@@ -19,4 +21,6 @@ public interface UserMapper {
 
     public User login(@Param("loginName") String loginName,
                       @Param("password") String password);
+
+    public List<User> selectUsers();
 }

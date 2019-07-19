@@ -7,7 +7,6 @@ public class User {
     private long id = -1 ;//用户ID
     private String loginName = "";//用户登录名
     private String userName = "";//用户名
-    private String nickName = "";//昵称
     private String password = "";//密码
 
     public long getId() {
@@ -26,13 +25,7 @@ public class User {
         this.userName = userName;
     }
 
-    public String getNickName() {
-        return nickName;
-    }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
 
     public String getPassword() {
         return password;
@@ -48,5 +41,15 @@ public class User {
 
     public void setLoginName(String loginName) {
         this.loginName = loginName;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", loginName='" + loginName + '\'' +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }
