@@ -90,14 +90,6 @@
                 <artifactId>spring-boot-maven-plugin</artifactId><!--要通过maven进行打包操作 需要这个插件-->
             </plugin>
         </plugins>
-        <resources>
-            <resource>
-                <directory>src/main/java</directory>
-                <includes>
-                    <include>**/*.xml</include>
-                </includes>
-            </resource>
-        </resources>
     </build>
 
 
