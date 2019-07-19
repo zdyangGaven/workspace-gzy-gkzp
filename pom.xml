@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.6.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.nsoft</groupId>
+    <artifactId>gkzp</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>war</packaging><!--mvn package 打包方式，  jar为jar包   war 为war包（由于采用web3.0 规范，是没有web.xml 的，需另行配置（别忘了servlet））-->
+    <name>gzy-gkzp</name>
+    <description>广职院-公开招聘系统网站</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version><!--JDK版本1.8-->
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId><!--springboot Web 依赖-->
+        </dependency>
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId><!--sqlserver依赖  驱动jar-->
+            <scope>runtime</scope>
+            <version>6.4.0.jre8</version>
+        </dependency>
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>sqljdbc4</artifactId>
+            <version>4.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId><!--mybatis 依赖-->
+            <version>2.1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId><!--SpringBoot默认不支持JSP。为了支持JSP，故引入此依赖-->
+            <version>9.0.21</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId><!--jsp标签库-->
+            <version>1.2</version>
+        </dependency>
+
+
+<!--*************************前期上面是必备的，下面的后面再调**********************************-->
+<!--
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+ -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId><!--tomcat依赖 内置tomcat-->
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId><!--devtools工具依赖，内置tomcat可实现热部署-->
+            <scope>runtime</scope><!--maven的scope参数含义： compile:编译时依赖（默认） provided:类似compile,需要额外提供的依赖  runtime:运行时依赖  test:测试时依赖（不会随项目发布）    system:类似provided，需要显式提供包含依赖的jar（不推荐使用）   《打war包时：compile和runtime两种依赖打包时会打进去，provided、system、test都不会打进去》-->
+            <optional>true</optional><!--maven的optional:true   默认为false，有传递性..   为true时表示此依赖不会产生传递依赖   eg：A依赖B，B依赖C, 在B项目配置中引入C依赖时加上<optional>true</optional>；这样在A项目引入B依赖时就不会连带着把C引进来了,否则会把C依赖jar引进了-->
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId><!--测试依赖-->
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId><!--要通过maven进行打包操作 需要这个插件-->
+            </plugin>
+        </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
+
+
+
+
+</project>

@@ -1,0 +1,20 @@
+# file
+*.class
+*.classpath
+*.project
+*.mymetadata
+*.myumldata
+*.war
+*.jar
+*.iml
+*.bak
+WebRoot/thumb/*
+WebRoot/tmp/*
+WebRoot/ueditor/jsp/upload/*
+WebRoot/WEB-INF/classes/*
+
+# dir
+.idea
+.settings
+.vscode
+target
