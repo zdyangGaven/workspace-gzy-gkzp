@@ -1,9 +1,9 @@
-package com.nsoft.gkzp.system.user.entity;
+package com.nsoft.gkzp.system.sysuser.entity;
 
 /**
  * 用户信息实体类
  */
-public class User {
+public class SysUser {
     private long id = -1 ;//用户ID
     private String loginName = "";//用户登录名
     private String userName = "";//用户名

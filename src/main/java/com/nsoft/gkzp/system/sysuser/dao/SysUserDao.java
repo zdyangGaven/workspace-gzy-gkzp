@@ -1,6 +1,6 @@
-package com.nsoft.gkzp.system.user.dao;
+package com.nsoft.gkzp.system.sysuser.dao;
 
-import com.nsoft.gkzp.system.user.entity.User;
+import com.nsoft.gkzp.system.sysuser.entity.SysUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -17,10 +17,10 @@ import java.util.List;
  */
 @Mapper
 @Repository
-public interface UserMapper {
+public interface SysUserDao {
 
-    public User login(@Param("loginName") String loginName,
+    public SysUser login(@Param("loginName") String loginName,
                       @Param("password") String password);
 
-    public List<User> selectUsers();
+    public List<SysUser> selectUsers();
 }
