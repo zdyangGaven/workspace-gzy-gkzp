@@ -23,8 +23,9 @@ public class SysUserController {
     public String login(String loginName, String password, HttpSession session, Model model){
         SysUser user = sysUserService.login(loginName,password);
         if(user != null){
-            session.setAttribute("user",user);
-            model.addAttribute("user",user);
+            session.setAttribute("sysUser",user);
+            model.addAttribute("sysUser",user);
+            System.out.println(user);
             return "index";
         }
         return "login";

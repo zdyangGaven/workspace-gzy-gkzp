@@ -11,6 +11,6 @@
     <title>首页</title>
 </head>
 <body>
-亲爱的${user.loginName},欢迎登录系统。
+亲爱的${sysUser.loginName},欢迎登录系统。
 </body>
 </html>
