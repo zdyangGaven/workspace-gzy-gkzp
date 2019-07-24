@@ -17,6 +17,14 @@ public class SysUserController {
     @Autowired
     private SysUserService sysUserService;
 
+    /**
+     * 登录
+     * @param loginName
+     * @param password
+     * @param session
+     * @param model
+     * @return
+     */
     //@GetMapping（"/sysuser/login"）
     //@PostMapping("/sysuser/login")
     @RequestMapping("/user/login")
@@ -31,6 +39,10 @@ public class SysUserController {
         return "login";
     }
 
+    /**
+     * 测试
+     * @return
+     */
     @RequestMapping("/user/getUsers")
     public List<SysUser> getUsers(){
         List<SysUser> userList =  null;
@@ -46,6 +58,33 @@ public class SysUserController {
         System.out.println("userList="+userList);
         return userList;
     }
+
+    /**
+     * 注册
+     * @param user
+     * @param model
+     * @return
+     */
+    @RequestMapping("/user/register")
+    public String register(SysUser user,Model model){
+        int id = -1;
+        id = sysUserService.findIdByColumn("loginname",user.getLoginName());
+        if(id >0){
+            System.out.println("此账号已经存在");
+            return "register";
+        }
+        id= sysUserService.findIdByColumn("email",user.getEmail());
+        if(id>0){
+            System.out.println("此email已经注册过");
+            return "register";
+        }
+
+        sysUserService.saveSysUserInformation(user);
+        return "register";
+
+
+    }
+
 
 
 

@@ -18,6 +18,21 @@ public class SysUserService {
         return sysUserDao.login(uName,pwd);
     }
 
+    public int findIdByColumn( String column,String value) {
+        int id = -1;
+        Integer temp = sysUserDao.findIdByColumn(column,value);
+        if(temp != null){
+            id = temp.intValue();
+        }
+        return id;
+    }
+
+
+
     public List<SysUser> selectUsers(){ return sysUserDao.selectUsers();}
+
+    public void saveSysUserInformation(SysUser user){
+        sysUserDao.saveSysUserInformation(user);
+    }
 
 }

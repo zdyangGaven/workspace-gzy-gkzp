@@ -3,6 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.nsoft.gkzp.system.sysuser.dao.SysUserDao" >
 
+    <!--动态sql使用可参照：http://www.mybatis.org/mybatis-3/zh/dynamic-sql.html#-->
+
     <select id="login" resultType="com.nsoft.gkzp.system.sysuser.entity.SysUser">
         select * from sys_user
         where loginname =#{loginName} and Password=#{password}
@@ -17,6 +19,20 @@
     <select id="selectUsers" resultMap="userMap">
         SELECT * FROM sys_User
     </select>
+
+    <select id="findIdByColumn" resultType="int">
+        select id from sys_user
+        where ${column} = #{value}
+    </select>
+
+    <select id="getIdByEmail" resultType="int">
+        select id from sys_user
+        where email = #{email}
+    </select>
+
+    <insert id="saveSysUserInformation"  parameterType="com.nsoft.gkzp.system.sysuser.entity.SysUser">
+       insert into sys_user(loginname,password,email) values(#{loginName},#{password},#{email})
+    </insert>
 
 
 
