@@ -10,6 +10,10 @@ create table sys_user(
 );
 --drop table sys_user;
 
+select * from sys_user;
+
+
+
 
 insert into sys_user(loginname,password,email) values('aa','a我的名字1','qwe');
 insert into sys_user(loginname,username,password) values('qq','q我的名字2','qwe');
