@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="600">
+
+    <properties> <!-- 变量配置   property可以自定义一些变量属性。下面用${}方式即可获取值-->
+        <property name="LOG_HOME">/logs</property>
+        <property name="FILE_NAME_INFO">SystemLog</property>
+        <property name="FILE_NAME_ERROR">SystemErr</property>
+    </properties>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT"> <!--这个输出控制台的配置，开发的时候一般都会配置，以便调试-->
+             <PatternLayout pattern="[%d{HH:mm:ss.SSS} %-5level] [%t] %l - %msg%n" />
+        </Console>
+
+        <RollingFile name="RollingFileInfo"
+                                 fileName="${LOG_HOME}/${FILE_NAME_INFO}.log"
+                                 filePattern="${LOG_HOME}/$${date:yyyy-MM}/${FILE_NAME_INFO}-%d{yyyy-MM-dd}-%i.log"><!--如想自动压缩滚动文件，可以写成 .log.gz 就自动生成压缩文件了--><!-- 每次大小超过size或到时间间隔，则这日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
+            <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level] [%t] %l - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <SizeBasedTriggeringPolicy size="10 MB"/><!--指定当文件体积大于size指定的值时，触发Rolling-->
+            </Policies>
+            <DefaultRolloverStrategy max="20"/><!-- 表示日志文件最大保留数 -->
+        </RollingFile>
+
+        <RollingFile name="RollingFileError"
+                     fileName="${LOG_HOME}/${FILE_NAME_ERROR}.log"
+                     filePattern="${LOG_HOME}/$${date:yyyy-MM}/${FILE_NAME_ERROR}-%d{yyyy-MM-dd}-%i.log">
+            <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/><!--此Appender用这个参数可单独配置日志级别    在下面此Appender被设置为root日志输出方法。 这里配置了level为ERROR，root的level的设置为INFO，取两者的较高级为level，即ERROR-->
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level] [%t] %l - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"  />
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+    </Appenders>
+
+    <!--然后定义logger，只有定义了logger并引入的appender，appender才会生效-->
+    <Loggers>
+        <!--第三方或自定义日志系统--> <!--此地过滤掉spring和mybatis的一些无用的DEBUG信息（level设置成INFO,则INFO级别下的DEBUG、TRACE、ALL日志就不会打印了）-->
+        <logger name="org.springframework" level="INFO"></logger><!--解释：org.springframework的日志器为此设置，此处没有配置<appender>输出方式，无输出。但additivity缺省默认为true，故会按照 继承root的appender配置 输出-->
+        <logger name="org.mybatis"         level="INFO"></logger>
+
+        <root level="info"><!--大于等于level级别的日志则进行日志输出-->
+            <appender-ref ref="Console"/>
+            <appender-ref ref="RollingFileInfo"/>
+            <appender-ref ref="RollingFileError"/>
+        </root>
+      　　
+    </Loggers>
+
+</Configuration>
+
+<!--
+***日志级别以及优先级排序: All < Trace < Debug < Info < Warn < Error < FATAL < OFF
+****根节点Configuration
+  1.两个属性：
+      status         :  这个用于设置log4j2自身内部的信息输出，可以不设置，当设置成trace时，你可以看到控制台中打印了一些log4j加载插件、组装logger等调试信息。
+      monitorInterval： Log4j能够自动检测修改配置 文件和重新配置本身，设置间隔秒数（最小5s）   eg：<configuration status="WARN" monitorInterval="30">
+  2.两个节点：
+      Appenders 常见的有三种子节点:Console、RollingFile、File
+      Loggers   表明可以定义多个Appender和Logger
+     ***Appenders:
+           **Console 节点用来定义输出到控制台的Appender.
+                 *name         :  指定Appender的名字.
+                 *target       :  SYSTEM_OUT 或 SYSTEM_ERR,一般只设置默认:SYSTEM_OUT.
+                 *PatternLayout:  输出格式，不设置默认为:%m%n.
+           **File  节点用来定义输出到指定位置的文件的Appender.
+                 *name         :  指定Appender的名字.
+                 *fileName     :  指定输出日志的目的文件带全路径的文件名.
+                 *PatternLayout:  输出格式，不设置默认为:%m%n.
+           **RollingFile 节点用来定义超过指定条件自动删除旧的创建新的Appender.（Rolling的意思是当满足一定条件后，就重命名原日志文件用于备份，并从新生成一个新的日志文件。eg:需求是每天生成一个日志文件，但是如果一天内的日志文件体积已经超过1G，就重新生成，两个条件满足一个即可。这在log4j 1.x原生功能中无法实现，在log4j2中就很简单了。）
+                 *name         :  指定Appender的名字.
+                 *fileName     :  指定输出日志的目的文件带全路径的文件名.
+                 *filePattern  :  指定当发生Rolling时，文件的转移和重命名规则.
+                 *PatternLayout:  输出格式，不设置默认为:%m%n.
+                 *Policies     :  指定滚动日志的策略，就是什么时候进行新建日志文件输出日志.
+                                  SizeBasedTriggeringPolicy: Policies子节点，指定当文件体积大于size指定的值时，触发Rolling
+                                  TimeBasedTriggeringPolicy: Policies子节点，基于时间的滚动策略，这个配置需要和filePattern结合使用，注意filePattern中配置的文件重命名规则是${FILE_NAME_INFO}-%d{yyyy-MM-dd HH-mm}-%i，最小的时间粒度是mm，即分钟，而TimeBasedTriggeringPolicy指定的interval是1，结合起来就是每1分钟生成一个新文件。如果改成%d{yyyy-MM-dd}，最小粒度为天，则每天生成一个文件。
+                                                             modulate="true": 则日志时间将以0点为边界进行偏移计算，用来调整初始计算时间（eg：比如按小时计算，现在是早上3am，interval是4，即每4小时触发Rolling一次。如modulate="true"， 那么第一次滚动是在4am，接着是8am，12am...而不是7am.）
+                *DefaultRolloverStrategy:指定最多保存的文件个数(max属性)。(即：用来指定同一个文件夹下最多有几个日志文件时开始删除最旧的，创建新的)
+                *PatternLayout :  控制台或文件输出源（Console、File、RollingRandomAccessFile）都必须包含一个PatternLayout节点，用于指定输出文件的格式（如 日志输出的时间 文件 方法 行数 等格式），例如 pattern=”%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n”
+                        %d{HH:mm:ss.SSS} 表示输出到毫秒的时间
+                        %t 输出当前线程名称
+                        %-5level 输出日志级别，-5表示左对齐并且固定输出5个字符，如果不足在右边补0
+                        %logger 输出logger名称，因为Root Logger没有名称，所以没有输出
+                        %msg 日志文本
+                        %n 换行
+                        其他常用的占位符有：
+                        %F 输出所在的类文件名，如Log4j2Test.java
+                        %L 输出行号
+                        %M 输出所在方法名
+                        %l 输出语句所在的行数, 包括类名、方法名、文件名、行数
+
+     ***Loggers： 日志器，常见的有两种:Root和Logger.
+           **Root节点:   用来指定项目的根日志，如果没有单独指定Logger，那么就会默认使用该Root日志输出
+                *level:        :  日志输出级别，共有8个级别，按照从低到高为：All < Trace < Debug < Info < Warn < Error < FATAL < OFF
+                *AppenderRef   :  Root的子节点，用来指定该日志输出到哪个Appender.
+           **Logger节点: 用来单独指定日志的形式，比如要为指定包下的class指定不同的日志级别等。
+                *level         :  日志输出级别，共有8个级别，按照从低到高为：All < Trace < Debug < Info < Warn < Error < Fatal < OFF.
+                *name          :  用来指定该Logger所适用的类或者类所在的包全路径,继承自Root节点.（对于命名可以以包名作为日志的名字，不同的包配置不同的级别等））
+                *AppenderRef   :  Logger的子节点，用来指定该日志输出到哪个Appender。
+                                  如果没有指定，就会默认继承自Root.
+                                  如果指定了，  那么会在指定的这个Appender和Root的Appender中都会输出。如果logger和root都设置了同一个Appender，那么在此Appender同一个日志会输出两次，此时我们可以设置Logger的additivity="false"，就只在自定义的Appender中进行输出。
+    ***对日志器的详细解释如下：
+            日志器分 根日志器Root 和 自定义日志器logger ，当根据日志名字获取不到指定的日志器时就使用Root作为默认的日志器，(意思是eg:springframework的日志名默认org.springframework。如果<logger>设置了此第三方日志器，则按照设置的进行日志输出，如<logger>没设置，则默认按照根日志器root设置进行日志输出)
+            自定义时需要指定每个Logger的名称name（对于命名可以以包名作为日志的名字，不同的包配置不同的级别等）
+            日志输出级别level，每个logger可以指定一个level（TRACE, DEBUG, INFO, WARN, ERROR, ALL or OFF），不指定时level默认为ERROR；
+            additivity指定是否同时输出log到父类的appender，缺省为true.(对于一般的日志器（如Console、File、RollingRandomAccessFile）一般需要配置一个或多个输出源AppenderRef；)
+            具体解释为： additivity是 子Logger 是否继承 root的Logger 的 输出源（appender） 的标志位。
+                        具体说，默认情况下子Logger会继承root的Logger的appender，也就是说子Logger会在root的Logger的appender里输出。
+                        1.若是additivity设为false，则子Logger只会在自己的appender里输出，  不会在root的logger的appender里输出。
+                        2.若是additivity设为true， 则子Logger不止会在自己的appender里输出，还会在root的logger的appender里输出。
+-->
