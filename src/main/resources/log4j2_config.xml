@@ -53,14 +53,44 @@
 </Configuration>
 
 <!--
-***日志级别以及优先级排序: All < Trace < Debug < Info < Warn < Error < FATAL < OFF
+****机制：如果一条日志信息的级别大于等于配置文件的级别，就记录。
+****日志级别以及优先级排序: All < Trace < Debug < Info < Warn < Error < FATAL < OFF
+        trace：  追踪，就是程序推进一下，可以写个trace输出
+        debug：  调试，一般作为最低级别，trace基本不用。
+        info：   输出重要的信息，使用较多
+        warn：   警告，有些信息不是错误信息，但也要给程序员一些提示。
+        error：  错误信息。用的也很多。
+        fatal：  致命错误。
+    输出源：
+        CONSOLE（输出到控制台）
+        FILE（输出到文件）
+    格式：
+        SimpleLayout  ：以简单的形式显示
+        HTMLLayout    ：以HTML表格显示
+        PatternLayout ：自定义形式显示
+        PatternLayout ：自定义日志布局
+            %d{yyyy-MM-dd HH:mm:ss.SSS} 日志生产时间,表示输出到毫秒的时间
+            %t               输出当前线程名称
+            %-5level         输出日志级别，-5表示左对齐并且固定输出5个字符，如果不足在右边补0
+            %logger 或 %c    输出logger名称，因为Root Logger没有名称，所以没有输出
+            %msg 或 %m       日志内容 eg：logger.info("message")里的内容
+            %n               换行
+            其他常用的占位符有：
+            %F              输出所在的类文件名，如Log4j2Test.java
+            %L              输出行号
+            %M              输出所在方法名
+            %l              输出语句所在的行数, 包括类名、方法名、文件名、行数
+            %p              日志输出格式
+            %C              Java类名(%F)
+            hostName        本地机器名
+            hostAddress     本地ip地址
+
 ****根节点Configuration
-  1.两个属性：
-      status         :  这个用于设置log4j2自身内部的信息输出，可以不设置，当设置成trace时，你可以看到控制台中打印了一些log4j加载插件、组装logger等调试信息。
-      monitorInterval： Log4j能够自动检测修改配置 文件和重新配置本身，设置间隔秒数（最小5s）   eg：<configuration status="WARN" monitorInterval="30">
-  2.两个节点：
-      Appenders 常见的有三种子节点:Console、RollingFile、File
-      Loggers   表明可以定义多个Appender和Logger
+  1.两个属性: status:           这个用于设置log4j2自身内部的信息输出，可以不设置，当设置成trace时，你可以看到控制台中打印了一些log4j加载插件、组装logger等调试信息。
+              monitorInterval:  Log4j能够自动检测修改配置 文件和重新配置本身，设置间隔秒数（最小5s）   eg：<configuration status="WARN" monitorInterval="30">
+  2.两个节点:Appenders:         常见的有三种子节点:Console、RollingFile、File
+              Loggers:          表明可以定义多个Appender和Logger
+
      ***Appenders:
            **Console 节点用来定义输出到控制台的Appender.
                  *name         :  指定Appender的名字.
@@ -81,17 +111,6 @@
                                                              modulate="true": 则日志时间将以0点为边界进行偏移计算，用来调整初始计算时间（eg：比如按小时计算，现在是早上3am，interval是4，即每4小时触发Rolling一次。如modulate="true"， 那么第一次滚动是在4am，接着是8am，12am...而不是7am.）
                 *DefaultRolloverStrategy:指定最多保存的文件个数(max属性)。(即：用来指定同一个文件夹下最多有几个日志文件时开始删除最旧的，创建新的)
                 *PatternLayout :  控制台或文件输出源（Console、File、RollingRandomAccessFile）都必须包含一个PatternLayout节点，用于指定输出文件的格式（如 日志输出的时间 文件 方法 行数 等格式），例如 pattern=”%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n”
-                        %d{HH:mm:ss.SSS} 表示输出到毫秒的时间
-                        %t 输出当前线程名称
-                        %-5level 输出日志级别，-5表示左对齐并且固定输出5个字符，如果不足在右边补0
-                        %logger 输出logger名称，因为Root Logger没有名称，所以没有输出
-                        %msg 日志文本
-                        %n 换行
-                        其他常用的占位符有：
-                        %F 输出所在的类文件名，如Log4j2Test.java
-                        %L 输出行号
-                        %M 输出所在方法名
-                        %l 输出语句所在的行数, 包括类名、方法名、文件名、行数
 
      ***Loggers： 日志器，常见的有两种:Root和Logger.
            **Root节点:   用来指定项目的根日志，如果没有单独指定Logger，那么就会默认使用该Root日志输出
@@ -112,4 +131,6 @@
                         具体说，默认情况下子Logger会继承root的Logger的appender，也就是说子Logger会在root的Logger的appender里输出。
                         1.若是additivity设为false，则子Logger只会在自己的appender里输出，  不会在root的logger的appender里输出。
                         2.若是additivity设为true， 则子Logger不止会在自己的appender里输出，还会在root的logger的appender里输出。
+
+        https://www.cnblogs.com/keeya/p/10101547.html#autoid-1-1-0
 -->
