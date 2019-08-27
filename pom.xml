@@ -26,7 +26,18 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId><!--springboot Web 依赖-->
+            <exclusions>
+                <exclusion> <!--由于我下面引入了log4j2日志框架来管理日志输出，所以要去掉spring默认自带的日志依赖spring-boot-starter-logging，否则导致冲突即配置log4j2时不生效-->
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
+        <dependency><!-- 引入log4j2依赖 -->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId><!--没写版本号。直接依赖parent-->
+        </dependency>
+
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>mssql-jdbc</artifactId><!--sqlserver依赖  驱动jar-->
@@ -56,6 +67,20 @@
             <artifactId>jstl</artifactId><!--jsp标签库-->
             <version>1.2</version>
         </dependency>
+
+        <dependency><!--发送邮件-->
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-email</artifactId>
+            <version>1.5</version>
+        </dependency>
+
+<!--
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j-log4j12-version}</version>
+        </dependency>
+-->
 
 
 
