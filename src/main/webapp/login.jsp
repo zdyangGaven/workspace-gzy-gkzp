@@ -1,16 +1,32 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Administrator
-  Date: 2019/7/18
-  Time: 18:13
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" %>
+<%@ page  language="java" contentType="text/html;charset=UTF-8" %>
+<%-- 引入页面头 --%>
+<%@ include file="/pageHead.jsp" %>
 
 <form action="user/login" method="post">
-    <input type="text"      name="loginName" required maxlength="24" />
-    <input type="password"  name="password" required maxlength="24" />
-    <input type="submit"    value="登 录" />
-    <br>
+
+    <div class=" row">
+        <div class=" col-md-2 col-md-offset-4" ><span id="photo" style="color:red;font-weight:bold; " >${msg}</span></div>
+    </div>
+    <div class=" row">
+        <div class="pull-left col-md-2 col-md-offset-4" >登录名：</div>
+        <div class="pull-left " ><input type="text"      name="loginName" required maxlength="24" value="${loginName}" /></div>
+    </div>
+    <div class=" row">
+        <div class="pull-left  col-md-2 col-md-offset-4" >密码：</div>
+        <div class="pull-left " ><input type="password"  name="password" required maxlength="24" /></div>
+    </div>
+
+    <div class="row" >
+        <div class=" col-md-offset-4 col-md-3 "><button class="btn btn-primary btn-lg btn-block" type="submit"  >登 录</button></div>
+
+    </div>
+
 </form>
 
+<script language="javascript">
+
+
+</script>
+
+<%-- 引入页面尾 --%>
+<%@ include file="/pageFloor.jsp" %>
