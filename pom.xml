@@ -55,6 +55,11 @@
             <artifactId>mybatis-spring-boot-starter</artifactId><!--mybatis 依赖-->
             <version>2.1.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.pagehelper</groupId><!--mybatis分页插件-->
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.2.3</version>
+        </dependency>
 
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
@@ -67,6 +72,13 @@
             <artifactId>jstl</artifactId><!--jsp标签库-->
             <version>1.2</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.json</groupId> <!--jsonObject-->
+            <artifactId>json</artifactId>
+            <version>20180813</version>
+        </dependency>
+
 
         <dependency><!--发送邮件-->
             <groupId>org.apache.commons</groupId>
