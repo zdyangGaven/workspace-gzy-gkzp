@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nsoft.gkzp.demo.dao.EmployeesDemoDao" >
+
+    <!--动态sql使用可参照：http://www.mybatis.org/mybatis-3/zh/dynamic-sql.html#-->
+
+    <insert id="save"  parameterType="com.nsoft.gkzp.demo.entity.EmployeesDemo">
+       insert into EmployeesDemo(name,age,address,status) values(#{name},#{age},#{address},#{status})
+    </insert>
+
+    <select id="getIdByName" resultType="int"  parameterType="String">
+        select id from EmployeesDemo
+        where name = #{name}
+    </select>
+
+
+    <select id="findInfoByColumn" resultType="com.nsoft.gkzp.demo.entity.EmployeesDemo">
+        select * from sys_user
+        where ${column} = #{value}
+    </select>
+
+
+    <resultMap id="Employees" type="com.nsoft.gkzp.demo.entity.EmployeesDemo">
+        <result property="name" column="employeesName"/>
+        <result property="age"  column="employeesAge"/>
+    </resultMap>
+    <select id="selectEmployees" resultMap="Employees">
+        SELECT  id,
+                name employeesName,
+                age  employeesAge,
+                address,
+                createTime,
+                status
+        FROM    EmployeesDemo
+    </select>
+
+
+    <resultMap id="EmployeesMap" type="HashMap">
+        <result property="nameRename" column="employeesName"/>
+        <result property="ageRename"  column="employeesAge"/>
+    </resultMap>
+    <select id="selectEmployeesToMap" resultMap="EmployeesMap">
+        SELECT  id,
+                name employeesName,
+                age  employeesAge,
+                address,
+                createTime,
+                status
+        FROM    EmployeesDemo
+    </select>
+
+    <select id="findByPaging" resultType="HashMap"  parameterType="com.github.pagehelper.Page">
+        select * from EmployeesDemo
+        where age >= #{name}
+    </select>
+
+
+</mapper>
