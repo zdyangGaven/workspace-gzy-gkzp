@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.nsoft.gkzp.demo.entity.EmployeesDemo;
 import com.nsoft.gkzp.demo.service.EmployeesDemoService;
+import com.nsoft.gkzp.syscore.web.AbstractController;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
@@ -28,7 +29,7 @@ import java.util.List;
  * @date 2019.08.27
  */
 @Controller
-public class EmployeesDemoController {
+public class EmployeesDemoController  {
     Logger logger = LogManager.getLogger(EmployeesDemoController.class);
 
     @Autowired
@@ -46,7 +47,7 @@ public class EmployeesDemoController {
         try{
             logger.info("**************EmployeesDemoControlle.save参数="+demoInfo);
             if(demoInfo != null &&!"".equals(demoInfo.getName())){
-                demoService.save(demoInfo);
+             //   demoService.save(demoInfo);
             }
 
             //writer.write("保存成功了，啦啦啦啦");
@@ -76,11 +77,13 @@ public class EmployeesDemoController {
             logger.info("**************参数="+name);
            id =  demoService.getIdByName(name);
            model.addAttribute("id",id);
+
+
         }catch (Exception e){
             e.printStackTrace();
         }
-       // return "demo/test2";
-        return "success";
+        return "demo/test2";
+
     }
 
 
