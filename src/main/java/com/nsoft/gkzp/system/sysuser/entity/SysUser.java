@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 
 /**
  * 用户信息实体类
+ * @author zdyang
+ * @date 2019.07.18
  */
 public class SysUser {
     private int id              = -1 ;//用户ID
