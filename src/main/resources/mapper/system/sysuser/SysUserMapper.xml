@@ -7,14 +7,20 @@
 
     <select id="login" resultType="com.nsoft.gkzp.system.sysuser.entity.SysUser">
         select * from sys_user
-        where loginname =#{loginName} and Password=#{password}
+        <where>
+            <if test="loginName != null">
+                ( loginname =#{loginName} or phone = #{loginName} or email = #{loginName} )
+            </if>
+            <if test="password != null">
+                and Password=#{password}
+            </if>
+        </where>
 
     </select>
 
 
     <resultMap id="userMap" type="com.nsoft.gkzp.system.sysuser.entity.SysUser">
         <result property="userName" column="username"/>
-        <result property="password" column="password"/>
     </resultMap>
     <select id="selectUsers" resultMap="userMap">
         SELECT * FROM sys_User

@@ -18,7 +18,7 @@
             <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level] [%t] %l - %msg%n"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true" />
-                <SizeBasedTriggeringPolicy size="10 MB"/><!--指定当文件体积大于size指定的值时，触发Rolling-->
+                <SizeBasedTriggeringPolicy size="50 MB"/><!--指定当文件体积大于size指定的值时，触发Rolling-->
             </Policies>
             <DefaultRolloverStrategy max="20"/><!-- 表示日志文件最大保留数 -->
         </RollingFile>
@@ -30,17 +30,17 @@
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level] [%t] %l - %msg%n"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"  />
-                <SizeBasedTriggeringPolicy size="10 MB"/>
+                <SizeBasedTriggeringPolicy size="50 MB"/>
             </Policies>
-            <DefaultRolloverStrategy max="20"/>
+            <DefaultRolloverStrategy max="20"/>   <!-- DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件，这里设置了20 -->
         </RollingFile>
     </Appenders>
 
     <!--然后定义logger，只有定义了logger并引入的appender，appender才会生效-->
     <Loggers>
         <!--第三方或自定义日志系统--> <!--此地过滤掉spring和mybatis的一些无用的DEBUG信息（level设置成INFO,则INFO级别下的DEBUG、TRACE、ALL日志就不会打印了）-->
-        <logger name="org.springframework" level="INFO"></logger><!--解释：org.springframework的日志器为此设置，此处没有配置<appender>输出方式，无输出。但additivity缺省默认为true，故会按照 继承root的appender配置 输出-->
-        <logger name="org.mybatis"         level="INFO"></logger>
+        <logger name="org.springframework" level="error"></logger><!--解释：org.springframework的日志器为此设置，此处没有配置<appender>输出方式，无输出。但additivity缺省默认为true，故会按照 继承root的appender配置 输出-->
+        <logger name="org.mybatis"         level="info"></logger>
 
         <root level="info"><!--大于等于level级别的日志则进行日志输出-->
             <appender-ref ref="Console"/>
