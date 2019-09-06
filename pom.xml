@@ -56,10 +56,28 @@
             <version>2.1.0</version>
         </dependency>
         <dependency>
-            <groupId>com.github.pagehelper</groupId><!--mybatis分页插件-->
-            <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>1.2.3</version>
+        <groupId>com.github.pagehelper</groupId><!--mybatis分页插件-->
+        <artifactId>pagehelper-spring-boot-starter</artifactId>
+        <version>1.2.3</version><!--注意版本-->
+    </dependency>
+
+        <dependency><!--redis依赖包 --><!--spring boot 与redis应用基本环境配置 -->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <exclusions>
+                <exclusion> <!--由于我下面引入了log4j2日志框架来管理日志输出，所以要去掉spring默认自带的日志依赖spring-boot-starter-logging，否则导致冲突即配置log4j2时不生效-->
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
+        <dependency><!--spring-session依赖包 --><!--spring session 与redis应用基本环境配置,需要开启redis后才可以使用，不然启动Spring boot会报错 -->
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-data-redis</artifactId>
+        </dependency>
+
+
+
 
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
@@ -74,9 +92,15 @@
         </dependency>
 
         <dependency>
-            <groupId>org.json</groupId> <!--jsonObject-->
+            <groupId>org.json</groupId> <!--json IN JAVA-->
             <artifactId>json</artifactId>
             <version>20180813</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.json-lib</groupId><!--json-lib-->
+            <artifactId>json-lib</artifactId>
+            <classifier>jdk15</classifier>
+            <version>2.4</version>
         </dependency>
 
 
@@ -85,6 +109,9 @@
             <artifactId>commons-email</artifactId>
             <version>1.5</version>
         </dependency>
+
+
+
 
 <!--
         <dependency>

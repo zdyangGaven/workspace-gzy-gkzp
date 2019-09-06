@@ -2,7 +2,7 @@
 <%-- 引入页面头 --%>
 <%@ include file="/pageHead.jsp" %>
 
-<form action="user/login" method="post">
+<form action="${systemctx}/user/login" method="post">
 
     <div class=" row">
         <div class=" col-md-2 col-md-offset-4" ><span id="photo" style="color:red;font-weight:bold; " >${msg}</span></div>
