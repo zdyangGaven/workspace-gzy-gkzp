@@ -1,6 +1,6 @@
-package com.nsoft.gkzp.syscore.config;
+package com.nsoft.gkzp.syscore.config.interceptor;
 
-import com.nsoft.gkzp.syscore.config.component.LoginHandlerInterceptor;
+import com.nsoft.gkzp.syscore.config.interceptor.LoginHandlerInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.ResourceUtils;
@@ -13,7 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  *
  */
 @Configuration
-public class MyMvcConfig implements WebMvcConfigurer {
+public class MyInterceptorConfig implements WebMvcConfigurer {
 
 
     @Autowired
@@ -31,7 +31,8 @@ public class MyMvcConfig implements WebMvcConfigurer {
        //这里添加多个拦截器
         // 登录检测        添加拦截的请求，并排除几个不拦截的请求  ----- 登录检测拦截规则:  /**     排除： 登录、注册相关页
         registry.addInterceptor(loginHandlerInterceptor).addPathPatterns("/**")
-                .excludePathPatterns( "/user/login","/user/register","/user/getUsers");
+                .excludePathPatterns( "/","/login","/user/login","/user/register");
+                //.excludePathPatterns( "/user/register","/user/getUsers");
 
     }
 

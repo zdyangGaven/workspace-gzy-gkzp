@@ -2,6 +2,7 @@ package com.nsoft.gkzp.demo.service;
 
 import com.github.pagehelper.Page;
 import com.nsoft.gkzp.demo.entity.EmployeesDemo;
+import com.nsoft.gkzp.syscore.service.ServiceException;
 
 import java.util.ArrayList;
 
@@ -16,14 +17,14 @@ public interface EmployeesDemoService {
      * 保存雇员信息
      * @param employees
      */
-    public void save(EmployeesDemo employees);
+    public void save(EmployeesDemo employees) throws ServiceException;
 
     /**
      * 通过名称获得ID值
      * @param name
      * @return
      */
-    public int getIdByName(String name);
+    public int getIdByName(String name) throws ServiceException;
 
 
     /**
@@ -33,23 +34,23 @@ public interface EmployeesDemoService {
      ** @param status 状态值
      * @return
      */
-    public EmployeesDemo findInfoByColumn(String column,String value, int status);
+    public EmployeesDemo findInfoByColumn(String column,String value, int status) throws ServiceException;
 
     /**
      * 获得雇员信息
      * @return
      */
-    public ArrayList selectEmployees();
+    public ArrayList selectEmployees() throws ServiceException;
     /**
      * 获得雇员信息
      * @return
      */
-    public ArrayList selectEmployeesToMap();
+    public ArrayList selectEmployeesToMap() throws ServiceException;
 
     /**
      * 分页查询结果
      * @param age 查询条件  年龄
      * @return
      */
-    public Page<EmployeesDemo> findByPaging(int age);
+    public Page<EmployeesDemo> findByPaging(int age) throws ServiceException;
 }

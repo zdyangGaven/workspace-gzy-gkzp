@@ -2,6 +2,7 @@ package com.nsoft.gkzp.demo.dao;
 
 import com.github.pagehelper.Page;
 import com.nsoft.gkzp.demo.entity.EmployeesDemo;
+import com.nsoft.gkzp.syscore.repository.DAOException;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -23,7 +24,7 @@ public interface EmployeesDemoDao {
      * 保存雇员信息
      * @param employees
      */
-    public void save(EmployeesDemo employees);
+    public void save(EmployeesDemo employees)throws DAOException;
 
     /**demo
      * 通过名称获得ID值

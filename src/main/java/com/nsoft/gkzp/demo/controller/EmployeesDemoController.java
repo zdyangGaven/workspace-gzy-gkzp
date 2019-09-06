@@ -5,8 +5,9 @@ import com.github.pagehelper.PageHelper;
 import com.nsoft.gkzp.demo.entity.EmployeesDemo;
 import com.nsoft.gkzp.demo.service.EmployeesDemoService;
 import com.nsoft.gkzp.syscore.web.AbstractController;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.nsoft.gkzp.syscore.web.ControllerException;
+import com.nsoft.gkzp.syscore.web.UserContext;
+import com.nsoft.gkzp.syscore.web.JSONFactory;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.io.Writer;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -29,8 +31,7 @@ import java.util.List;
  * @date 2019.08.27
  */
 @Controller
-public class EmployeesDemoController  {
-    Logger logger = LogManager.getLogger(EmployeesDemoController.class);
+public class EmployeesDemoController extends AbstractController {
 
     @Autowired
     EmployeesDemoService demoService;
@@ -42,20 +43,31 @@ public class EmployeesDemoController  {
      * @param model     model
      */
     @ResponseBody
-    @PostMapping("/demo/save") // 发送post请求，代替了RequestMapping（value="/user/login", method="post"）
-    public String  save(EmployeesDemo demoInfo, HttpSession session, Model model){
+    @PostMapping("/demo/save.json") // 发送post请求，代替了RequestMapping（value="/user/login", method="post"）
+    public void  save(EmployeesDemo demoInfo, HttpSession session, Model model,Writer writer) throws ControllerException {
+        this.userContext = new UserContext();
         try{
             logger.info("**************EmployeesDemoControlle.save参数="+demoInfo);
+
             if(demoInfo != null &&!"".equals(demoInfo.getName())){
              //   demoService.save(demoInfo);
+                this.addErrorMessage("dadadadada");
             }
-
-            //writer.write("保存成功了，啦啦啦啦");
+            writer.write(JSONFactory.toJSONString(userContext));
 
         }catch (Exception e){
             e.printStackTrace();
+            throw new ControllerException("雇员信息保存失败",e,userContext);
+        }finally {
+            try {
+                writer.flush();
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
-        return "成功保存了";
+        throw new ControllerException("故意的抛出异常",userContext);
     }
 
     /**
@@ -67,7 +79,7 @@ public class EmployeesDemoController  {
      * @return
      */
     @PostMapping("/demo/getIdByName")
-    public String  getIdByName(HttpServletRequest arg0, HttpServletResponse arg1, HttpSession session, Model model){
+    public String  getIdByName(HttpServletRequest arg0, HttpServletResponse arg1, HttpSession session, Model model)throws ControllerException {
         int id = -1;
         String  name = "";
         try{
@@ -81,6 +93,7 @@ public class EmployeesDemoController  {
 
         }catch (Exception e){
             e.printStackTrace();
+            throw new ControllerException("获得ID失败",e,userContext);
         }
         return "demo/test2";
 
@@ -94,7 +107,7 @@ public class EmployeesDemoController  {
      */
     @ResponseBody   //返回json数据
     @RequestMapping("/demo/getEmployees")
-    public List<EmployeesDemo> getEmployees(int type){
+    public List<EmployeesDemo> getEmployees(int type)throws ControllerException {
         List<EmployeesDemo> userList =  null;
         List userList2 =  null;
         EmployeesDemo aa = null;
@@ -125,6 +138,7 @@ public class EmployeesDemoController  {
             }
         }catch (Exception e){
             e.printStackTrace();
+            throw new ControllerException("查询信息失败",e,userContext);
         }
         return type==1?userList:userList2;
     }
@@ -136,13 +150,14 @@ public class EmployeesDemoController  {
      */
 
     @RequestMapping("/demo/findInfoByColumn")
-    public String  findInfoByColumn(String column,String value, String status){
+    public String  findInfoByColumn(String column,String value, String status)throws ControllerException {
         EmployeesDemo  info = null;
         try{
           info =   demoService.findInfoByColumn("name","张三",1);
 
         }catch (Exception e){
             e.printStackTrace();
+            throw new ControllerException("查询信息失败",e,userContext);
         }
 
         return "/demo/test1";
@@ -156,7 +171,7 @@ public class EmployeesDemoController  {
      */
     @ResponseBody   //返回json数据
     @GetMapping("/demo/findByPaging")
-    public  String findByPaging(Integer pageNum, Integer pageSize){
+    public  String findByPaging(Integer pageNum, Integer pageSize)throws ControllerException {
         int age = 27;
         JSONObject result = new JSONObject();
         try{
@@ -168,8 +183,9 @@ public class EmployeesDemoController  {
             result.put("pages",data.getPages());
             //获取数据总数
             result.put("total",data.getTotal());
-        }catch(Exception e){
+        }catch (Exception e){
             e.printStackTrace();
+            throw new ControllerException("分页查询失败",e,userContext);
         }
 
         return result !=null?result.toString():null;

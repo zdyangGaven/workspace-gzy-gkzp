@@ -1,4 +1,6 @@
 package com.nsoft.gkzp.demo.entity;
+import com.nsoft.gkzp.syscore.repository.AbstractEntity;
+
 import java.sql.Timestamp;
 
 /**
@@ -6,7 +8,7 @@ import java.sql.Timestamp;
  * @author zdyang
  * @date 2019.08.27
  */
-public class EmployeesDemo {
+public class EmployeesDemo extends AbstractEntity {
 
     private int id              = -1 ;//员工ID              demo
     private String name         = "";//员工名称             demo
