@@ -24,6 +24,18 @@ public interface SysUserService {
      */
     public int findIdByColumn( String column,String value) throws ServiceException;
 
+    /**
+     * 保存 用户注册信息
+     * @param loginName 用户名
+     * @param passWord  用户密码
+     * @throws ServiceException
+     */
+    public void saveRegister(String loginName,String  password) throws ServiceException;
+
+
+
+
+
 
     /**
      * 查找所以用户信息
@@ -36,6 +48,7 @@ public interface SysUserService {
      * @param user
      */
     public void saveSysUserInformation(SysUser user) throws ServiceException;
+
 
 
 }

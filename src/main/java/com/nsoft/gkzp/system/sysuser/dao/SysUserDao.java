@@ -17,7 +17,7 @@ import java.util.List;
  */
 
 
-@Mapper
+//@Mapper  //在启动类中加了@MapperScan("com.nsoft.gkzp.**.dao"),故这里可不添加@Mapper注解
 @Repository
 public interface SysUserDao {
 
@@ -30,10 +30,6 @@ public interface SysUserDao {
     public SysUser login(@Param("loginName") String loginName,
                       @Param("password") String password);
 
-
-    public List<SysUser> selectUsers();
-
-
     /**
      * 通过传入的列和值获得用户id
      * @param column
@@ -42,8 +38,19 @@ public interface SysUserDao {
      */
     public Integer findIdByColumn(@Param("column") String column, @Param("value") String value);
 
+    /**
+     * 保存 用户注册信息
+     * @param loginName 用户名
+     * @param password  用户密码
+     */
+    public void saveRegister(@Param("loginName") String loginName, @Param("password") String password);
 
 
+
+
+
+
+    public List<SysUser> selectUsers();
     /**
      * 用于保存用户注册信息
      * @param user

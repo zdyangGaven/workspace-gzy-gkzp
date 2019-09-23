@@ -18,6 +18,18 @@
 
     </select>
 
+    <select id="findIdByColumn" resultType="int">
+        select id from sys_user
+        where ${column} = #{value}
+    </select>
+
+    <insert id="saveRegister"  >
+       insert into sys_user(loginname,password) values(#{loginName},#{password})
+    </insert>
+
+
+
+
 
     <resultMap id="userMap" type="com.nsoft.gkzp.system.sysuser.entity.SysUser">
         <result property="userName" column="username"/>
@@ -26,10 +38,6 @@
         SELECT * FROM sys_User
     </select>
 
-    <select id="findIdByColumn" resultType="int">
-        select id from sys_user
-        where ${column} = #{value}
-    </select>
 
     <select id="getIdByEmail" resultType="int">
         select id from sys_user
@@ -37,7 +45,7 @@
     </select>
 
     <insert id="saveSysUserInformation"  parameterType="com.nsoft.gkzp.system.sysuser.entity.SysUser">
-       insert into sys_user(loginname,password,email) values(#{loginName},#{password},#{email})
+       insert into sys_user(loginname,password) values(#{loginName},#{password})
     </insert>
 
 

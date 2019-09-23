@@ -1,6 +1,5 @@
 package com.nsoft.gkzp.syscore.config.interceptor;
 
-import com.nsoft.gkzp.syscore.config.interceptor.LoginHandlerInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.ResourceUtils;
@@ -31,7 +30,7 @@ public class MyInterceptorConfig implements WebMvcConfigurer {
        //这里添加多个拦截器
         // 登录检测        添加拦截的请求，并排除几个不拦截的请求  ----- 登录检测拦截规则:  /**     排除： 登录、注册相关页
         registry.addInterceptor(loginHandlerInterceptor).addPathPatterns("/**")
-                .excludePathPatterns( "/","/login","/user/login","/user/register");
+                .excludePathPatterns( "/","/login","/user/login","/register","/user/register","/demo/getTest");
                 //.excludePathPatterns( "/user/register","/user/getUsers");
 
     }
@@ -45,7 +44,7 @@ public class MyInterceptorConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
 
-        registry.addViewController("/").setViewName("login");//浏览器发送 / 请求，同样展示login页面，但是不读取数据
+        //registry.addViewController("/").setViewName("jsp/login.jsp");//浏览器发送 / 请求，同样展示login页面，但是不读取数据
 
     }
 

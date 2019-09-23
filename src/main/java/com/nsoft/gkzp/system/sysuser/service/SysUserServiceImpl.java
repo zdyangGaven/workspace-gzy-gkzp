@@ -55,6 +55,26 @@ public class SysUserServiceImpl extends AbstractService implements SysUserServic
 
 
     /**
+     * 保存 用户注册信息
+     * @param loginName 用户名
+     * @param password  用户密码
+     * @throws ServiceException
+     */
+    public void saveRegister(String loginName,String  password) throws ServiceException{
+        try {
+             sysUserDao.saveRegister(loginName,password);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ServiceException("向数据库插入注册信息时出错 loginName="+loginName+",password="+password, e);
+        }
+    }
+
+
+
+
+
+    /**
      * 查找所有用户信息
      * @return
      */

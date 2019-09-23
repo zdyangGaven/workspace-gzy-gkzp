@@ -1,9 +1,12 @@
 <%@ page  language="java" contentType="text/html;charset=UTF-8" %>
 <%-- 引入页面头 --%>
-<%@ include file="/pageHead.jsp" %>
+<%@ include file="/jsp/pageHead.jsp" %>
 
 <form action="${systemctx}/user/login" method="post">
 
+    <div class=" row">
+        <div class=" col-md-2 col-md-offset-4" ><span id="qwq" style="color:red;font-weight:bold; " >${systemctx}</span></div>
+    </div>
     <div class=" row">
         <div class=" col-md-2 col-md-offset-4" ><span id="photo" style="color:red;font-weight:bold; " >${msg}</span></div>
     </div>
@@ -29,4 +32,4 @@
 </script>
 
 <%-- 引入页面尾 --%>
-<%@ include file="/pageFloor.jsp" %>
+<%@ include file="/jsp/pageFloor.jsp" %>

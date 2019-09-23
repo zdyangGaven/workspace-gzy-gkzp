@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%-- 引入页面头 --%>
-<%@ include file="/pageHead.jsp" %>
+<%@ include file="/jsp/pageHead.jsp" %>
 
 
 
@@ -17,4 +17,4 @@
 
 
 <%-- 引入页面尾 --%>
-<%@ include file="/pageFloor.jsp" %>
+<%@ include file="/jsp/pageFloor.jsp" %>

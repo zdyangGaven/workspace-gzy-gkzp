@@ -29,24 +29,23 @@ public class CommonCrypto
 
 	@Autowired
 	private MyDefinedUtil myDefinedUtil;
-	//public  String deskey = "D93F76F8175EB1A300000000";
+	public  String deskey = "D93F76F8175EB1A300000000";
 	/**
-	 * 用于明文密码SHA，SysUser密码专用
+	 * 用于明文密码SHA
 	 * @param password
 	 * @return
 	 * @throws ServiceException
 	 */
-	public  String encryptSHAEncoder(String password, SysUser sysUser) throws ServiceException {
+	public  String encryptSHAEncoderLogin(String password) throws ServiceException {
 		StringBuffer temp = new StringBuffer();
 		String strSHAEncoder = "";
 		try
 		{
+
+			temp.append("@");
 			temp.append(password);
 			temp.append("@");
-			temp.append(StringUtils.isEmpty(sysUser.getLoginName())?"":sysUser.getLoginName());
-			temp.append("@");
-			temp.append(DataFormat.formatDate(sysUser.getPwdChangeTime(), DataFormat.DT_YYYY_MM_DD));
-
+			temp.append(deskey);
 			MessageDigest sha = MessageDigest.getInstance("SHA");
 			sha.update(temp.toString().getBytes(myDefinedUtil.SYSTEM_ENCODING));
 			byte[] shaDigest = sha.digest();

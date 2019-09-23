@@ -37,27 +37,22 @@ public class LoginHandlerInterceptor  implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Thread t = Thread.currentThread();
-        logger.info("***********************************拦截器111-"+handler.toString()+"*************************");
+
         //ResourceHttpRequest  访问资源文件时不验证 WebContext的存在
            if( handler instanceof ResourceHttpRequestHandler){
                return true;
            }
-
-//           if(handler instanceof AbstractController){
-//               logger.info("**********************************AbstractControllerAbstractControllerAbstractController*************************");
-//           }
-//      if(1==1){
-//          logger.info("**********************************被拦截了，这里测试先放行*************************");
-//          return true;
-//      }
-//        logger.info("***********************************拦截器333-"+t.getName()+"*************************");
-
+        logger.info("***********************************拦截器111-"+handler.toString()+"*************************");
+           int a=1;
+           if(a==1){
+               return true;
+           }
         Object user = request.getSession().getAttribute("userContext");
         if (user == null) {// 如果获取的request的session中的loginUser参数为空（未登录），就返回登录页，否则放行访问
             // 未登录，给出错误信息，
             request.setAttribute("msg","无权限请先登录");
             // 获取request返回页面到登录页
-            request.getRequestDispatcher("/login.jsp").forward(request, response);
+            request.getRequestDispatcher("/jsp/login.jsp").forward(request, response);
             return false;
         } else {
             userContext = (UserContext)user;
@@ -66,13 +61,13 @@ public class LoginHandlerInterceptor  implements HandlerInterceptor {
             if (loginSessionId != null && loginSessionId.equals(request.getSession().getId()))
             {
 
-                stringRedisTemplate.opsForValue().set("loginUser:" +userContext.getLoginUserId(), loginSessionId,1, TimeUnit.HOURS);//
+                stringRedisTemplate.opsForValue().set("loginUser:" +userContext.getLoginUserId(), loginSessionId,1, TimeUnit.HOURS);//相当于重新设置redis里存的有效时间
                 return true;
             }else{
                 //重复登录
                 request.setAttribute("msg","用户已在其他地方登录，请重新登录！");
                 // 获取request返回页面到登录页
-                request.getRequestDispatcher("/login.jsp").forward(request, response);
+                request.getRequestDispatcher("/jsp/login.jsp").forward(request, response);
                 return false;
             }
         }
