@@ -1,16 +1,20 @@
 package com.nsoft.gkzp.util;
 
 import org.springframework.stereotype.Component;
+
+import java.io.Serializable;
+
 /**公共方法
  * 返回结果信息
  * @author 孙理锟
  * @date 2019.09.29
  */
 @Component
-public class ResultMsg {
+public class ResultMsg  implements Serializable {
 
-    int type    = MsgType.NONE; //返回信息类型
-    String msg  = "";           //返回信息
+    int type        = MsgType.NONE; //返回信息类型
+    String msg      = "";           //返回信息
+    Object object   = null;         //返回数据
 
     /**
      * 业务提示信息类型
@@ -39,7 +43,21 @@ public class ResultMsg {
     }
 
     public void setResultMsg(int type,String msg){
+        this.setResultMsg(type,msg,null);
+    }
+
+    public void setResultMsg(int type,String msg,Object object){
         this.type = type;
         this.msg = msg;
+        this.object = object;
+    }
+
+    @Override
+    public String toString() {
+        return "ResultMsg{" +
+                "type=" + type +
+                ", msg='" + msg + '\'' +
+                ", object=" + object +
+                '}';
     }
 }
