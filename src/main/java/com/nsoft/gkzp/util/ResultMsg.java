@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
  * @date 2019.09.29
  */
 @Component
-public class ReslutMsg {
+public class ResultMsg {
 
     int type    = MsgType.NONE; //返回信息类型
     String msg  = "";           //返回信息
@@ -38,7 +38,7 @@ public class ReslutMsg {
         this.msg = msg;
     }
 
-    public void setReslutMsg(int type,String msg){
+    public void setResultMsg(int type,String msg){
         this.type = type;
         this.msg = msg;
     }
