@@ -16,6 +16,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +26,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-@Controller
+@RestController
 public class SysUserController {
 
     final protected Logger logger = LogManager.getLogger(getClass());
@@ -127,13 +128,18 @@ public class SysUserController {
      * @return
      */
     @RequestMapping("/user/register")
-    public String register(String loginName,String password, HttpServletRequest arg0, HttpServletResponse arg1,Model model) throws Exception{
+    public String register(String loginName,String password,String rePassword, HttpServletRequest arg0, HttpServletResponse arg1,Model model) throws Exception{
         int id = -1;
 
         try {
             logger.info("开始用户注册信息校验");
             if (StringUtils.isEmpty(loginName) || StringUtils.isEmpty(password)) {
                 model.addAttribute(MESSAGE, "注册失败，用户名或密码不能为空,请检查");
+                return REGISTER_ERRORPAGE;
+            }
+
+            if(!password.equals(rePassword)){
+                model.addAttribute(MESSAGE, "注册失败，密码和确认密码不一样,请检查");
                 return REGISTER_ERRORPAGE;
             }
 
