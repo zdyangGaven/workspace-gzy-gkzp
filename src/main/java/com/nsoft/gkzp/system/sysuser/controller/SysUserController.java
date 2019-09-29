@@ -122,7 +122,7 @@ public class SysUserController {
     }
 
     /**
-     * 注册
+     *  注册
      * @param
      * @param model
      * @return
