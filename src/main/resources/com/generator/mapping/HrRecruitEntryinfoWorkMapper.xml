@@ -1,0 +1,595 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.generator.mapper.HrRecruitEntryinfoWorkMapper">
+  <resultMap id="BaseResultMap" type="com.generator.model.HrRecruitEntryinfoWork">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="BaseID" jdbcType="INTEGER" property="baseid" />
+    <result column="Duration" jdbcType="NVARCHAR" property="duration" />
+    <result column="Unit" jdbcType="NVARCHAR" property="unit" />
+    <result column="Post" jdbcType="NVARCHAR" property="post" />
+    <result column="LeaveReason" jdbcType="NVARCHAR" property="leavereason" />
+    <result column="Remarks" jdbcType="NVARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, BaseID, Duration, Unit, Post, LeaveReason, Remarks
+  </sql>
+  <select id="selectByExample" parameterType="com.generator.model.HrRecruitEntryinfoWorkExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from HR_Recruit_entryInfo_work
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from HR_Recruit_entryInfo_work
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from HR_Recruit_entryInfo_work
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.generator.model.HrRecruitEntryinfoWorkExample">
+    delete from HR_Recruit_entryInfo_work
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.generator.model.HrRecruitEntryinfoWork">
+    insert into HR_Recruit_entryInfo_work (ID, BaseID, Duration, 
+      Unit, Post, LeaveReason, 
+      Remarks)
+    values (#{id,jdbcType=INTEGER}, #{baseid,jdbcType=INTEGER}, #{duration,jdbcType=NVARCHAR}, 
+      #{unit,jdbcType=NVARCHAR}, #{post,jdbcType=NVARCHAR}, #{leavereason,jdbcType=NVARCHAR}, 
+      #{remarks,jdbcType=NVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.generator.model.HrRecruitEntryinfoWork">
+    insert into HR_Recruit_entryInfo_work
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="baseid != null">
+        BaseID,
+      </if>
+      <if test="duration != null">
+        Duration,
+      </if>
+      <if test="unit != null">
+        Unit,
+      </if>
+      <if test="post != null">
+        Post,
+      </if>
+      <if test="leavereason != null">
+        LeaveReason,
+      </if>
+      <if test="remarks != null">
+        Remarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="baseid != null">
+        #{baseid,jdbcType=INTEGER},
+      </if>
+      <if test="duration != null">
+        #{duration,jdbcType=NVARCHAR},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=NVARCHAR},
+      </if>
+      <if test="post != null">
+        #{post,jdbcType=NVARCHAR},
+      </if>
+      <if test="leavereason != null">
+        #{leavereason,jdbcType=NVARCHAR},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=NVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.generator.model.HrRecruitEntryinfoWorkExample" resultType="java.lang.Long">
+    select count(*) from HR_Recruit_entryInfo_work
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update HR_Recruit_entryInfo_work
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.baseid != null">
+        BaseID = #{record.baseid,jdbcType=INTEGER},
+      </if>
+      <if test="record.duration != null">
+        Duration = #{record.duration,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.unit != null">
+        Unit = #{record.unit,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.post != null">
+        Post = #{record.post,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.leavereason != null">
+        LeaveReason = #{record.leavereason,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.remarks != null">
+        Remarks = #{record.remarks,jdbcType=NVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update HR_Recruit_entryInfo_work
+    set ID = #{record.id,jdbcType=INTEGER},
+      BaseID = #{record.baseid,jdbcType=INTEGER},
+      Duration = #{record.duration,jdbcType=NVARCHAR},
+      Unit = #{record.unit,jdbcType=NVARCHAR},
+      Post = #{record.post,jdbcType=NVARCHAR},
+      LeaveReason = #{record.leavereason,jdbcType=NVARCHAR},
+      Remarks = #{record.remarks,jdbcType=NVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.generator.model.HrRecruitEntryinfoWork">
+    update HR_Recruit_entryInfo_work
+    <set>
+      <if test="baseid != null">
+        BaseID = #{baseid,jdbcType=INTEGER},
+      </if>
+      <if test="duration != null">
+        Duration = #{duration,jdbcType=NVARCHAR},
+      </if>
+      <if test="unit != null">
+        Unit = #{unit,jdbcType=NVARCHAR},
+      </if>
+      <if test="post != null">
+        Post = #{post,jdbcType=NVARCHAR},
+      </if>
+      <if test="leavereason != null">
+        LeaveReason = #{leavereason,jdbcType=NVARCHAR},
+      </if>
+      <if test="remarks != null">
+        Remarks = #{remarks,jdbcType=NVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.generator.model.HrRecruitEntryinfoWork">
+    update HR_Recruit_entryInfo_work
+    set BaseID = #{baseid,jdbcType=INTEGER},
+      Duration = #{duration,jdbcType=NVARCHAR},
+      Unit = #{unit,jdbcType=NVARCHAR},
+      Post = #{post,jdbcType=NVARCHAR},
+      LeaveReason = #{leavereason,jdbcType=NVARCHAR},
+      Remarks = #{remarks,jdbcType=NVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.generator.model.HrRecruitEntryinfoWork">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="BaseID" jdbcType="INTEGER" property="baseid" />
+    <result column="Duration" jdbcType="NVARCHAR" property="duration" />
+    <result column="Unit" jdbcType="NVARCHAR" property="unit" />
+    <result column="Post" jdbcType="NVARCHAR" property="post" />
+    <result column="LeaveReason" jdbcType="NVARCHAR" property="leavereason" />
+    <result column="Remarks" jdbcType="NVARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, BaseID, Duration, Unit, Post, LeaveReason, Remarks
+  </sql>
+  <select id="selectByExample" parameterType="com.generator.model.HrRecruitEntryinfoWorkExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from HR_Recruit_entryInfo_work
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from HR_Recruit_entryInfo_work
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from HR_Recruit_entryInfo_work
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.generator.model.HrRecruitEntryinfoWorkExample">
+    delete from HR_Recruit_entryInfo_work
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.generator.model.HrRecruitEntryinfoWork">
+    insert into HR_Recruit_entryInfo_work (ID, BaseID, Duration, 
+      Unit, Post, LeaveReason, 
+      Remarks)
+    values (#{id,jdbcType=INTEGER}, #{baseid,jdbcType=INTEGER}, #{duration,jdbcType=NVARCHAR}, 
+      #{unit,jdbcType=NVARCHAR}, #{post,jdbcType=NVARCHAR}, #{leavereason,jdbcType=NVARCHAR}, 
+      #{remarks,jdbcType=NVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.generator.model.HrRecruitEntryinfoWork">
+    insert into HR_Recruit_entryInfo_work
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="baseid != null">
+        BaseID,
+      </if>
+      <if test="duration != null">
+        Duration,
+      </if>
+      <if test="unit != null">
+        Unit,
+      </if>
+      <if test="post != null">
+        Post,
+      </if>
+      <if test="leavereason != null">
+        LeaveReason,
+      </if>
+      <if test="remarks != null">
+        Remarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="baseid != null">
+        #{baseid,jdbcType=INTEGER},
+      </if>
+      <if test="duration != null">
+        #{duration,jdbcType=NVARCHAR},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=NVARCHAR},
+      </if>
+      <if test="post != null">
+        #{post,jdbcType=NVARCHAR},
+      </if>
+      <if test="leavereason != null">
+        #{leavereason,jdbcType=NVARCHAR},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=NVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.generator.model.HrRecruitEntryinfoWorkExample" resultType="java.lang.Long">
+    select count(*) from HR_Recruit_entryInfo_work
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update HR_Recruit_entryInfo_work
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.baseid != null">
+        BaseID = #{record.baseid,jdbcType=INTEGER},
+      </if>
+      <if test="record.duration != null">
+        Duration = #{record.duration,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.unit != null">
+        Unit = #{record.unit,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.post != null">
+        Post = #{record.post,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.leavereason != null">
+        LeaveReason = #{record.leavereason,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.remarks != null">
+        Remarks = #{record.remarks,jdbcType=NVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update HR_Recruit_entryInfo_work
+    set ID = #{record.id,jdbcType=INTEGER},
+      BaseID = #{record.baseid,jdbcType=INTEGER},
+      Duration = #{record.duration,jdbcType=NVARCHAR},
+      Unit = #{record.unit,jdbcType=NVARCHAR},
+      Post = #{record.post,jdbcType=NVARCHAR},
+      LeaveReason = #{record.leavereason,jdbcType=NVARCHAR},
+      Remarks = #{record.remarks,jdbcType=NVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.generator.model.HrRecruitEntryinfoWork">
+    update HR_Recruit_entryInfo_work
+    <set>
+      <if test="baseid != null">
+        BaseID = #{baseid,jdbcType=INTEGER},
+      </if>
+      <if test="duration != null">
+        Duration = #{duration,jdbcType=NVARCHAR},
+      </if>
+      <if test="unit != null">
+        Unit = #{unit,jdbcType=NVARCHAR},
+      </if>
+      <if test="post != null">
+        Post = #{post,jdbcType=NVARCHAR},
+      </if>
+      <if test="leavereason != null">
+        LeaveReason = #{leavereason,jdbcType=NVARCHAR},
+      </if>
+      <if test="remarks != null">
+        Remarks = #{remarks,jdbcType=NVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.generator.model.HrRecruitEntryinfoWork">
+    update HR_Recruit_entryInfo_work
+    set BaseID = #{baseid,jdbcType=INTEGER},
+      Duration = #{duration,jdbcType=NVARCHAR},
+      Unit = #{unit,jdbcType=NVARCHAR},
+      Post = #{post,jdbcType=NVARCHAR},
+      LeaveReason = #{leavereason,jdbcType=NVARCHAR},
+      Remarks = #{remarks,jdbcType=NVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.generator.model.HrRecruitEntryinfoWork">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="BaseID" jdbcType="INTEGER" property="baseid" />
+    <result column="Duration" jdbcType="NVARCHAR" property="duration" />
+    <result column="Unit" jdbcType="NVARCHAR" property="unit" />
+    <result column="Post" jdbcType="NVARCHAR" property="post" />
+    <result column="LeaveReason" jdbcType="NVARCHAR" property="leavereason" />
+    <result column="Remarks" jdbcType="NVARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, BaseID, Duration, Unit, Post, LeaveReason, Remarks
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from HR_Recruit_entryInfo_work
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from HR_Recruit_entryInfo_work
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.generator.model.HrRecruitEntryinfoWork">
+    insert into HR_Recruit_entryInfo_work (ID, BaseID, Duration, 
+      Unit, Post, LeaveReason, 
+      Remarks)
+    values (#{id,jdbcType=INTEGER}, #{baseid,jdbcType=INTEGER}, #{duration,jdbcType=NVARCHAR}, 
+      #{unit,jdbcType=NVARCHAR}, #{post,jdbcType=NVARCHAR}, #{leavereason,jdbcType=NVARCHAR}, 
+      #{remarks,jdbcType=NVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.generator.model.HrRecruitEntryinfoWork">
+    insert into HR_Recruit_entryInfo_work
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="baseid != null">
+        BaseID,
+      </if>
+      <if test="duration != null">
+        Duration,
+      </if>
+      <if test="unit != null">
+        Unit,
+      </if>
+      <if test="post != null">
+        Post,
+      </if>
+      <if test="leavereason != null">
+        LeaveReason,
+      </if>
+      <if test="remarks != null">
+        Remarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="baseid != null">
+        #{baseid,jdbcType=INTEGER},
+      </if>
+      <if test="duration != null">
+        #{duration,jdbcType=NVARCHAR},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=NVARCHAR},
+      </if>
+      <if test="post != null">
+        #{post,jdbcType=NVARCHAR},
+      </if>
+      <if test="leavereason != null">
+        #{leavereason,jdbcType=NVARCHAR},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=NVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.generator.model.HrRecruitEntryinfoWork">
+    update HR_Recruit_entryInfo_work
+    <set>
+      <if test="baseid != null">
+        BaseID = #{baseid,jdbcType=INTEGER},
+      </if>
+      <if test="duration != null">
+        Duration = #{duration,jdbcType=NVARCHAR},
+      </if>
+      <if test="unit != null">
+        Unit = #{unit,jdbcType=NVARCHAR},
+      </if>
+      <if test="post != null">
+        Post = #{post,jdbcType=NVARCHAR},
+      </if>
+      <if test="leavereason != null">
+        LeaveReason = #{leavereason,jdbcType=NVARCHAR},
+      </if>
+      <if test="remarks != null">
+        Remarks = #{remarks,jdbcType=NVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.generator.model.HrRecruitEntryinfoWork">
+    update HR_Recruit_entryInfo_work
+    set BaseID = #{baseid,jdbcType=INTEGER},
+      Duration = #{duration,jdbcType=NVARCHAR},
+      Unit = #{unit,jdbcType=NVARCHAR},
+      Post = #{post,jdbcType=NVARCHAR},
+      LeaveReason = #{leavereason,jdbcType=NVARCHAR},
+      Remarks = #{remarks,jdbcType=NVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

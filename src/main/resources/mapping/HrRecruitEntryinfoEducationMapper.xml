@@ -1,0 +1,942 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.generator.mapper.HrRecruitEntryinfoEducationMapper">
+  <resultMap id="BaseResultMap" type="com.generator.model.HrRecruitEntryinfoEducation">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="BaseID" jdbcType="INTEGER" property="baseid" />
+    <result column="Duration" jdbcType="NVARCHAR" property="duration" />
+    <result column="TrainingAgency" jdbcType="NVARCHAR" property="trainingagency" />
+    <result column="Major" jdbcType="NVARCHAR" property="major" />
+    <result column="InForm" jdbcType="NVARCHAR" property="inform" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, BaseID, Duration, TrainingAgency, Major, InForm
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from HR_Recruit_entryInfo_education
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from HR_Recruit_entryInfo_education
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.generator.model.HrRecruitEntryinfoEducation">
+    insert into HR_Recruit_entryInfo_education (ID, BaseID, Duration, 
+      TrainingAgency, Major, InForm
+      )
+    values (#{id,jdbcType=INTEGER}, #{baseid,jdbcType=INTEGER}, #{duration,jdbcType=NVARCHAR}, 
+      #{trainingagency,jdbcType=NVARCHAR}, #{major,jdbcType=NVARCHAR}, #{inform,jdbcType=NVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.generator.model.HrRecruitEntryinfoEducation">
+    insert into HR_Recruit_entryInfo_education
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="baseid != null">
+        BaseID,
+      </if>
+      <if test="duration != null">
+        Duration,
+      </if>
+      <if test="trainingagency != null">
+        TrainingAgency,
+      </if>
+      <if test="major != null">
+        Major,
+      </if>
+      <if test="inform != null">
+        InForm,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="baseid != null">
+        #{baseid,jdbcType=INTEGER},
+      </if>
+      <if test="duration != null">
+        #{duration,jdbcType=NVARCHAR},
+      </if>
+      <if test="trainingagency != null">
+        #{trainingagency,jdbcType=NVARCHAR},
+      </if>
+      <if test="major != null">
+        #{major,jdbcType=NVARCHAR},
+      </if>
+      <if test="inform != null">
+        #{inform,jdbcType=NVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.generator.model.HrRecruitEntryinfoEducation">
+    update HR_Recruit_entryInfo_education
+    <set>
+      <if test="baseid != null">
+        BaseID = #{baseid,jdbcType=INTEGER},
+      </if>
+      <if test="duration != null">
+        Duration = #{duration,jdbcType=NVARCHAR},
+      </if>
+      <if test="trainingagency != null">
+        TrainingAgency = #{trainingagency,jdbcType=NVARCHAR},
+      </if>
+      <if test="major != null">
+        Major = #{major,jdbcType=NVARCHAR},
+      </if>
+      <if test="inform != null">
+        InForm = #{inform,jdbcType=NVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.generator.model.HrRecruitEntryinfoEducation">
+    update HR_Recruit_entryInfo_education
+    set BaseID = #{baseid,jdbcType=INTEGER},
+      Duration = #{duration,jdbcType=NVARCHAR},
+      TrainingAgency = #{trainingagency,jdbcType=NVARCHAR},
+      Major = #{major,jdbcType=NVARCHAR},
+      InForm = #{inform,jdbcType=NVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.generator.model.HrRecruitEntryinfoEducation">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="BaseID" jdbcType="INTEGER" property="baseid" />
+    <result column="Duration" jdbcType="NVARCHAR" property="duration" />
+    <result column="TrainingAgency" jdbcType="NVARCHAR" property="trainingagency" />
+    <result column="Major" jdbcType="NVARCHAR" property="major" />
+    <result column="InForm" jdbcType="NVARCHAR" property="inform" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, BaseID, Duration, TrainingAgency, Major, InForm
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from HR_Recruit_entryInfo_education
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from HR_Recruit_entryInfo_education
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.generator.model.HrRecruitEntryinfoEducation">
+    insert into HR_Recruit_entryInfo_education (ID, BaseID, Duration, 
+      TrainingAgency, Major, InForm
+      )
+    values (#{id,jdbcType=INTEGER}, #{baseid,jdbcType=INTEGER}, #{duration,jdbcType=NVARCHAR}, 
+      #{trainingagency,jdbcType=NVARCHAR}, #{major,jdbcType=NVARCHAR}, #{inform,jdbcType=NVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.generator.model.HrRecruitEntryinfoEducation">
+    insert into HR_Recruit_entryInfo_education
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="baseid != null">
+        BaseID,
+      </if>
+      <if test="duration != null">
+        Duration,
+      </if>
+      <if test="trainingagency != null">
+        TrainingAgency,
+      </if>
+      <if test="major != null">
+        Major,
+      </if>
+      <if test="inform != null">
+        InForm,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="baseid != null">
+        #{baseid,jdbcType=INTEGER},
+      </if>
+      <if test="duration != null">
+        #{duration,jdbcType=NVARCHAR},
+      </if>
+      <if test="trainingagency != null">
+        #{trainingagency,jdbcType=NVARCHAR},
+      </if>
+      <if test="major != null">
+        #{major,jdbcType=NVARCHAR},
+      </if>
+      <if test="inform != null">
+        #{inform,jdbcType=NVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.generator.model.HrRecruitEntryinfoEducation">
+    update HR_Recruit_entryInfo_education
+    <set>
+      <if test="baseid != null">
+        BaseID = #{baseid,jdbcType=INTEGER},
+      </if>
+      <if test="duration != null">
+        Duration = #{duration,jdbcType=NVARCHAR},
+      </if>
+      <if test="trainingagency != null">
+        TrainingAgency = #{trainingagency,jdbcType=NVARCHAR},
+      </if>
+      <if test="major != null">
+        Major = #{major,jdbcType=NVARCHAR},
+      </if>
+      <if test="inform != null">
+        InForm = #{inform,jdbcType=NVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.generator.model.HrRecruitEntryinfoEducation">
+    update HR_Recruit_entryInfo_education
+    set BaseID = #{baseid,jdbcType=INTEGER},
+      Duration = #{duration,jdbcType=NVARCHAR},
+      TrainingAgency = #{trainingagency,jdbcType=NVARCHAR},
+      Major = #{major,jdbcType=NVARCHAR},
+      InForm = #{inform,jdbcType=NVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.generator.model.HrRecruitEntryinfoEducation">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="BaseID" jdbcType="INTEGER" property="baseid" />
+    <result column="Duration" jdbcType="NVARCHAR" property="duration" />
+    <result column="TrainingAgency" jdbcType="NVARCHAR" property="trainingagency" />
+    <result column="Major" jdbcType="NVARCHAR" property="major" />
+    <result column="InForm" jdbcType="NVARCHAR" property="inform" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, BaseID, Duration, TrainingAgency, Major, InForm
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from HR_Recruit_entryInfo_education
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from HR_Recruit_entryInfo_education
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.generator.model.HrRecruitEntryinfoEducation">
+    insert into HR_Recruit_entryInfo_education (ID, BaseID, Duration, 
+      TrainingAgency, Major, InForm
+      )
+    values (#{id,jdbcType=INTEGER}, #{baseid,jdbcType=INTEGER}, #{duration,jdbcType=NVARCHAR}, 
+      #{trainingagency,jdbcType=NVARCHAR}, #{major,jdbcType=NVARCHAR}, #{inform,jdbcType=NVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.generator.model.HrRecruitEntryinfoEducation">
+    insert into HR_Recruit_entryInfo_education
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="baseid != null">
+        BaseID,
+      </if>
+      <if test="duration != null">
+        Duration,
+      </if>
+      <if test="trainingagency != null">
+        TrainingAgency,
+      </if>
+      <if test="major != null">
+        Major,
+      </if>
+      <if test="inform != null">
+        InForm,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="baseid != null">
+        #{baseid,jdbcType=INTEGER},
+      </if>
+      <if test="duration != null">
+        #{duration,jdbcType=NVARCHAR},
+      </if>
+      <if test="trainingagency != null">
+        #{trainingagency,jdbcType=NVARCHAR},
+      </if>
+      <if test="major != null">
+        #{major,jdbcType=NVARCHAR},
+      </if>
+      <if test="inform != null">
+        #{inform,jdbcType=NVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.generator.model.HrRecruitEntryinfoEducation">
+    update HR_Recruit_entryInfo_education
+    <set>
+      <if test="baseid != null">
+        BaseID = #{baseid,jdbcType=INTEGER},
+      </if>
+      <if test="duration != null">
+        Duration = #{duration,jdbcType=NVARCHAR},
+      </if>
+      <if test="trainingagency != null">
+        TrainingAgency = #{trainingagency,jdbcType=NVARCHAR},
+      </if>
+      <if test="major != null">
+        Major = #{major,jdbcType=NVARCHAR},
+      </if>
+      <if test="inform != null">
+        InForm = #{inform,jdbcType=NVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.generator.model.HrRecruitEntryinfoEducation">
+    update HR_Recruit_entryInfo_education
+    set BaseID = #{baseid,jdbcType=INTEGER},
+      Duration = #{duration,jdbcType=NVARCHAR},
+      TrainingAgency = #{trainingagency,jdbcType=NVARCHAR},
+      Major = #{major,jdbcType=NVARCHAR},
+      InForm = #{inform,jdbcType=NVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.generator.model.HrRecruitEntryinfoEducation">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="BaseID" jdbcType="INTEGER" property="baseid" />
+    <result column="Duration" jdbcType="NVARCHAR" property="duration" />
+    <result column="TrainingAgency" jdbcType="NVARCHAR" property="trainingagency" />
+    <result column="Major" jdbcType="NVARCHAR" property="major" />
+    <result column="InForm" jdbcType="NVARCHAR" property="inform" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, BaseID, Duration, TrainingAgency, Major, InForm
+  </sql>
+  <select id="selectByExample" parameterType="com.generator.model.HrRecruitEntryinfoEducationExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from HR_Recruit_entryInfo_education
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from HR_Recruit_entryInfo_education
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from HR_Recruit_entryInfo_education
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.generator.model.HrRecruitEntryinfoEducationExample">
+    delete from HR_Recruit_entryInfo_education
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.generator.model.HrRecruitEntryinfoEducation">
+    insert into HR_Recruit_entryInfo_education (ID, BaseID, Duration, 
+      TrainingAgency, Major, InForm
+      )
+    values (#{id,jdbcType=INTEGER}, #{baseid,jdbcType=INTEGER}, #{duration,jdbcType=NVARCHAR}, 
+      #{trainingagency,jdbcType=NVARCHAR}, #{major,jdbcType=NVARCHAR}, #{inform,jdbcType=NVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.generator.model.HrRecruitEntryinfoEducation">
+    insert into HR_Recruit_entryInfo_education
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="baseid != null">
+        BaseID,
+      </if>
+      <if test="duration != null">
+        Duration,
+      </if>
+      <if test="trainingagency != null">
+        TrainingAgency,
+      </if>
+      <if test="major != null">
+        Major,
+      </if>
+      <if test="inform != null">
+        InForm,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="baseid != null">
+        #{baseid,jdbcType=INTEGER},
+      </if>
+      <if test="duration != null">
+        #{duration,jdbcType=NVARCHAR},
+      </if>
+      <if test="trainingagency != null">
+        #{trainingagency,jdbcType=NVARCHAR},
+      </if>
+      <if test="major != null">
+        #{major,jdbcType=NVARCHAR},
+      </if>
+      <if test="inform != null">
+        #{inform,jdbcType=NVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.generator.model.HrRecruitEntryinfoEducationExample" resultType="java.lang.Long">
+    select count(*) from HR_Recruit_entryInfo_education
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update HR_Recruit_entryInfo_education
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.baseid != null">
+        BaseID = #{record.baseid,jdbcType=INTEGER},
+      </if>
+      <if test="record.duration != null">
+        Duration = #{record.duration,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.trainingagency != null">
+        TrainingAgency = #{record.trainingagency,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.major != null">
+        Major = #{record.major,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.inform != null">
+        InForm = #{record.inform,jdbcType=NVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update HR_Recruit_entryInfo_education
+    set ID = #{record.id,jdbcType=INTEGER},
+      BaseID = #{record.baseid,jdbcType=INTEGER},
+      Duration = #{record.duration,jdbcType=NVARCHAR},
+      TrainingAgency = #{record.trainingagency,jdbcType=NVARCHAR},
+      Major = #{record.major,jdbcType=NVARCHAR},
+      InForm = #{record.inform,jdbcType=NVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.generator.model.HrRecruitEntryinfoEducation">
+    update HR_Recruit_entryInfo_education
+    <set>
+      <if test="baseid != null">
+        BaseID = #{baseid,jdbcType=INTEGER},
+      </if>
+      <if test="duration != null">
+        Duration = #{duration,jdbcType=NVARCHAR},
+      </if>
+      <if test="trainingagency != null">
+        TrainingAgency = #{trainingagency,jdbcType=NVARCHAR},
+      </if>
+      <if test="major != null">
+        Major = #{major,jdbcType=NVARCHAR},
+      </if>
+      <if test="inform != null">
+        InForm = #{inform,jdbcType=NVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.generator.model.HrRecruitEntryinfoEducation">
+    update HR_Recruit_entryInfo_education
+    set BaseID = #{baseid,jdbcType=INTEGER},
+      Duration = #{duration,jdbcType=NVARCHAR},
+      TrainingAgency = #{trainingagency,jdbcType=NVARCHAR},
+      Major = #{major,jdbcType=NVARCHAR},
+      InForm = #{inform,jdbcType=NVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.generator.model.HrRecruitEntryinfoEducation">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="BaseID" jdbcType="INTEGER" property="baseid" />
+    <result column="Duration" jdbcType="NVARCHAR" property="duration" />
+    <result column="TrainingAgency" jdbcType="NVARCHAR" property="trainingagency" />
+    <result column="Major" jdbcType="NVARCHAR" property="major" />
+    <result column="InForm" jdbcType="NVARCHAR" property="inform" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, BaseID, Duration, TrainingAgency, Major, InForm
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from HR_Recruit_entryInfo_education
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from HR_Recruit_entryInfo_education
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.generator.model.HrRecruitEntryinfoEducation">
+    insert into HR_Recruit_entryInfo_education (ID, BaseID, Duration, 
+      TrainingAgency, Major, InForm
+      )
+    values (#{id,jdbcType=INTEGER}, #{baseid,jdbcType=INTEGER}, #{duration,jdbcType=NVARCHAR}, 
+      #{trainingagency,jdbcType=NVARCHAR}, #{major,jdbcType=NVARCHAR}, #{inform,jdbcType=NVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.generator.model.HrRecruitEntryinfoEducation">
+    insert into HR_Recruit_entryInfo_education
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="baseid != null">
+        BaseID,
+      </if>
+      <if test="duration != null">
+        Duration,
+      </if>
+      <if test="trainingagency != null">
+        TrainingAgency,
+      </if>
+      <if test="major != null">
+        Major,
+      </if>
+      <if test="inform != null">
+        InForm,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="baseid != null">
+        #{baseid,jdbcType=INTEGER},
+      </if>
+      <if test="duration != null">
+        #{duration,jdbcType=NVARCHAR},
+      </if>
+      <if test="trainingagency != null">
+        #{trainingagency,jdbcType=NVARCHAR},
+      </if>
+      <if test="major != null">
+        #{major,jdbcType=NVARCHAR},
+      </if>
+      <if test="inform != null">
+        #{inform,jdbcType=NVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.generator.model.HrRecruitEntryinfoEducation">
+    update HR_Recruit_entryInfo_education
+    <set>
+      <if test="baseid != null">
+        BaseID = #{baseid,jdbcType=INTEGER},
+      </if>
+      <if test="duration != null">
+        Duration = #{duration,jdbcType=NVARCHAR},
+      </if>
+      <if test="trainingagency != null">
+        TrainingAgency = #{trainingagency,jdbcType=NVARCHAR},
+      </if>
+      <if test="major != null">
+        Major = #{major,jdbcType=NVARCHAR},
+      </if>
+      <if test="inform != null">
+        InForm = #{inform,jdbcType=NVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.generator.model.HrRecruitEntryinfoEducation">
+    update HR_Recruit_entryInfo_education
+    set BaseID = #{baseid,jdbcType=INTEGER},
+      Duration = #{duration,jdbcType=NVARCHAR},
+      TrainingAgency = #{trainingagency,jdbcType=NVARCHAR},
+      Major = #{major,jdbcType=NVARCHAR},
+      InForm = #{inform,jdbcType=NVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.generator.model.HrRecruitEntryinfoEducation">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="BaseID" jdbcType="INTEGER" property="baseid" />
+    <result column="Duration" jdbcType="NVARCHAR" property="duration" />
+    <result column="TrainingAgency" jdbcType="NVARCHAR" property="trainingagency" />
+    <result column="Major" jdbcType="NVARCHAR" property="major" />
+    <result column="InForm" jdbcType="NVARCHAR" property="inform" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, BaseID, Duration, TrainingAgency, Major, InForm
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from HR_Recruit_entryInfo_education
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from HR_Recruit_entryInfo_education
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.generator.model.HrRecruitEntryinfoEducation">
+    insert into HR_Recruit_entryInfo_education (ID, BaseID, Duration, 
+      TrainingAgency, Major, InForm
+      )
+    values (#{id,jdbcType=INTEGER}, #{baseid,jdbcType=INTEGER}, #{duration,jdbcType=NVARCHAR}, 
+      #{trainingagency,jdbcType=NVARCHAR}, #{major,jdbcType=NVARCHAR}, #{inform,jdbcType=NVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.generator.model.HrRecruitEntryinfoEducation">
+    insert into HR_Recruit_entryInfo_education
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="baseid != null">
+        BaseID,
+      </if>
+      <if test="duration != null">
+        Duration,
+      </if>
+      <if test="trainingagency != null">
+        TrainingAgency,
+      </if>
+      <if test="major != null">
+        Major,
+      </if>
+      <if test="inform != null">
+        InForm,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="baseid != null">
+        #{baseid,jdbcType=INTEGER},
+      </if>
+      <if test="duration != null">
+        #{duration,jdbcType=NVARCHAR},
+      </if>
+      <if test="trainingagency != null">
+        #{trainingagency,jdbcType=NVARCHAR},
+      </if>
+      <if test="major != null">
+        #{major,jdbcType=NVARCHAR},
+      </if>
+      <if test="inform != null">
+        #{inform,jdbcType=NVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.generator.model.HrRecruitEntryinfoEducation">
+    update HR_Recruit_entryInfo_education
+    <set>
+      <if test="baseid != null">
+        BaseID = #{baseid,jdbcType=INTEGER},
+      </if>
+      <if test="duration != null">
+        Duration = #{duration,jdbcType=NVARCHAR},
+      </if>
+      <if test="trainingagency != null">
+        TrainingAgency = #{trainingagency,jdbcType=NVARCHAR},
+      </if>
+      <if test="major != null">
+        Major = #{major,jdbcType=NVARCHAR},
+      </if>
+      <if test="inform != null">
+        InForm = #{inform,jdbcType=NVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.generator.model.HrRecruitEntryinfoEducation">
+    update HR_Recruit_entryInfo_education
+    set BaseID = #{baseid,jdbcType=INTEGER},
+      Duration = #{duration,jdbcType=NVARCHAR},
+      TrainingAgency = #{trainingagency,jdbcType=NVARCHAR},
+      Major = #{major,jdbcType=NVARCHAR},
+      InForm = #{inform,jdbcType=NVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.generator.model.HrRecruitEntryinfoEducation">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="BaseID" jdbcType="INTEGER" property="baseid" />
+    <result column="Duration" jdbcType="NVARCHAR" property="duration" />
+    <result column="TrainingAgency" jdbcType="NVARCHAR" property="trainingagency" />
+    <result column="Major" jdbcType="NVARCHAR" property="major" />
+    <result column="InForm" jdbcType="NVARCHAR" property="inform" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, BaseID, Duration, TrainingAgency, Major, InForm
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from HR_Recruit_entryInfo_education
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from HR_Recruit_entryInfo_education
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.generator.model.HrRecruitEntryinfoEducation">
+    insert into HR_Recruit_entryInfo_education (ID, BaseID, Duration, 
+      TrainingAgency, Major, InForm
+      )
+    values (#{id,jdbcType=INTEGER}, #{baseid,jdbcType=INTEGER}, #{duration,jdbcType=NVARCHAR}, 
+      #{trainingagency,jdbcType=NVARCHAR}, #{major,jdbcType=NVARCHAR}, #{inform,jdbcType=NVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.generator.model.HrRecruitEntryinfoEducation">
+    insert into HR_Recruit_entryInfo_education
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="baseid != null">
+        BaseID,
+      </if>
+      <if test="duration != null">
+        Duration,
+      </if>
+      <if test="trainingagency != null">
+        TrainingAgency,
+      </if>
+      <if test="major != null">
+        Major,
+      </if>
+      <if test="inform != null">
+        InForm,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="baseid != null">
+        #{baseid,jdbcType=INTEGER},
+      </if>
+      <if test="duration != null">
+        #{duration,jdbcType=NVARCHAR},
+      </if>
+      <if test="trainingagency != null">
+        #{trainingagency,jdbcType=NVARCHAR},
+      </if>
+      <if test="major != null">
+        #{major,jdbcType=NVARCHAR},
+      </if>
+      <if test="inform != null">
+        #{inform,jdbcType=NVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.generator.model.HrRecruitEntryinfoEducation">
+    update HR_Recruit_entryInfo_education
+    <set>
+      <if test="baseid != null">
+        BaseID = #{baseid,jdbcType=INTEGER},
+      </if>
+      <if test="duration != null">
+        Duration = #{duration,jdbcType=NVARCHAR},
+      </if>
+      <if test="trainingagency != null">
+        TrainingAgency = #{trainingagency,jdbcType=NVARCHAR},
+      </if>
+      <if test="major != null">
+        Major = #{major,jdbcType=NVARCHAR},
+      </if>
+      <if test="inform != null">
+        InForm = #{inform,jdbcType=NVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.generator.model.HrRecruitEntryinfoEducation">
+    update HR_Recruit_entryInfo_education
+    set BaseID = #{baseid,jdbcType=INTEGER},
+      Duration = #{duration,jdbcType=NVARCHAR},
+      TrainingAgency = #{trainingagency,jdbcType=NVARCHAR},
+      Major = #{major,jdbcType=NVARCHAR},
+      InForm = #{inform,jdbcType=NVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.alibaba.model.HrRecruitEntryinfoEducation">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="BaseID" jdbcType="INTEGER" property="baseid" />
+    <result column="Duration" jdbcType="NVARCHAR" property="duration" />
+    <result column="TrainingAgency" jdbcType="NVARCHAR" property="trainingagency" />
+    <result column="Major" jdbcType="NVARCHAR" property="major" />
+    <result column="InForm" jdbcType="NVARCHAR" property="inform" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, BaseID, Duration, TrainingAgency, Major, InForm
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from HR_Recruit_entryInfo_education
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from HR_Recruit_entryInfo_education
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.alibaba.model.HrRecruitEntryinfoEducation">
+    insert into HR_Recruit_entryInfo_education (ID, BaseID, Duration, 
+      TrainingAgency, Major, InForm
+      )
+    values (#{id,jdbcType=INTEGER}, #{baseid,jdbcType=INTEGER}, #{duration,jdbcType=NVARCHAR}, 
+      #{trainingagency,jdbcType=NVARCHAR}, #{major,jdbcType=NVARCHAR}, #{inform,jdbcType=NVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.alibaba.model.HrRecruitEntryinfoEducation">
+    insert into HR_Recruit_entryInfo_education
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="baseid != null">
+        BaseID,
+      </if>
+      <if test="duration != null">
+        Duration,
+      </if>
+      <if test="trainingagency != null">
+        TrainingAgency,
+      </if>
+      <if test="major != null">
+        Major,
+      </if>
+      <if test="inform != null">
+        InForm,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="baseid != null">
+        #{baseid,jdbcType=INTEGER},
+      </if>
+      <if test="duration != null">
+        #{duration,jdbcType=NVARCHAR},
+      </if>
+      <if test="trainingagency != null">
+        #{trainingagency,jdbcType=NVARCHAR},
+      </if>
+      <if test="major != null">
+        #{major,jdbcType=NVARCHAR},
+      </if>
+      <if test="inform != null">
+        #{inform,jdbcType=NVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.alibaba.model.HrRecruitEntryinfoEducation">
+    update HR_Recruit_entryInfo_education
+    <set>
+      <if test="baseid != null">
+        BaseID = #{baseid,jdbcType=INTEGER},
+      </if>
+      <if test="duration != null">
+        Duration = #{duration,jdbcType=NVARCHAR},
+      </if>
+      <if test="trainingagency != null">
+        TrainingAgency = #{trainingagency,jdbcType=NVARCHAR},
+      </if>
+      <if test="major != null">
+        Major = #{major,jdbcType=NVARCHAR},
+      </if>
+      <if test="inform != null">
+        InForm = #{inform,jdbcType=NVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.alibaba.model.HrRecruitEntryinfoEducation">
+    update HR_Recruit_entryInfo_education
+    set BaseID = #{baseid,jdbcType=INTEGER},
+      Duration = #{duration,jdbcType=NVARCHAR},
+      TrainingAgency = #{trainingagency,jdbcType=NVARCHAR},
+      Major = #{major,jdbcType=NVARCHAR},
+      InForm = #{inform,jdbcType=NVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

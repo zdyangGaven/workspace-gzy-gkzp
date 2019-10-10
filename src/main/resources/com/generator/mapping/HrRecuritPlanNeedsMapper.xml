@@ -1,0 +1,1509 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.generator.mapper.HrRecuritPlanNeedsMapper">
+  <resultMap id="BaseResultMap" type="com.generator.model.HrRecuritPlanNeeds">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="Plan_id" jdbcType="NVARCHAR" property="planId" />
+    <result column="Dept" jdbcType="NVARCHAR" property="dept" />
+    <result column="PostName" jdbcType="NVARCHAR" property="postname" />
+    <result column="PostNum" jdbcType="NVARCHAR" property="postnum" />
+    <result column="PostIntention" jdbcType="NVARCHAR" property="postintention" />
+    <result column="PostType" jdbcType="NVARCHAR" property="posttype" />
+    <result column="PostConfig" jdbcType="NVARCHAR" property="postconfig" />
+    <result column="Specialities" jdbcType="NVARCHAR" property="specialities" />
+    <result column="Degree" jdbcType="NVARCHAR" property="degree" />
+    <result column="Age" jdbcType="NVARCHAR" property="age" />
+    <result column="Title" jdbcType="NVARCHAR" property="title" />
+    <result column="Politic" jdbcType="NVARCHAR" property="politic" />
+    <result column="Condition" jdbcType="NVARCHAR" property="condition" />
+    <result column="Examination" jdbcType="NVARCHAR" property="examination" />
+    <result column="Interview" jdbcType="NVARCHAR" property="interview" />
+    <result column="Employment" jdbcType="NVARCHAR" property="employment" />
+    <result column="Reason" jdbcType="NVARCHAR" property="reason" />
+    <result column="Remarks" jdbcType="NVARCHAR" property="remarks" />
+    <result column="AffixFile" jdbcType="NVARCHAR" property="affixfile" />
+    <result column="Status" jdbcType="INTEGER" property="status" />
+    <result column="PostNote" jdbcType="NVARCHAR" property="postnote" />
+    <result column="DeptName" jdbcType="NVARCHAR" property="deptname" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, Plan_id, Dept, PostName, PostNum, PostIntention, PostType, PostConfig, Specialities, 
+    Degree, Age, Title, Politic, Condition, Examination, Interview, Employment, Reason, 
+    Remarks, AffixFile, Status, PostNote, DeptName
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from HR_Recurit_Plan_Needs
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from HR_Recurit_Plan_Needs
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.generator.model.HrRecuritPlanNeeds">
+    insert into HR_Recurit_Plan_Needs (ID, Plan_id, Dept, 
+      PostName, PostNum, PostIntention, 
+      PostType, PostConfig, Specialities, 
+      Degree, Age, Title, 
+      Politic, Condition, Examination, 
+      Interview, Employment, Reason, 
+      Remarks, AffixFile, Status, 
+      PostNote, DeptName)
+    values (#{id,jdbcType=INTEGER}, #{planId,jdbcType=NVARCHAR}, #{dept,jdbcType=NVARCHAR}, 
+      #{postname,jdbcType=NVARCHAR}, #{postnum,jdbcType=NVARCHAR}, #{postintention,jdbcType=NVARCHAR}, 
+      #{posttype,jdbcType=NVARCHAR}, #{postconfig,jdbcType=NVARCHAR}, #{specialities,jdbcType=NVARCHAR}, 
+      #{degree,jdbcType=NVARCHAR}, #{age,jdbcType=NVARCHAR}, #{title,jdbcType=NVARCHAR}, 
+      #{politic,jdbcType=NVARCHAR}, #{condition,jdbcType=NVARCHAR}, #{examination,jdbcType=NVARCHAR}, 
+      #{interview,jdbcType=NVARCHAR}, #{employment,jdbcType=NVARCHAR}, #{reason,jdbcType=NVARCHAR}, 
+      #{remarks,jdbcType=NVARCHAR}, #{affixfile,jdbcType=NVARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{postnote,jdbcType=NVARCHAR}, #{deptname,jdbcType=NVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.generator.model.HrRecuritPlanNeeds">
+    insert into HR_Recurit_Plan_Needs
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="planId != null">
+        Plan_id,
+      </if>
+      <if test="dept != null">
+        Dept,
+      </if>
+      <if test="postname != null">
+        PostName,
+      </if>
+      <if test="postnum != null">
+        PostNum,
+      </if>
+      <if test="postintention != null">
+        PostIntention,
+      </if>
+      <if test="posttype != null">
+        PostType,
+      </if>
+      <if test="postconfig != null">
+        PostConfig,
+      </if>
+      <if test="specialities != null">
+        Specialities,
+      </if>
+      <if test="degree != null">
+        Degree,
+      </if>
+      <if test="age != null">
+        Age,
+      </if>
+      <if test="title != null">
+        Title,
+      </if>
+      <if test="politic != null">
+        Politic,
+      </if>
+      <if test="condition != null">
+        Condition,
+      </if>
+      <if test="examination != null">
+        Examination,
+      </if>
+      <if test="interview != null">
+        Interview,
+      </if>
+      <if test="employment != null">
+        Employment,
+      </if>
+      <if test="reason != null">
+        Reason,
+      </if>
+      <if test="remarks != null">
+        Remarks,
+      </if>
+      <if test="affixfile != null">
+        AffixFile,
+      </if>
+      <if test="status != null">
+        Status,
+      </if>
+      <if test="postnote != null">
+        PostNote,
+      </if>
+      <if test="deptname != null">
+        DeptName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="planId != null">
+        #{planId,jdbcType=NVARCHAR},
+      </if>
+      <if test="dept != null">
+        #{dept,jdbcType=NVARCHAR},
+      </if>
+      <if test="postname != null">
+        #{postname,jdbcType=NVARCHAR},
+      </if>
+      <if test="postnum != null">
+        #{postnum,jdbcType=NVARCHAR},
+      </if>
+      <if test="postintention != null">
+        #{postintention,jdbcType=NVARCHAR},
+      </if>
+      <if test="posttype != null">
+        #{posttype,jdbcType=NVARCHAR},
+      </if>
+      <if test="postconfig != null">
+        #{postconfig,jdbcType=NVARCHAR},
+      </if>
+      <if test="specialities != null">
+        #{specialities,jdbcType=NVARCHAR},
+      </if>
+      <if test="degree != null">
+        #{degree,jdbcType=NVARCHAR},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=NVARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=NVARCHAR},
+      </if>
+      <if test="politic != null">
+        #{politic,jdbcType=NVARCHAR},
+      </if>
+      <if test="condition != null">
+        #{condition,jdbcType=NVARCHAR},
+      </if>
+      <if test="examination != null">
+        #{examination,jdbcType=NVARCHAR},
+      </if>
+      <if test="interview != null">
+        #{interview,jdbcType=NVARCHAR},
+      </if>
+      <if test="employment != null">
+        #{employment,jdbcType=NVARCHAR},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=NVARCHAR},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=NVARCHAR},
+      </if>
+      <if test="affixfile != null">
+        #{affixfile,jdbcType=NVARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="postnote != null">
+        #{postnote,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptname != null">
+        #{deptname,jdbcType=NVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.generator.model.HrRecuritPlanNeeds">
+    update HR_Recurit_Plan_Needs
+    <set>
+      <if test="planId != null">
+        Plan_id = #{planId,jdbcType=NVARCHAR},
+      </if>
+      <if test="dept != null">
+        Dept = #{dept,jdbcType=NVARCHAR},
+      </if>
+      <if test="postname != null">
+        PostName = #{postname,jdbcType=NVARCHAR},
+      </if>
+      <if test="postnum != null">
+        PostNum = #{postnum,jdbcType=NVARCHAR},
+      </if>
+      <if test="postintention != null">
+        PostIntention = #{postintention,jdbcType=NVARCHAR},
+      </if>
+      <if test="posttype != null">
+        PostType = #{posttype,jdbcType=NVARCHAR},
+      </if>
+      <if test="postconfig != null">
+        PostConfig = #{postconfig,jdbcType=NVARCHAR},
+      </if>
+      <if test="specialities != null">
+        Specialities = #{specialities,jdbcType=NVARCHAR},
+      </if>
+      <if test="degree != null">
+        Degree = #{degree,jdbcType=NVARCHAR},
+      </if>
+      <if test="age != null">
+        Age = #{age,jdbcType=NVARCHAR},
+      </if>
+      <if test="title != null">
+        Title = #{title,jdbcType=NVARCHAR},
+      </if>
+      <if test="politic != null">
+        Politic = #{politic,jdbcType=NVARCHAR},
+      </if>
+      <if test="condition != null">
+        Condition = #{condition,jdbcType=NVARCHAR},
+      </if>
+      <if test="examination != null">
+        Examination = #{examination,jdbcType=NVARCHAR},
+      </if>
+      <if test="interview != null">
+        Interview = #{interview,jdbcType=NVARCHAR},
+      </if>
+      <if test="employment != null">
+        Employment = #{employment,jdbcType=NVARCHAR},
+      </if>
+      <if test="reason != null">
+        Reason = #{reason,jdbcType=NVARCHAR},
+      </if>
+      <if test="remarks != null">
+        Remarks = #{remarks,jdbcType=NVARCHAR},
+      </if>
+      <if test="affixfile != null">
+        AffixFile = #{affixfile,jdbcType=NVARCHAR},
+      </if>
+      <if test="status != null">
+        Status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="postnote != null">
+        PostNote = #{postnote,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptname != null">
+        DeptName = #{deptname,jdbcType=NVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.generator.model.HrRecuritPlanNeeds">
+    update HR_Recurit_Plan_Needs
+    set Plan_id = #{planId,jdbcType=NVARCHAR},
+      Dept = #{dept,jdbcType=NVARCHAR},
+      PostName = #{postname,jdbcType=NVARCHAR},
+      PostNum = #{postnum,jdbcType=NVARCHAR},
+      PostIntention = #{postintention,jdbcType=NVARCHAR},
+      PostType = #{posttype,jdbcType=NVARCHAR},
+      PostConfig = #{postconfig,jdbcType=NVARCHAR},
+      Specialities = #{specialities,jdbcType=NVARCHAR},
+      Degree = #{degree,jdbcType=NVARCHAR},
+      Age = #{age,jdbcType=NVARCHAR},
+      Title = #{title,jdbcType=NVARCHAR},
+      Politic = #{politic,jdbcType=NVARCHAR},
+      Condition = #{condition,jdbcType=NVARCHAR},
+      Examination = #{examination,jdbcType=NVARCHAR},
+      Interview = #{interview,jdbcType=NVARCHAR},
+      Employment = #{employment,jdbcType=NVARCHAR},
+      Reason = #{reason,jdbcType=NVARCHAR},
+      Remarks = #{remarks,jdbcType=NVARCHAR},
+      AffixFile = #{affixfile,jdbcType=NVARCHAR},
+      Status = #{status,jdbcType=INTEGER},
+      PostNote = #{postnote,jdbcType=NVARCHAR},
+      DeptName = #{deptname,jdbcType=NVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.generator.model.HrRecuritPlanNeeds">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="Plan_id" jdbcType="NVARCHAR" property="planId" />
+    <result column="Dept" jdbcType="NVARCHAR" property="dept" />
+    <result column="PostName" jdbcType="NVARCHAR" property="postname" />
+    <result column="PostNum" jdbcType="NVARCHAR" property="postnum" />
+    <result column="PostIntention" jdbcType="NVARCHAR" property="postintention" />
+    <result column="PostType" jdbcType="NVARCHAR" property="posttype" />
+    <result column="PostConfig" jdbcType="NVARCHAR" property="postconfig" />
+    <result column="Specialities" jdbcType="NVARCHAR" property="specialities" />
+    <result column="Degree" jdbcType="NVARCHAR" property="degree" />
+    <result column="Age" jdbcType="NVARCHAR" property="age" />
+    <result column="Title" jdbcType="NVARCHAR" property="title" />
+    <result column="Politic" jdbcType="NVARCHAR" property="politic" />
+    <result column="Condition" jdbcType="NVARCHAR" property="condition" />
+    <result column="Examination" jdbcType="NVARCHAR" property="examination" />
+    <result column="Interview" jdbcType="NVARCHAR" property="interview" />
+    <result column="Employment" jdbcType="NVARCHAR" property="employment" />
+    <result column="Reason" jdbcType="NVARCHAR" property="reason" />
+    <result column="Remarks" jdbcType="NVARCHAR" property="remarks" />
+    <result column="AffixFile" jdbcType="NVARCHAR" property="affixfile" />
+    <result column="Status" jdbcType="INTEGER" property="status" />
+    <result column="PostNote" jdbcType="NVARCHAR" property="postnote" />
+    <result column="DeptName" jdbcType="NVARCHAR" property="deptname" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, Plan_id, Dept, PostName, PostNum, PostIntention, PostType, PostConfig, Specialities, 
+    Degree, Age, Title, Politic, Condition, Examination, Interview, Employment, Reason, 
+    Remarks, AffixFile, Status, PostNote, DeptName
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from HR_Recurit_Plan_Needs
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from HR_Recurit_Plan_Needs
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.generator.model.HrRecuritPlanNeeds">
+    insert into HR_Recurit_Plan_Needs (ID, Plan_id, Dept, 
+      PostName, PostNum, PostIntention, 
+      PostType, PostConfig, Specialities, 
+      Degree, Age, Title, 
+      Politic, Condition, Examination, 
+      Interview, Employment, Reason, 
+      Remarks, AffixFile, Status, 
+      PostNote, DeptName)
+    values (#{id,jdbcType=INTEGER}, #{planId,jdbcType=NVARCHAR}, #{dept,jdbcType=NVARCHAR}, 
+      #{postname,jdbcType=NVARCHAR}, #{postnum,jdbcType=NVARCHAR}, #{postintention,jdbcType=NVARCHAR}, 
+      #{posttype,jdbcType=NVARCHAR}, #{postconfig,jdbcType=NVARCHAR}, #{specialities,jdbcType=NVARCHAR}, 
+      #{degree,jdbcType=NVARCHAR}, #{age,jdbcType=NVARCHAR}, #{title,jdbcType=NVARCHAR}, 
+      #{politic,jdbcType=NVARCHAR}, #{condition,jdbcType=NVARCHAR}, #{examination,jdbcType=NVARCHAR}, 
+      #{interview,jdbcType=NVARCHAR}, #{employment,jdbcType=NVARCHAR}, #{reason,jdbcType=NVARCHAR}, 
+      #{remarks,jdbcType=NVARCHAR}, #{affixfile,jdbcType=NVARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{postnote,jdbcType=NVARCHAR}, #{deptname,jdbcType=NVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.generator.model.HrRecuritPlanNeeds">
+    insert into HR_Recurit_Plan_Needs
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="planId != null">
+        Plan_id,
+      </if>
+      <if test="dept != null">
+        Dept,
+      </if>
+      <if test="postname != null">
+        PostName,
+      </if>
+      <if test="postnum != null">
+        PostNum,
+      </if>
+      <if test="postintention != null">
+        PostIntention,
+      </if>
+      <if test="posttype != null">
+        PostType,
+      </if>
+      <if test="postconfig != null">
+        PostConfig,
+      </if>
+      <if test="specialities != null">
+        Specialities,
+      </if>
+      <if test="degree != null">
+        Degree,
+      </if>
+      <if test="age != null">
+        Age,
+      </if>
+      <if test="title != null">
+        Title,
+      </if>
+      <if test="politic != null">
+        Politic,
+      </if>
+      <if test="condition != null">
+        Condition,
+      </if>
+      <if test="examination != null">
+        Examination,
+      </if>
+      <if test="interview != null">
+        Interview,
+      </if>
+      <if test="employment != null">
+        Employment,
+      </if>
+      <if test="reason != null">
+        Reason,
+      </if>
+      <if test="remarks != null">
+        Remarks,
+      </if>
+      <if test="affixfile != null">
+        AffixFile,
+      </if>
+      <if test="status != null">
+        Status,
+      </if>
+      <if test="postnote != null">
+        PostNote,
+      </if>
+      <if test="deptname != null">
+        DeptName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="planId != null">
+        #{planId,jdbcType=NVARCHAR},
+      </if>
+      <if test="dept != null">
+        #{dept,jdbcType=NVARCHAR},
+      </if>
+      <if test="postname != null">
+        #{postname,jdbcType=NVARCHAR},
+      </if>
+      <if test="postnum != null">
+        #{postnum,jdbcType=NVARCHAR},
+      </if>
+      <if test="postintention != null">
+        #{postintention,jdbcType=NVARCHAR},
+      </if>
+      <if test="posttype != null">
+        #{posttype,jdbcType=NVARCHAR},
+      </if>
+      <if test="postconfig != null">
+        #{postconfig,jdbcType=NVARCHAR},
+      </if>
+      <if test="specialities != null">
+        #{specialities,jdbcType=NVARCHAR},
+      </if>
+      <if test="degree != null">
+        #{degree,jdbcType=NVARCHAR},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=NVARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=NVARCHAR},
+      </if>
+      <if test="politic != null">
+        #{politic,jdbcType=NVARCHAR},
+      </if>
+      <if test="condition != null">
+        #{condition,jdbcType=NVARCHAR},
+      </if>
+      <if test="examination != null">
+        #{examination,jdbcType=NVARCHAR},
+      </if>
+      <if test="interview != null">
+        #{interview,jdbcType=NVARCHAR},
+      </if>
+      <if test="employment != null">
+        #{employment,jdbcType=NVARCHAR},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=NVARCHAR},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=NVARCHAR},
+      </if>
+      <if test="affixfile != null">
+        #{affixfile,jdbcType=NVARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="postnote != null">
+        #{postnote,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptname != null">
+        #{deptname,jdbcType=NVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.generator.model.HrRecuritPlanNeeds">
+    update HR_Recurit_Plan_Needs
+    <set>
+      <if test="planId != null">
+        Plan_id = #{planId,jdbcType=NVARCHAR},
+      </if>
+      <if test="dept != null">
+        Dept = #{dept,jdbcType=NVARCHAR},
+      </if>
+      <if test="postname != null">
+        PostName = #{postname,jdbcType=NVARCHAR},
+      </if>
+      <if test="postnum != null">
+        PostNum = #{postnum,jdbcType=NVARCHAR},
+      </if>
+      <if test="postintention != null">
+        PostIntention = #{postintention,jdbcType=NVARCHAR},
+      </if>
+      <if test="posttype != null">
+        PostType = #{posttype,jdbcType=NVARCHAR},
+      </if>
+      <if test="postconfig != null">
+        PostConfig = #{postconfig,jdbcType=NVARCHAR},
+      </if>
+      <if test="specialities != null">
+        Specialities = #{specialities,jdbcType=NVARCHAR},
+      </if>
+      <if test="degree != null">
+        Degree = #{degree,jdbcType=NVARCHAR},
+      </if>
+      <if test="age != null">
+        Age = #{age,jdbcType=NVARCHAR},
+      </if>
+      <if test="title != null">
+        Title = #{title,jdbcType=NVARCHAR},
+      </if>
+      <if test="politic != null">
+        Politic = #{politic,jdbcType=NVARCHAR},
+      </if>
+      <if test="condition != null">
+        Condition = #{condition,jdbcType=NVARCHAR},
+      </if>
+      <if test="examination != null">
+        Examination = #{examination,jdbcType=NVARCHAR},
+      </if>
+      <if test="interview != null">
+        Interview = #{interview,jdbcType=NVARCHAR},
+      </if>
+      <if test="employment != null">
+        Employment = #{employment,jdbcType=NVARCHAR},
+      </if>
+      <if test="reason != null">
+        Reason = #{reason,jdbcType=NVARCHAR},
+      </if>
+      <if test="remarks != null">
+        Remarks = #{remarks,jdbcType=NVARCHAR},
+      </if>
+      <if test="affixfile != null">
+        AffixFile = #{affixfile,jdbcType=NVARCHAR},
+      </if>
+      <if test="status != null">
+        Status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="postnote != null">
+        PostNote = #{postnote,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptname != null">
+        DeptName = #{deptname,jdbcType=NVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.generator.model.HrRecuritPlanNeeds">
+    update HR_Recurit_Plan_Needs
+    set Plan_id = #{planId,jdbcType=NVARCHAR},
+      Dept = #{dept,jdbcType=NVARCHAR},
+      PostName = #{postname,jdbcType=NVARCHAR},
+      PostNum = #{postnum,jdbcType=NVARCHAR},
+      PostIntention = #{postintention,jdbcType=NVARCHAR},
+      PostType = #{posttype,jdbcType=NVARCHAR},
+      PostConfig = #{postconfig,jdbcType=NVARCHAR},
+      Specialities = #{specialities,jdbcType=NVARCHAR},
+      Degree = #{degree,jdbcType=NVARCHAR},
+      Age = #{age,jdbcType=NVARCHAR},
+      Title = #{title,jdbcType=NVARCHAR},
+      Politic = #{politic,jdbcType=NVARCHAR},
+      Condition = #{condition,jdbcType=NVARCHAR},
+      Examination = #{examination,jdbcType=NVARCHAR},
+      Interview = #{interview,jdbcType=NVARCHAR},
+      Employment = #{employment,jdbcType=NVARCHAR},
+      Reason = #{reason,jdbcType=NVARCHAR},
+      Remarks = #{remarks,jdbcType=NVARCHAR},
+      AffixFile = #{affixfile,jdbcType=NVARCHAR},
+      Status = #{status,jdbcType=INTEGER},
+      PostNote = #{postnote,jdbcType=NVARCHAR},
+      DeptName = #{deptname,jdbcType=NVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.generator.model.HrRecuritPlanNeeds">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="Plan_id" jdbcType="NVARCHAR" property="planId" />
+    <result column="Dept" jdbcType="NVARCHAR" property="dept" />
+    <result column="PostName" jdbcType="NVARCHAR" property="postname" />
+    <result column="PostNum" jdbcType="NVARCHAR" property="postnum" />
+    <result column="PostIntention" jdbcType="NVARCHAR" property="postintention" />
+    <result column="PostType" jdbcType="NVARCHAR" property="posttype" />
+    <result column="PostConfig" jdbcType="NVARCHAR" property="postconfig" />
+    <result column="Specialities" jdbcType="NVARCHAR" property="specialities" />
+    <result column="Degree" jdbcType="NVARCHAR" property="degree" />
+    <result column="Age" jdbcType="NVARCHAR" property="age" />
+    <result column="Title" jdbcType="NVARCHAR" property="title" />
+    <result column="Politic" jdbcType="NVARCHAR" property="politic" />
+    <result column="Condition" jdbcType="NVARCHAR" property="condition" />
+    <result column="Examination" jdbcType="NVARCHAR" property="examination" />
+    <result column="Interview" jdbcType="NVARCHAR" property="interview" />
+    <result column="Employment" jdbcType="NVARCHAR" property="employment" />
+    <result column="Reason" jdbcType="NVARCHAR" property="reason" />
+    <result column="Remarks" jdbcType="NVARCHAR" property="remarks" />
+    <result column="AffixFile" jdbcType="NVARCHAR" property="affixfile" />
+    <result column="Status" jdbcType="INTEGER" property="status" />
+    <result column="PostNote" jdbcType="NVARCHAR" property="postnote" />
+    <result column="DeptName" jdbcType="NVARCHAR" property="deptname" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, Plan_id, Dept, PostName, PostNum, PostIntention, PostType, PostConfig, Specialities, 
+    Degree, Age, Title, Politic, Condition, Examination, Interview, Employment, Reason, 
+    Remarks, AffixFile, Status, PostNote, DeptName
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from HR_Recurit_Plan_Needs
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from HR_Recurit_Plan_Needs
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.generator.model.HrRecuritPlanNeeds">
+    insert into HR_Recurit_Plan_Needs (ID, Plan_id, Dept, 
+      PostName, PostNum, PostIntention, 
+      PostType, PostConfig, Specialities, 
+      Degree, Age, Title, 
+      Politic, Condition, Examination, 
+      Interview, Employment, Reason, 
+      Remarks, AffixFile, Status, 
+      PostNote, DeptName)
+    values (#{id,jdbcType=INTEGER}, #{planId,jdbcType=NVARCHAR}, #{dept,jdbcType=NVARCHAR}, 
+      #{postname,jdbcType=NVARCHAR}, #{postnum,jdbcType=NVARCHAR}, #{postintention,jdbcType=NVARCHAR}, 
+      #{posttype,jdbcType=NVARCHAR}, #{postconfig,jdbcType=NVARCHAR}, #{specialities,jdbcType=NVARCHAR}, 
+      #{degree,jdbcType=NVARCHAR}, #{age,jdbcType=NVARCHAR}, #{title,jdbcType=NVARCHAR}, 
+      #{politic,jdbcType=NVARCHAR}, #{condition,jdbcType=NVARCHAR}, #{examination,jdbcType=NVARCHAR}, 
+      #{interview,jdbcType=NVARCHAR}, #{employment,jdbcType=NVARCHAR}, #{reason,jdbcType=NVARCHAR}, 
+      #{remarks,jdbcType=NVARCHAR}, #{affixfile,jdbcType=NVARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{postnote,jdbcType=NVARCHAR}, #{deptname,jdbcType=NVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.generator.model.HrRecuritPlanNeeds">
+    insert into HR_Recurit_Plan_Needs
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="planId != null">
+        Plan_id,
+      </if>
+      <if test="dept != null">
+        Dept,
+      </if>
+      <if test="postname != null">
+        PostName,
+      </if>
+      <if test="postnum != null">
+        PostNum,
+      </if>
+      <if test="postintention != null">
+        PostIntention,
+      </if>
+      <if test="posttype != null">
+        PostType,
+      </if>
+      <if test="postconfig != null">
+        PostConfig,
+      </if>
+      <if test="specialities != null">
+        Specialities,
+      </if>
+      <if test="degree != null">
+        Degree,
+      </if>
+      <if test="age != null">
+        Age,
+      </if>
+      <if test="title != null">
+        Title,
+      </if>
+      <if test="politic != null">
+        Politic,
+      </if>
+      <if test="condition != null">
+        Condition,
+      </if>
+      <if test="examination != null">
+        Examination,
+      </if>
+      <if test="interview != null">
+        Interview,
+      </if>
+      <if test="employment != null">
+        Employment,
+      </if>
+      <if test="reason != null">
+        Reason,
+      </if>
+      <if test="remarks != null">
+        Remarks,
+      </if>
+      <if test="affixfile != null">
+        AffixFile,
+      </if>
+      <if test="status != null">
+        Status,
+      </if>
+      <if test="postnote != null">
+        PostNote,
+      </if>
+      <if test="deptname != null">
+        DeptName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="planId != null">
+        #{planId,jdbcType=NVARCHAR},
+      </if>
+      <if test="dept != null">
+        #{dept,jdbcType=NVARCHAR},
+      </if>
+      <if test="postname != null">
+        #{postname,jdbcType=NVARCHAR},
+      </if>
+      <if test="postnum != null">
+        #{postnum,jdbcType=NVARCHAR},
+      </if>
+      <if test="postintention != null">
+        #{postintention,jdbcType=NVARCHAR},
+      </if>
+      <if test="posttype != null">
+        #{posttype,jdbcType=NVARCHAR},
+      </if>
+      <if test="postconfig != null">
+        #{postconfig,jdbcType=NVARCHAR},
+      </if>
+      <if test="specialities != null">
+        #{specialities,jdbcType=NVARCHAR},
+      </if>
+      <if test="degree != null">
+        #{degree,jdbcType=NVARCHAR},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=NVARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=NVARCHAR},
+      </if>
+      <if test="politic != null">
+        #{politic,jdbcType=NVARCHAR},
+      </if>
+      <if test="condition != null">
+        #{condition,jdbcType=NVARCHAR},
+      </if>
+      <if test="examination != null">
+        #{examination,jdbcType=NVARCHAR},
+      </if>
+      <if test="interview != null">
+        #{interview,jdbcType=NVARCHAR},
+      </if>
+      <if test="employment != null">
+        #{employment,jdbcType=NVARCHAR},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=NVARCHAR},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=NVARCHAR},
+      </if>
+      <if test="affixfile != null">
+        #{affixfile,jdbcType=NVARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="postnote != null">
+        #{postnote,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptname != null">
+        #{deptname,jdbcType=NVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.generator.model.HrRecuritPlanNeeds">
+    update HR_Recurit_Plan_Needs
+    <set>
+      <if test="planId != null">
+        Plan_id = #{planId,jdbcType=NVARCHAR},
+      </if>
+      <if test="dept != null">
+        Dept = #{dept,jdbcType=NVARCHAR},
+      </if>
+      <if test="postname != null">
+        PostName = #{postname,jdbcType=NVARCHAR},
+      </if>
+      <if test="postnum != null">
+        PostNum = #{postnum,jdbcType=NVARCHAR},
+      </if>
+      <if test="postintention != null">
+        PostIntention = #{postintention,jdbcType=NVARCHAR},
+      </if>
+      <if test="posttype != null">
+        PostType = #{posttype,jdbcType=NVARCHAR},
+      </if>
+      <if test="postconfig != null">
+        PostConfig = #{postconfig,jdbcType=NVARCHAR},
+      </if>
+      <if test="specialities != null">
+        Specialities = #{specialities,jdbcType=NVARCHAR},
+      </if>
+      <if test="degree != null">
+        Degree = #{degree,jdbcType=NVARCHAR},
+      </if>
+      <if test="age != null">
+        Age = #{age,jdbcType=NVARCHAR},
+      </if>
+      <if test="title != null">
+        Title = #{title,jdbcType=NVARCHAR},
+      </if>
+      <if test="politic != null">
+        Politic = #{politic,jdbcType=NVARCHAR},
+      </if>
+      <if test="condition != null">
+        Condition = #{condition,jdbcType=NVARCHAR},
+      </if>
+      <if test="examination != null">
+        Examination = #{examination,jdbcType=NVARCHAR},
+      </if>
+      <if test="interview != null">
+        Interview = #{interview,jdbcType=NVARCHAR},
+      </if>
+      <if test="employment != null">
+        Employment = #{employment,jdbcType=NVARCHAR},
+      </if>
+      <if test="reason != null">
+        Reason = #{reason,jdbcType=NVARCHAR},
+      </if>
+      <if test="remarks != null">
+        Remarks = #{remarks,jdbcType=NVARCHAR},
+      </if>
+      <if test="affixfile != null">
+        AffixFile = #{affixfile,jdbcType=NVARCHAR},
+      </if>
+      <if test="status != null">
+        Status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="postnote != null">
+        PostNote = #{postnote,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptname != null">
+        DeptName = #{deptname,jdbcType=NVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.generator.model.HrRecuritPlanNeeds">
+    update HR_Recurit_Plan_Needs
+    set Plan_id = #{planId,jdbcType=NVARCHAR},
+      Dept = #{dept,jdbcType=NVARCHAR},
+      PostName = #{postname,jdbcType=NVARCHAR},
+      PostNum = #{postnum,jdbcType=NVARCHAR},
+      PostIntention = #{postintention,jdbcType=NVARCHAR},
+      PostType = #{posttype,jdbcType=NVARCHAR},
+      PostConfig = #{postconfig,jdbcType=NVARCHAR},
+      Specialities = #{specialities,jdbcType=NVARCHAR},
+      Degree = #{degree,jdbcType=NVARCHAR},
+      Age = #{age,jdbcType=NVARCHAR},
+      Title = #{title,jdbcType=NVARCHAR},
+      Politic = #{politic,jdbcType=NVARCHAR},
+      Condition = #{condition,jdbcType=NVARCHAR},
+      Examination = #{examination,jdbcType=NVARCHAR},
+      Interview = #{interview,jdbcType=NVARCHAR},
+      Employment = #{employment,jdbcType=NVARCHAR},
+      Reason = #{reason,jdbcType=NVARCHAR},
+      Remarks = #{remarks,jdbcType=NVARCHAR},
+      AffixFile = #{affixfile,jdbcType=NVARCHAR},
+      Status = #{status,jdbcType=INTEGER},
+      PostNote = #{postnote,jdbcType=NVARCHAR},
+      DeptName = #{deptname,jdbcType=NVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.generator.model.HrRecuritPlanNeeds">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="Plan_id" jdbcType="NVARCHAR" property="planId" />
+    <result column="Dept" jdbcType="NVARCHAR" property="dept" />
+    <result column="PostName" jdbcType="NVARCHAR" property="postname" />
+    <result column="PostNum" jdbcType="NVARCHAR" property="postnum" />
+    <result column="PostIntention" jdbcType="NVARCHAR" property="postintention" />
+    <result column="PostType" jdbcType="NVARCHAR" property="posttype" />
+    <result column="PostConfig" jdbcType="NVARCHAR" property="postconfig" />
+    <result column="Specialities" jdbcType="NVARCHAR" property="specialities" />
+    <result column="Degree" jdbcType="NVARCHAR" property="degree" />
+    <result column="Age" jdbcType="NVARCHAR" property="age" />
+    <result column="Title" jdbcType="NVARCHAR" property="title" />
+    <result column="Politic" jdbcType="NVARCHAR" property="politic" />
+    <result column="Condition" jdbcType="NVARCHAR" property="condition" />
+    <result column="Examination" jdbcType="NVARCHAR" property="examination" />
+    <result column="Interview" jdbcType="NVARCHAR" property="interview" />
+    <result column="Employment" jdbcType="NVARCHAR" property="employment" />
+    <result column="Reason" jdbcType="NVARCHAR" property="reason" />
+    <result column="Remarks" jdbcType="NVARCHAR" property="remarks" />
+    <result column="AffixFile" jdbcType="NVARCHAR" property="affixfile" />
+    <result column="Status" jdbcType="INTEGER" property="status" />
+    <result column="PostNote" jdbcType="NVARCHAR" property="postnote" />
+    <result column="DeptName" jdbcType="NVARCHAR" property="deptname" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, Plan_id, Dept, PostName, PostNum, PostIntention, PostType, PostConfig, Specialities, 
+    Degree, Age, Title, Politic, Condition, Examination, Interview, Employment, Reason, 
+    Remarks, AffixFile, Status, PostNote, DeptName
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from HR_Recurit_Plan_Needs
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from HR_Recurit_Plan_Needs
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.generator.model.HrRecuritPlanNeeds">
+    insert into HR_Recurit_Plan_Needs (ID, Plan_id, Dept, 
+      PostName, PostNum, PostIntention, 
+      PostType, PostConfig, Specialities, 
+      Degree, Age, Title, 
+      Politic, Condition, Examination, 
+      Interview, Employment, Reason, 
+      Remarks, AffixFile, Status, 
+      PostNote, DeptName)
+    values (#{id,jdbcType=INTEGER}, #{planId,jdbcType=NVARCHAR}, #{dept,jdbcType=NVARCHAR}, 
+      #{postname,jdbcType=NVARCHAR}, #{postnum,jdbcType=NVARCHAR}, #{postintention,jdbcType=NVARCHAR}, 
+      #{posttype,jdbcType=NVARCHAR}, #{postconfig,jdbcType=NVARCHAR}, #{specialities,jdbcType=NVARCHAR}, 
+      #{degree,jdbcType=NVARCHAR}, #{age,jdbcType=NVARCHAR}, #{title,jdbcType=NVARCHAR}, 
+      #{politic,jdbcType=NVARCHAR}, #{condition,jdbcType=NVARCHAR}, #{examination,jdbcType=NVARCHAR}, 
+      #{interview,jdbcType=NVARCHAR}, #{employment,jdbcType=NVARCHAR}, #{reason,jdbcType=NVARCHAR}, 
+      #{remarks,jdbcType=NVARCHAR}, #{affixfile,jdbcType=NVARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{postnote,jdbcType=NVARCHAR}, #{deptname,jdbcType=NVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.generator.model.HrRecuritPlanNeeds">
+    insert into HR_Recurit_Plan_Needs
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="planId != null">
+        Plan_id,
+      </if>
+      <if test="dept != null">
+        Dept,
+      </if>
+      <if test="postname != null">
+        PostName,
+      </if>
+      <if test="postnum != null">
+        PostNum,
+      </if>
+      <if test="postintention != null">
+        PostIntention,
+      </if>
+      <if test="posttype != null">
+        PostType,
+      </if>
+      <if test="postconfig != null">
+        PostConfig,
+      </if>
+      <if test="specialities != null">
+        Specialities,
+      </if>
+      <if test="degree != null">
+        Degree,
+      </if>
+      <if test="age != null">
+        Age,
+      </if>
+      <if test="title != null">
+        Title,
+      </if>
+      <if test="politic != null">
+        Politic,
+      </if>
+      <if test="condition != null">
+        Condition,
+      </if>
+      <if test="examination != null">
+        Examination,
+      </if>
+      <if test="interview != null">
+        Interview,
+      </if>
+      <if test="employment != null">
+        Employment,
+      </if>
+      <if test="reason != null">
+        Reason,
+      </if>
+      <if test="remarks != null">
+        Remarks,
+      </if>
+      <if test="affixfile != null">
+        AffixFile,
+      </if>
+      <if test="status != null">
+        Status,
+      </if>
+      <if test="postnote != null">
+        PostNote,
+      </if>
+      <if test="deptname != null">
+        DeptName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="planId != null">
+        #{planId,jdbcType=NVARCHAR},
+      </if>
+      <if test="dept != null">
+        #{dept,jdbcType=NVARCHAR},
+      </if>
+      <if test="postname != null">
+        #{postname,jdbcType=NVARCHAR},
+      </if>
+      <if test="postnum != null">
+        #{postnum,jdbcType=NVARCHAR},
+      </if>
+      <if test="postintention != null">
+        #{postintention,jdbcType=NVARCHAR},
+      </if>
+      <if test="posttype != null">
+        #{posttype,jdbcType=NVARCHAR},
+      </if>
+      <if test="postconfig != null">
+        #{postconfig,jdbcType=NVARCHAR},
+      </if>
+      <if test="specialities != null">
+        #{specialities,jdbcType=NVARCHAR},
+      </if>
+      <if test="degree != null">
+        #{degree,jdbcType=NVARCHAR},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=NVARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=NVARCHAR},
+      </if>
+      <if test="politic != null">
+        #{politic,jdbcType=NVARCHAR},
+      </if>
+      <if test="condition != null">
+        #{condition,jdbcType=NVARCHAR},
+      </if>
+      <if test="examination != null">
+        #{examination,jdbcType=NVARCHAR},
+      </if>
+      <if test="interview != null">
+        #{interview,jdbcType=NVARCHAR},
+      </if>
+      <if test="employment != null">
+        #{employment,jdbcType=NVARCHAR},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=NVARCHAR},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=NVARCHAR},
+      </if>
+      <if test="affixfile != null">
+        #{affixfile,jdbcType=NVARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="postnote != null">
+        #{postnote,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptname != null">
+        #{deptname,jdbcType=NVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.generator.model.HrRecuritPlanNeeds">
+    update HR_Recurit_Plan_Needs
+    <set>
+      <if test="planId != null">
+        Plan_id = #{planId,jdbcType=NVARCHAR},
+      </if>
+      <if test="dept != null">
+        Dept = #{dept,jdbcType=NVARCHAR},
+      </if>
+      <if test="postname != null">
+        PostName = #{postname,jdbcType=NVARCHAR},
+      </if>
+      <if test="postnum != null">
+        PostNum = #{postnum,jdbcType=NVARCHAR},
+      </if>
+      <if test="postintention != null">
+        PostIntention = #{postintention,jdbcType=NVARCHAR},
+      </if>
+      <if test="posttype != null">
+        PostType = #{posttype,jdbcType=NVARCHAR},
+      </if>
+      <if test="postconfig != null">
+        PostConfig = #{postconfig,jdbcType=NVARCHAR},
+      </if>
+      <if test="specialities != null">
+        Specialities = #{specialities,jdbcType=NVARCHAR},
+      </if>
+      <if test="degree != null">
+        Degree = #{degree,jdbcType=NVARCHAR},
+      </if>
+      <if test="age != null">
+        Age = #{age,jdbcType=NVARCHAR},
+      </if>
+      <if test="title != null">
+        Title = #{title,jdbcType=NVARCHAR},
+      </if>
+      <if test="politic != null">
+        Politic = #{politic,jdbcType=NVARCHAR},
+      </if>
+      <if test="condition != null">
+        Condition = #{condition,jdbcType=NVARCHAR},
+      </if>
+      <if test="examination != null">
+        Examination = #{examination,jdbcType=NVARCHAR},
+      </if>
+      <if test="interview != null">
+        Interview = #{interview,jdbcType=NVARCHAR},
+      </if>
+      <if test="employment != null">
+        Employment = #{employment,jdbcType=NVARCHAR},
+      </if>
+      <if test="reason != null">
+        Reason = #{reason,jdbcType=NVARCHAR},
+      </if>
+      <if test="remarks != null">
+        Remarks = #{remarks,jdbcType=NVARCHAR},
+      </if>
+      <if test="affixfile != null">
+        AffixFile = #{affixfile,jdbcType=NVARCHAR},
+      </if>
+      <if test="status != null">
+        Status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="postnote != null">
+        PostNote = #{postnote,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptname != null">
+        DeptName = #{deptname,jdbcType=NVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.generator.model.HrRecuritPlanNeeds">
+    update HR_Recurit_Plan_Needs
+    set Plan_id = #{planId,jdbcType=NVARCHAR},
+      Dept = #{dept,jdbcType=NVARCHAR},
+      PostName = #{postname,jdbcType=NVARCHAR},
+      PostNum = #{postnum,jdbcType=NVARCHAR},
+      PostIntention = #{postintention,jdbcType=NVARCHAR},
+      PostType = #{posttype,jdbcType=NVARCHAR},
+      PostConfig = #{postconfig,jdbcType=NVARCHAR},
+      Specialities = #{specialities,jdbcType=NVARCHAR},
+      Degree = #{degree,jdbcType=NVARCHAR},
+      Age = #{age,jdbcType=NVARCHAR},
+      Title = #{title,jdbcType=NVARCHAR},
+      Politic = #{politic,jdbcType=NVARCHAR},
+      Condition = #{condition,jdbcType=NVARCHAR},
+      Examination = #{examination,jdbcType=NVARCHAR},
+      Interview = #{interview,jdbcType=NVARCHAR},
+      Employment = #{employment,jdbcType=NVARCHAR},
+      Reason = #{reason,jdbcType=NVARCHAR},
+      Remarks = #{remarks,jdbcType=NVARCHAR},
+      AffixFile = #{affixfile,jdbcType=NVARCHAR},
+      Status = #{status,jdbcType=INTEGER},
+      PostNote = #{postnote,jdbcType=NVARCHAR},
+      DeptName = #{deptname,jdbcType=NVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.generator.model.HrRecuritPlanNeeds">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="Plan_id" jdbcType="NVARCHAR" property="planId" />
+    <result column="Dept" jdbcType="NVARCHAR" property="dept" />
+    <result column="PostName" jdbcType="NVARCHAR" property="postname" />
+    <result column="PostNum" jdbcType="NVARCHAR" property="postnum" />
+    <result column="PostIntention" jdbcType="NVARCHAR" property="postintention" />
+    <result column="PostType" jdbcType="NVARCHAR" property="posttype" />
+    <result column="PostConfig" jdbcType="NVARCHAR" property="postconfig" />
+    <result column="Specialities" jdbcType="NVARCHAR" property="specialities" />
+    <result column="Degree" jdbcType="NVARCHAR" property="degree" />
+    <result column="Age" jdbcType="NVARCHAR" property="age" />
+    <result column="Title" jdbcType="NVARCHAR" property="title" />
+    <result column="Politic" jdbcType="NVARCHAR" property="politic" />
+    <result column="Condition" jdbcType="NVARCHAR" property="condition" />
+    <result column="Examination" jdbcType="NVARCHAR" property="examination" />
+    <result column="Interview" jdbcType="NVARCHAR" property="interview" />
+    <result column="Employment" jdbcType="NVARCHAR" property="employment" />
+    <result column="Reason" jdbcType="NVARCHAR" property="reason" />
+    <result column="Remarks" jdbcType="NVARCHAR" property="remarks" />
+    <result column="AffixFile" jdbcType="NVARCHAR" property="affixfile" />
+    <result column="Status" jdbcType="INTEGER" property="status" />
+    <result column="PostNote" jdbcType="NVARCHAR" property="postnote" />
+    <result column="DeptName" jdbcType="NVARCHAR" property="deptname" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, Plan_id, Dept, PostName, PostNum, PostIntention, PostType, PostConfig, Specialities, 
+    Degree, Age, Title, Politic, Condition, Examination, Interview, Employment, Reason, 
+    Remarks, AffixFile, Status, PostNote, DeptName
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from HR_Recurit_Plan_Needs
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from HR_Recurit_Plan_Needs
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.generator.model.HrRecuritPlanNeeds">
+    insert into HR_Recurit_Plan_Needs (ID, Plan_id, Dept, 
+      PostName, PostNum, PostIntention, 
+      PostType, PostConfig, Specialities, 
+      Degree, Age, Title, 
+      Politic, Condition, Examination, 
+      Interview, Employment, Reason, 
+      Remarks, AffixFile, Status, 
+      PostNote, DeptName)
+    values (#{id,jdbcType=INTEGER}, #{planId,jdbcType=NVARCHAR}, #{dept,jdbcType=NVARCHAR}, 
+      #{postname,jdbcType=NVARCHAR}, #{postnum,jdbcType=NVARCHAR}, #{postintention,jdbcType=NVARCHAR}, 
+      #{posttype,jdbcType=NVARCHAR}, #{postconfig,jdbcType=NVARCHAR}, #{specialities,jdbcType=NVARCHAR}, 
+      #{degree,jdbcType=NVARCHAR}, #{age,jdbcType=NVARCHAR}, #{title,jdbcType=NVARCHAR}, 
+      #{politic,jdbcType=NVARCHAR}, #{condition,jdbcType=NVARCHAR}, #{examination,jdbcType=NVARCHAR}, 
+      #{interview,jdbcType=NVARCHAR}, #{employment,jdbcType=NVARCHAR}, #{reason,jdbcType=NVARCHAR}, 
+      #{remarks,jdbcType=NVARCHAR}, #{affixfile,jdbcType=NVARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{postnote,jdbcType=NVARCHAR}, #{deptname,jdbcType=NVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.generator.model.HrRecuritPlanNeeds">
+    insert into HR_Recurit_Plan_Needs
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="planId != null">
+        Plan_id,
+      </if>
+      <if test="dept != null">
+        Dept,
+      </if>
+      <if test="postname != null">
+        PostName,
+      </if>
+      <if test="postnum != null">
+        PostNum,
+      </if>
+      <if test="postintention != null">
+        PostIntention,
+      </if>
+      <if test="posttype != null">
+        PostType,
+      </if>
+      <if test="postconfig != null">
+        PostConfig,
+      </if>
+      <if test="specialities != null">
+        Specialities,
+      </if>
+      <if test="degree != null">
+        Degree,
+      </if>
+      <if test="age != null">
+        Age,
+      </if>
+      <if test="title != null">
+        Title,
+      </if>
+      <if test="politic != null">
+        Politic,
+      </if>
+      <if test="condition != null">
+        Condition,
+      </if>
+      <if test="examination != null">
+        Examination,
+      </if>
+      <if test="interview != null">
+        Interview,
+      </if>
+      <if test="employment != null">
+        Employment,
+      </if>
+      <if test="reason != null">
+        Reason,
+      </if>
+      <if test="remarks != null">
+        Remarks,
+      </if>
+      <if test="affixfile != null">
+        AffixFile,
+      </if>
+      <if test="status != null">
+        Status,
+      </if>
+      <if test="postnote != null">
+        PostNote,
+      </if>
+      <if test="deptname != null">
+        DeptName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="planId != null">
+        #{planId,jdbcType=NVARCHAR},
+      </if>
+      <if test="dept != null">
+        #{dept,jdbcType=NVARCHAR},
+      </if>
+      <if test="postname != null">
+        #{postname,jdbcType=NVARCHAR},
+      </if>
+      <if test="postnum != null">
+        #{postnum,jdbcType=NVARCHAR},
+      </if>
+      <if test="postintention != null">
+        #{postintention,jdbcType=NVARCHAR},
+      </if>
+      <if test="posttype != null">
+        #{posttype,jdbcType=NVARCHAR},
+      </if>
+      <if test="postconfig != null">
+        #{postconfig,jdbcType=NVARCHAR},
+      </if>
+      <if test="specialities != null">
+        #{specialities,jdbcType=NVARCHAR},
+      </if>
+      <if test="degree != null">
+        #{degree,jdbcType=NVARCHAR},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=NVARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=NVARCHAR},
+      </if>
+      <if test="politic != null">
+        #{politic,jdbcType=NVARCHAR},
+      </if>
+      <if test="condition != null">
+        #{condition,jdbcType=NVARCHAR},
+      </if>
+      <if test="examination != null">
+        #{examination,jdbcType=NVARCHAR},
+      </if>
+      <if test="interview != null">
+        #{interview,jdbcType=NVARCHAR},
+      </if>
+      <if test="employment != null">
+        #{employment,jdbcType=NVARCHAR},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=NVARCHAR},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=NVARCHAR},
+      </if>
+      <if test="affixfile != null">
+        #{affixfile,jdbcType=NVARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="postnote != null">
+        #{postnote,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptname != null">
+        #{deptname,jdbcType=NVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.generator.model.HrRecuritPlanNeeds">
+    update HR_Recurit_Plan_Needs
+    <set>
+      <if test="planId != null">
+        Plan_id = #{planId,jdbcType=NVARCHAR},
+      </if>
+      <if test="dept != null">
+        Dept = #{dept,jdbcType=NVARCHAR},
+      </if>
+      <if test="postname != null">
+        PostName = #{postname,jdbcType=NVARCHAR},
+      </if>
+      <if test="postnum != null">
+        PostNum = #{postnum,jdbcType=NVARCHAR},
+      </if>
+      <if test="postintention != null">
+        PostIntention = #{postintention,jdbcType=NVARCHAR},
+      </if>
+      <if test="posttype != null">
+        PostType = #{posttype,jdbcType=NVARCHAR},
+      </if>
+      <if test="postconfig != null">
+        PostConfig = #{postconfig,jdbcType=NVARCHAR},
+      </if>
+      <if test="specialities != null">
+        Specialities = #{specialities,jdbcType=NVARCHAR},
+      </if>
+      <if test="degree != null">
+        Degree = #{degree,jdbcType=NVARCHAR},
+      </if>
+      <if test="age != null">
+        Age = #{age,jdbcType=NVARCHAR},
+      </if>
+      <if test="title != null">
+        Title = #{title,jdbcType=NVARCHAR},
+      </if>
+      <if test="politic != null">
+        Politic = #{politic,jdbcType=NVARCHAR},
+      </if>
+      <if test="condition != null">
+        Condition = #{condition,jdbcType=NVARCHAR},
+      </if>
+      <if test="examination != null">
+        Examination = #{examination,jdbcType=NVARCHAR},
+      </if>
+      <if test="interview != null">
+        Interview = #{interview,jdbcType=NVARCHAR},
+      </if>
+      <if test="employment != null">
+        Employment = #{employment,jdbcType=NVARCHAR},
+      </if>
+      <if test="reason != null">
+        Reason = #{reason,jdbcType=NVARCHAR},
+      </if>
+      <if test="remarks != null">
+        Remarks = #{remarks,jdbcType=NVARCHAR},
+      </if>
+      <if test="affixfile != null">
+        AffixFile = #{affixfile,jdbcType=NVARCHAR},
+      </if>
+      <if test="status != null">
+        Status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="postnote != null">
+        PostNote = #{postnote,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptname != null">
+        DeptName = #{deptname,jdbcType=NVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.generator.model.HrRecuritPlanNeeds">
+    update HR_Recurit_Plan_Needs
+    set Plan_id = #{planId,jdbcType=NVARCHAR},
+      Dept = #{dept,jdbcType=NVARCHAR},
+      PostName = #{postname,jdbcType=NVARCHAR},
+      PostNum = #{postnum,jdbcType=NVARCHAR},
+      PostIntention = #{postintention,jdbcType=NVARCHAR},
+      PostType = #{posttype,jdbcType=NVARCHAR},
+      PostConfig = #{postconfig,jdbcType=NVARCHAR},
+      Specialities = #{specialities,jdbcType=NVARCHAR},
+      Degree = #{degree,jdbcType=NVARCHAR},
+      Age = #{age,jdbcType=NVARCHAR},
+      Title = #{title,jdbcType=NVARCHAR},
+      Politic = #{politic,jdbcType=NVARCHAR},
+      Condition = #{condition,jdbcType=NVARCHAR},
+      Examination = #{examination,jdbcType=NVARCHAR},
+      Interview = #{interview,jdbcType=NVARCHAR},
+      Employment = #{employment,jdbcType=NVARCHAR},
+      Reason = #{reason,jdbcType=NVARCHAR},
+      Remarks = #{remarks,jdbcType=NVARCHAR},
+      AffixFile = #{affixfile,jdbcType=NVARCHAR},
+      Status = #{status,jdbcType=INTEGER},
+      PostNote = #{postnote,jdbcType=NVARCHAR},
+      DeptName = #{deptname,jdbcType=NVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

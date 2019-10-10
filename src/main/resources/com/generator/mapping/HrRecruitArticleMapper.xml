@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.generator.mapper.HrRecruitArticleMapper">
+  <resultMap id="BaseResultMap" type="com.generator.model.HrRecruitArticle">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="OrderNo" jdbcType="INTEGER" property="orderno" />
+    <result column="Type" jdbcType="INTEGER" property="type" />
+    <result column="Title" jdbcType="NVARCHAR" property="title" />
+    <result column="Description" jdbcType="NVARCHAR" property="description" />
+    <result column="Dept" jdbcType="NVARCHAR" property="dept" />
+    <result column="Source" jdbcType="NVARCHAR" property="source" />
+    <result column="publishTime" jdbcType="TIMESTAMP" property="publishtime" />
+    <result column="Author" jdbcType="NVARCHAR" property="author" />
+    <result column="ClickTimes" jdbcType="INTEGER" property="clicktimes" />
+    <result column="Status" jdbcType="INTEGER" property="status" />
+    <result column="SubmitMan" jdbcType="NVARCHAR" property="submitman" />
+    <result column="SubmitTime" jdbcType="TIMESTAMP" property="submittime" />
+    <result column="ModifyTime" jdbcType="TIMESTAMP" property="modifytime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.generator.model.HrRecruitArticle">
+    <result column="Content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, OrderNo, Type, Title, Description, Dept, Source, publishTime, Author, ClickTimes, 
+    Status, SubmitMan, SubmitTime, ModifyTime
+  </sql>
+  <sql id="Blob_Column_List">
+    Content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from HR_Recruit_article
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from HR_Recruit_article
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.generator.model.HrRecruitArticle">
+    insert into HR_Recruit_article (ID, OrderNo, Type, 
+      Title, Description, Dept, 
+      Source, publishTime, Author, 
+      ClickTimes, Status, SubmitMan, 
+      SubmitTime, ModifyTime, Content
+      )
+    values (#{id,jdbcType=INTEGER}, #{orderno,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
+      #{title,jdbcType=NVARCHAR}, #{description,jdbcType=NVARCHAR}, #{dept,jdbcType=NVARCHAR}, 
+      #{source,jdbcType=NVARCHAR}, #{publishtime,jdbcType=TIMESTAMP}, #{author,jdbcType=NVARCHAR}, 
+      #{clicktimes,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{submitman,jdbcType=NVARCHAR}, 
+      #{submittime,jdbcType=TIMESTAMP}, #{modifytime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.generator.model.HrRecruitArticle">
+    insert into HR_Recruit_article
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="orderno != null">
+        OrderNo,
+      </if>
+      <if test="type != null">
+        Type,
+      </if>
+      <if test="title != null">
+        Title,
+      </if>
+      <if test="description != null">
+        Description,
+      </if>
+      <if test="dept != null">
+        Dept,
+      </if>
+      <if test="source != null">
+        Source,
+      </if>
+      <if test="publishtime != null">
+        publishTime,
+      </if>
+      <if test="author != null">
+        Author,
+      </if>
+      <if test="clicktimes != null">
+        ClickTimes,
+      </if>
+      <if test="status != null">
+        Status,
+      </if>
+      <if test="submitman != null">
+        SubmitMan,
+      </if>
+      <if test="submittime != null">
+        SubmitTime,
+      </if>
+      <if test="modifytime != null">
+        ModifyTime,
+      </if>
+      <if test="content != null">
+        Content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="orderno != null">
+        #{orderno,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=NVARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=NVARCHAR},
+      </if>
+      <if test="dept != null">
+        #{dept,jdbcType=NVARCHAR},
+      </if>
+      <if test="source != null">
+        #{source,jdbcType=NVARCHAR},
+      </if>
+      <if test="publishtime != null">
+        #{publishtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="author != null">
+        #{author,jdbcType=NVARCHAR},
+      </if>
+      <if test="clicktimes != null">
+        #{clicktimes,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="submitman != null">
+        #{submitman,jdbcType=NVARCHAR},
+      </if>
+      <if test="submittime != null">
+        #{submittime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null">
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.generator.model.HrRecruitArticle">
+    update HR_Recruit_article
+    <set>
+      <if test="orderno != null">
+        OrderNo = #{orderno,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        Type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        Title = #{title,jdbcType=NVARCHAR},
+      </if>
+      <if test="description != null">
+        Description = #{description,jdbcType=NVARCHAR},
+      </if>
+      <if test="dept != null">
+        Dept = #{dept,jdbcType=NVARCHAR},
+      </if>
+      <if test="source != null">
+        Source = #{source,jdbcType=NVARCHAR},
+      </if>
+      <if test="publishtime != null">
+        publishTime = #{publishtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="author != null">
+        Author = #{author,jdbcType=NVARCHAR},
+      </if>
+      <if test="clicktimes != null">
+        ClickTimes = #{clicktimes,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        Status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="submitman != null">
+        SubmitMan = #{submitman,jdbcType=NVARCHAR},
+      </if>
+      <if test="submittime != null">
+        SubmitTime = #{submittime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null">
+        ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        Content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.generator.model.HrRecruitArticle">
+    update HR_Recruit_article
+    set OrderNo = #{orderno,jdbcType=INTEGER},
+      Type = #{type,jdbcType=INTEGER},
+      Title = #{title,jdbcType=NVARCHAR},
+      Description = #{description,jdbcType=NVARCHAR},
+      Dept = #{dept,jdbcType=NVARCHAR},
+      Source = #{source,jdbcType=NVARCHAR},
+      publishTime = #{publishtime,jdbcType=TIMESTAMP},
+      Author = #{author,jdbcType=NVARCHAR},
+      ClickTimes = #{clicktimes,jdbcType=INTEGER},
+      Status = #{status,jdbcType=INTEGER},
+      SubmitMan = #{submitman,jdbcType=NVARCHAR},
+      SubmitTime = #{submittime,jdbcType=TIMESTAMP},
+      ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      Content = #{content,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.generator.model.HrRecruitArticle">
+    update HR_Recruit_article
+    set OrderNo = #{orderno,jdbcType=INTEGER},
+      Type = #{type,jdbcType=INTEGER},
+      Title = #{title,jdbcType=NVARCHAR},
+      Description = #{description,jdbcType=NVARCHAR},
+      Dept = #{dept,jdbcType=NVARCHAR},
+      Source = #{source,jdbcType=NVARCHAR},
+      publishTime = #{publishtime,jdbcType=TIMESTAMP},
+      Author = #{author,jdbcType=NVARCHAR},
+      ClickTimes = #{clicktimes,jdbcType=INTEGER},
+      Status = #{status,jdbcType=INTEGER},
+      SubmitMan = #{submitman,jdbcType=NVARCHAR},
+      SubmitTime = #{submittime,jdbcType=TIMESTAMP},
+      ModifyTime = #{modifytime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

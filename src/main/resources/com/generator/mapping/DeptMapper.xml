@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.generator.mapper.DeptMapper">
+  <resultMap id="BaseResultMap" type="com.generator.model.Dept">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="DeptNo" jdbcType="INTEGER" property="deptno" />
+    <result column="DeptName" jdbcType="NVARCHAR" property="deptname" />
+    <result column="DeptLevel" jdbcType="INTEGER" property="deptlevel" />
+    <result column="DeptRight" jdbcType="INTEGER" property="deptright" />
+    <result column="Leader" jdbcType="NVARCHAR" property="leader" />
+    <result column="ParentID" jdbcType="INTEGER" property="parentid" />
+    <result column="DeptDuty" jdbcType="NVARCHAR" property="deptduty" />
+    <result column="DeptPhone" jdbcType="NVARCHAR" property="deptphone" />
+    <result column="DeptEMail" jdbcType="NVARCHAR" property="deptemail" />
+    <result column="ModifyTime" jdbcType="TIMESTAMP" property="modifytime" />
+    <result column="nSerial" jdbcType="INTEGER" property="nserial" />
+    <result column="pym" jdbcType="NVARCHAR" property="pym" />
+    <result column="DeptStatus" jdbcType="INTEGER" property="deptstatus" />
+    <result column="cname" jdbcType="NVARCHAR" property="cname" />
+    <result column="oaid" jdbcType="NVARCHAR" property="oaid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, DeptNo, DeptName, DeptLevel, DeptRight, Leader, ParentID, DeptDuty, DeptPhone, 
+    DeptEMail, ModifyTime, nSerial, pym, DeptStatus, cname, oaid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from Dept
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from Dept
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.generator.model.Dept">
+    insert into Dept (ID, DeptNo, DeptName, 
+      DeptLevel, DeptRight, Leader, 
+      ParentID, DeptDuty, DeptPhone, 
+      DeptEMail, ModifyTime, nSerial, 
+      pym, DeptStatus, cname, 
+      oaid)
+    values (#{id,jdbcType=INTEGER}, #{deptno,jdbcType=INTEGER}, #{deptname,jdbcType=NVARCHAR}, 
+      #{deptlevel,jdbcType=INTEGER}, #{deptright,jdbcType=INTEGER}, #{leader,jdbcType=NVARCHAR}, 
+      #{parentid,jdbcType=INTEGER}, #{deptduty,jdbcType=NVARCHAR}, #{deptphone,jdbcType=NVARCHAR}, 
+      #{deptemail,jdbcType=NVARCHAR}, #{modifytime,jdbcType=TIMESTAMP}, #{nserial,jdbcType=INTEGER}, 
+      #{pym,jdbcType=NVARCHAR}, #{deptstatus,jdbcType=INTEGER}, #{cname,jdbcType=NVARCHAR}, 
+      #{oaid,jdbcType=NVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.generator.model.Dept">
+    insert into Dept
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="deptno != null">
+        DeptNo,
+      </if>
+      <if test="deptname != null">
+        DeptName,
+      </if>
+      <if test="deptlevel != null">
+        DeptLevel,
+      </if>
+      <if test="deptright != null">
+        DeptRight,
+      </if>
+      <if test="leader != null">
+        Leader,
+      </if>
+      <if test="parentid != null">
+        ParentID,
+      </if>
+      <if test="deptduty != null">
+        DeptDuty,
+      </if>
+      <if test="deptphone != null">
+        DeptPhone,
+      </if>
+      <if test="deptemail != null">
+        DeptEMail,
+      </if>
+      <if test="modifytime != null">
+        ModifyTime,
+      </if>
+      <if test="nserial != null">
+        nSerial,
+      </if>
+      <if test="pym != null">
+        pym,
+      </if>
+      <if test="deptstatus != null">
+        DeptStatus,
+      </if>
+      <if test="cname != null">
+        cname,
+      </if>
+      <if test="oaid != null">
+        oaid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="deptno != null">
+        #{deptno,jdbcType=INTEGER},
+      </if>
+      <if test="deptname != null">
+        #{deptname,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptlevel != null">
+        #{deptlevel,jdbcType=INTEGER},
+      </if>
+      <if test="deptright != null">
+        #{deptright,jdbcType=INTEGER},
+      </if>
+      <if test="leader != null">
+        #{leader,jdbcType=NVARCHAR},
+      </if>
+      <if test="parentid != null">
+        #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="deptduty != null">
+        #{deptduty,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptphone != null">
+        #{deptphone,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptemail != null">
+        #{deptemail,jdbcType=NVARCHAR},
+      </if>
+      <if test="modifytime != null">
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nserial != null">
+        #{nserial,jdbcType=INTEGER},
+      </if>
+      <if test="pym != null">
+        #{pym,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptstatus != null">
+        #{deptstatus,jdbcType=INTEGER},
+      </if>
+      <if test="cname != null">
+        #{cname,jdbcType=NVARCHAR},
+      </if>
+      <if test="oaid != null">
+        #{oaid,jdbcType=NVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.generator.model.Dept">
+    update Dept
+    <set>
+      <if test="deptno != null">
+        DeptNo = #{deptno,jdbcType=INTEGER},
+      </if>
+      <if test="deptname != null">
+        DeptName = #{deptname,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptlevel != null">
+        DeptLevel = #{deptlevel,jdbcType=INTEGER},
+      </if>
+      <if test="deptright != null">
+        DeptRight = #{deptright,jdbcType=INTEGER},
+      </if>
+      <if test="leader != null">
+        Leader = #{leader,jdbcType=NVARCHAR},
+      </if>
+      <if test="parentid != null">
+        ParentID = #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="deptduty != null">
+        DeptDuty = #{deptduty,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptphone != null">
+        DeptPhone = #{deptphone,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptemail != null">
+        DeptEMail = #{deptemail,jdbcType=NVARCHAR},
+      </if>
+      <if test="modifytime != null">
+        ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nserial != null">
+        nSerial = #{nserial,jdbcType=INTEGER},
+      </if>
+      <if test="pym != null">
+        pym = #{pym,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptstatus != null">
+        DeptStatus = #{deptstatus,jdbcType=INTEGER},
+      </if>
+      <if test="cname != null">
+        cname = #{cname,jdbcType=NVARCHAR},
+      </if>
+      <if test="oaid != null">
+        oaid = #{oaid,jdbcType=NVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.generator.model.Dept">
+    update Dept
+    set DeptNo = #{deptno,jdbcType=INTEGER},
+      DeptName = #{deptname,jdbcType=NVARCHAR},
+      DeptLevel = #{deptlevel,jdbcType=INTEGER},
+      DeptRight = #{deptright,jdbcType=INTEGER},
+      Leader = #{leader,jdbcType=NVARCHAR},
+      ParentID = #{parentid,jdbcType=INTEGER},
+      DeptDuty = #{deptduty,jdbcType=NVARCHAR},
+      DeptPhone = #{deptphone,jdbcType=NVARCHAR},
+      DeptEMail = #{deptemail,jdbcType=NVARCHAR},
+      ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      nSerial = #{nserial,jdbcType=INTEGER},
+      pym = #{pym,jdbcType=NVARCHAR},
+      DeptStatus = #{deptstatus,jdbcType=INTEGER},
+      cname = #{cname,jdbcType=NVARCHAR},
+      oaid = #{oaid,jdbcType=NVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.generator.model.Dept">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="DeptNo" jdbcType="INTEGER" property="deptno" />
+    <result column="DeptName" jdbcType="NVARCHAR" property="deptname" />
+    <result column="DeptLevel" jdbcType="INTEGER" property="deptlevel" />
+    <result column="DeptRight" jdbcType="INTEGER" property="deptright" />
+    <result column="Leader" jdbcType="NVARCHAR" property="leader" />
+    <result column="ParentID" jdbcType="INTEGER" property="parentid" />
+    <result column="DeptDuty" jdbcType="NVARCHAR" property="deptduty" />
+    <result column="DeptPhone" jdbcType="NVARCHAR" property="deptphone" />
+    <result column="DeptEMail" jdbcType="NVARCHAR" property="deptemail" />
+    <result column="ModifyTime" jdbcType="TIMESTAMP" property="modifytime" />
+    <result column="nSerial" jdbcType="INTEGER" property="nserial" />
+    <result column="pym" jdbcType="NVARCHAR" property="pym" />
+    <result column="DeptStatus" jdbcType="INTEGER" property="deptstatus" />
+    <result column="cname" jdbcType="NVARCHAR" property="cname" />
+    <result column="oaid" jdbcType="NVARCHAR" property="oaid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, DeptNo, DeptName, DeptLevel, DeptRight, Leader, ParentID, DeptDuty, DeptPhone, 
+    DeptEMail, ModifyTime, nSerial, pym, DeptStatus, cname, oaid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from Dept
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from Dept
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.generator.model.Dept">
+    insert into Dept (ID, DeptNo, DeptName, 
+      DeptLevel, DeptRight, Leader, 
+      ParentID, DeptDuty, DeptPhone, 
+      DeptEMail, ModifyTime, nSerial, 
+      pym, DeptStatus, cname, 
+      oaid)
+    values (#{id,jdbcType=INTEGER}, #{deptno,jdbcType=INTEGER}, #{deptname,jdbcType=NVARCHAR}, 
+      #{deptlevel,jdbcType=INTEGER}, #{deptright,jdbcType=INTEGER}, #{leader,jdbcType=NVARCHAR}, 
+      #{parentid,jdbcType=INTEGER}, #{deptduty,jdbcType=NVARCHAR}, #{deptphone,jdbcType=NVARCHAR}, 
+      #{deptemail,jdbcType=NVARCHAR}, #{modifytime,jdbcType=TIMESTAMP}, #{nserial,jdbcType=INTEGER}, 
+      #{pym,jdbcType=NVARCHAR}, #{deptstatus,jdbcType=INTEGER}, #{cname,jdbcType=NVARCHAR}, 
+      #{oaid,jdbcType=NVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.generator.model.Dept">
+    insert into Dept
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="deptno != null">
+        DeptNo,
+      </if>
+      <if test="deptname != null">
+        DeptName,
+      </if>
+      <if test="deptlevel != null">
+        DeptLevel,
+      </if>
+      <if test="deptright != null">
+        DeptRight,
+      </if>
+      <if test="leader != null">
+        Leader,
+      </if>
+      <if test="parentid != null">
+        ParentID,
+      </if>
+      <if test="deptduty != null">
+        DeptDuty,
+      </if>
+      <if test="deptphone != null">
+        DeptPhone,
+      </if>
+      <if test="deptemail != null">
+        DeptEMail,
+      </if>
+      <if test="modifytime != null">
+        ModifyTime,
+      </if>
+      <if test="nserial != null">
+        nSerial,
+      </if>
+      <if test="pym != null">
+        pym,
+      </if>
+      <if test="deptstatus != null">
+        DeptStatus,
+      </if>
+      <if test="cname != null">
+        cname,
+      </if>
+      <if test="oaid != null">
+        oaid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="deptno != null">
+        #{deptno,jdbcType=INTEGER},
+      </if>
+      <if test="deptname != null">
+        #{deptname,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptlevel != null">
+        #{deptlevel,jdbcType=INTEGER},
+      </if>
+      <if test="deptright != null">
+        #{deptright,jdbcType=INTEGER},
+      </if>
+      <if test="leader != null">
+        #{leader,jdbcType=NVARCHAR},
+      </if>
+      <if test="parentid != null">
+        #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="deptduty != null">
+        #{deptduty,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptphone != null">
+        #{deptphone,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptemail != null">
+        #{deptemail,jdbcType=NVARCHAR},
+      </if>
+      <if test="modifytime != null">
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nserial != null">
+        #{nserial,jdbcType=INTEGER},
+      </if>
+      <if test="pym != null">
+        #{pym,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptstatus != null">
+        #{deptstatus,jdbcType=INTEGER},
+      </if>
+      <if test="cname != null">
+        #{cname,jdbcType=NVARCHAR},
+      </if>
+      <if test="oaid != null">
+        #{oaid,jdbcType=NVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.generator.model.Dept">
+    update Dept
+    <set>
+      <if test="deptno != null">
+        DeptNo = #{deptno,jdbcType=INTEGER},
+      </if>
+      <if test="deptname != null">
+        DeptName = #{deptname,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptlevel != null">
+        DeptLevel = #{deptlevel,jdbcType=INTEGER},
+      </if>
+      <if test="deptright != null">
+        DeptRight = #{deptright,jdbcType=INTEGER},
+      </if>
+      <if test="leader != null">
+        Leader = #{leader,jdbcType=NVARCHAR},
+      </if>
+      <if test="parentid != null">
+        ParentID = #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="deptduty != null">
+        DeptDuty = #{deptduty,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptphone != null">
+        DeptPhone = #{deptphone,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptemail != null">
+        DeptEMail = #{deptemail,jdbcType=NVARCHAR},
+      </if>
+      <if test="modifytime != null">
+        ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nserial != null">
+        nSerial = #{nserial,jdbcType=INTEGER},
+      </if>
+      <if test="pym != null">
+        pym = #{pym,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptstatus != null">
+        DeptStatus = #{deptstatus,jdbcType=INTEGER},
+      </if>
+      <if test="cname != null">
+        cname = #{cname,jdbcType=NVARCHAR},
+      </if>
+      <if test="oaid != null">
+        oaid = #{oaid,jdbcType=NVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.generator.model.Dept">
+    update Dept
+    set DeptNo = #{deptno,jdbcType=INTEGER},
+      DeptName = #{deptname,jdbcType=NVARCHAR},
+      DeptLevel = #{deptlevel,jdbcType=INTEGER},
+      DeptRight = #{deptright,jdbcType=INTEGER},
+      Leader = #{leader,jdbcType=NVARCHAR},
+      ParentID = #{parentid,jdbcType=INTEGER},
+      DeptDuty = #{deptduty,jdbcType=NVARCHAR},
+      DeptPhone = #{deptphone,jdbcType=NVARCHAR},
+      DeptEMail = #{deptemail,jdbcType=NVARCHAR},
+      ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      nSerial = #{nserial,jdbcType=INTEGER},
+      pym = #{pym,jdbcType=NVARCHAR},
+      DeptStatus = #{deptstatus,jdbcType=INTEGER},
+      cname = #{cname,jdbcType=NVARCHAR},
+      oaid = #{oaid,jdbcType=NVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

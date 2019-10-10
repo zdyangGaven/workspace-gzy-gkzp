@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.generator.mapper.HrRecruitEntryinfoOtherMapper">
+  <resultMap id="BaseResultMap" type="com.generator.model.HrRecruitEntryinfoOther">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="BaseID" jdbcType="INTEGER" property="baseid" />
+    <result column="Telephone" jdbcType="NVARCHAR" property="telephone" />
+    <result column="EMail" jdbcType="NVARCHAR" property="email" />
+    <result column="Address" jdbcType="NVARCHAR" property="address" />
+    <result column="AchievementsAndJustice" jdbcType="NVARCHAR" property="achievementsandjustice" />
+    <result column="AvoidInfo" jdbcType="NVARCHAR" property="avoidinfo" />
+    <result column="UnitAddress1" jdbcType="NVARCHAR" property="unitaddress1" />
+    <result column="ContactsInfo1" jdbcType="NVARCHAR" property="contactsinfo1" />
+    <result column="UnitAddress2" jdbcType="NVARCHAR" property="unitaddress2" />
+    <result column="ContactsInfo2" jdbcType="NVARCHAR" property="contactsinfo2" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, BaseID, Telephone, EMail, Address, AchievementsAndJustice, AvoidInfo, UnitAddress1, 
+    ContactsInfo1, UnitAddress2, ContactsInfo2
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from HR_Recruit_entryInfo_other
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from HR_Recruit_entryInfo_other
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.generator.model.HrRecruitEntryinfoOther">
+    insert into HR_Recruit_entryInfo_other (ID, BaseID, Telephone, 
+      EMail, Address, AchievementsAndJustice, 
+      AvoidInfo, UnitAddress1, ContactsInfo1, 
+      UnitAddress2, ContactsInfo2)
+    values (#{id,jdbcType=INTEGER}, #{baseid,jdbcType=INTEGER}, #{telephone,jdbcType=NVARCHAR}, 
+      #{email,jdbcType=NVARCHAR}, #{address,jdbcType=NVARCHAR}, #{achievementsandjustice,jdbcType=NVARCHAR}, 
+      #{avoidinfo,jdbcType=NVARCHAR}, #{unitaddress1,jdbcType=NVARCHAR}, #{contactsinfo1,jdbcType=NVARCHAR}, 
+      #{unitaddress2,jdbcType=NVARCHAR}, #{contactsinfo2,jdbcType=NVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.generator.model.HrRecruitEntryinfoOther">
+    insert into HR_Recruit_entryInfo_other
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="baseid != null">
+        BaseID,
+      </if>
+      <if test="telephone != null">
+        Telephone,
+      </if>
+      <if test="email != null">
+        EMail,
+      </if>
+      <if test="address != null">
+        Address,
+      </if>
+      <if test="achievementsandjustice != null">
+        AchievementsAndJustice,
+      </if>
+      <if test="avoidinfo != null">
+        AvoidInfo,
+      </if>
+      <if test="unitaddress1 != null">
+        UnitAddress1,
+      </if>
+      <if test="contactsinfo1 != null">
+        ContactsInfo1,
+      </if>
+      <if test="unitaddress2 != null">
+        UnitAddress2,
+      </if>
+      <if test="contactsinfo2 != null">
+        ContactsInfo2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="baseid != null">
+        #{baseid,jdbcType=INTEGER},
+      </if>
+      <if test="telephone != null">
+        #{telephone,jdbcType=NVARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=NVARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=NVARCHAR},
+      </if>
+      <if test="achievementsandjustice != null">
+        #{achievementsandjustice,jdbcType=NVARCHAR},
+      </if>
+      <if test="avoidinfo != null">
+        #{avoidinfo,jdbcType=NVARCHAR},
+      </if>
+      <if test="unitaddress1 != null">
+        #{unitaddress1,jdbcType=NVARCHAR},
+      </if>
+      <if test="contactsinfo1 != null">
+        #{contactsinfo1,jdbcType=NVARCHAR},
+      </if>
+      <if test="unitaddress2 != null">
+        #{unitaddress2,jdbcType=NVARCHAR},
+      </if>
+      <if test="contactsinfo2 != null">
+        #{contactsinfo2,jdbcType=NVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.generator.model.HrRecruitEntryinfoOther">
+    update HR_Recruit_entryInfo_other
+    <set>
+      <if test="baseid != null">
+        BaseID = #{baseid,jdbcType=INTEGER},
+      </if>
+      <if test="telephone != null">
+        Telephone = #{telephone,jdbcType=NVARCHAR},
+      </if>
+      <if test="email != null">
+        EMail = #{email,jdbcType=NVARCHAR},
+      </if>
+      <if test="address != null">
+        Address = #{address,jdbcType=NVARCHAR},
+      </if>
+      <if test="achievementsandjustice != null">
+        AchievementsAndJustice = #{achievementsandjustice,jdbcType=NVARCHAR},
+      </if>
+      <if test="avoidinfo != null">
+        AvoidInfo = #{avoidinfo,jdbcType=NVARCHAR},
+      </if>
+      <if test="unitaddress1 != null">
+        UnitAddress1 = #{unitaddress1,jdbcType=NVARCHAR},
+      </if>
+      <if test="contactsinfo1 != null">
+        ContactsInfo1 = #{contactsinfo1,jdbcType=NVARCHAR},
+      </if>
+      <if test="unitaddress2 != null">
+        UnitAddress2 = #{unitaddress2,jdbcType=NVARCHAR},
+      </if>
+      <if test="contactsinfo2 != null">
+        ContactsInfo2 = #{contactsinfo2,jdbcType=NVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.generator.model.HrRecruitEntryinfoOther">
+    update HR_Recruit_entryInfo_other
+    set BaseID = #{baseid,jdbcType=INTEGER},
+      Telephone = #{telephone,jdbcType=NVARCHAR},
+      EMail = #{email,jdbcType=NVARCHAR},
+      Address = #{address,jdbcType=NVARCHAR},
+      AchievementsAndJustice = #{achievementsandjustice,jdbcType=NVARCHAR},
+      AvoidInfo = #{avoidinfo,jdbcType=NVARCHAR},
+      UnitAddress1 = #{unitaddress1,jdbcType=NVARCHAR},
+      ContactsInfo1 = #{contactsinfo1,jdbcType=NVARCHAR},
+      UnitAddress2 = #{unitaddress2,jdbcType=NVARCHAR},
+      ContactsInfo2 = #{contactsinfo2,jdbcType=NVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.generator.model.HrRecruitEntryinfoOther">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="BaseID" jdbcType="INTEGER" property="baseid" />
+    <result column="Telephone" jdbcType="NVARCHAR" property="telephone" />
+    <result column="EMail" jdbcType="NVARCHAR" property="email" />
+    <result column="Address" jdbcType="NVARCHAR" property="address" />
+    <result column="AchievementsAndJustice" jdbcType="NVARCHAR" property="achievementsandjustice" />
+    <result column="AvoidInfo" jdbcType="NVARCHAR" property="avoidinfo" />
+    <result column="UnitAddress1" jdbcType="NVARCHAR" property="unitaddress1" />
+    <result column="ContactsInfo1" jdbcType="NVARCHAR" property="contactsinfo1" />
+    <result column="UnitAddress2" jdbcType="NVARCHAR" property="unitaddress2" />
+    <result column="ContactsInfo2" jdbcType="NVARCHAR" property="contactsinfo2" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, BaseID, Telephone, EMail, Address, AchievementsAndJustice, AvoidInfo, UnitAddress1, 
+    ContactsInfo1, UnitAddress2, ContactsInfo2
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from HR_Recruit_entryInfo_other
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from HR_Recruit_entryInfo_other
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.generator.model.HrRecruitEntryinfoOther">
+    insert into HR_Recruit_entryInfo_other (ID, BaseID, Telephone, 
+      EMail, Address, AchievementsAndJustice, 
+      AvoidInfo, UnitAddress1, ContactsInfo1, 
+      UnitAddress2, ContactsInfo2)
+    values (#{id,jdbcType=INTEGER}, #{baseid,jdbcType=INTEGER}, #{telephone,jdbcType=NVARCHAR}, 
+      #{email,jdbcType=NVARCHAR}, #{address,jdbcType=NVARCHAR}, #{achievementsandjustice,jdbcType=NVARCHAR}, 
+      #{avoidinfo,jdbcType=NVARCHAR}, #{unitaddress1,jdbcType=NVARCHAR}, #{contactsinfo1,jdbcType=NVARCHAR}, 
+      #{unitaddress2,jdbcType=NVARCHAR}, #{contactsinfo2,jdbcType=NVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.generator.model.HrRecruitEntryinfoOther">
+    insert into HR_Recruit_entryInfo_other
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="baseid != null">
+        BaseID,
+      </if>
+      <if test="telephone != null">
+        Telephone,
+      </if>
+      <if test="email != null">
+        EMail,
+      </if>
+      <if test="address != null">
+        Address,
+      </if>
+      <if test="achievementsandjustice != null">
+        AchievementsAndJustice,
+      </if>
+      <if test="avoidinfo != null">
+        AvoidInfo,
+      </if>
+      <if test="unitaddress1 != null">
+        UnitAddress1,
+      </if>
+      <if test="contactsinfo1 != null">
+        ContactsInfo1,
+      </if>
+      <if test="unitaddress2 != null">
+        UnitAddress2,
+      </if>
+      <if test="contactsinfo2 != null">
+        ContactsInfo2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="baseid != null">
+        #{baseid,jdbcType=INTEGER},
+      </if>
+      <if test="telephone != null">
+        #{telephone,jdbcType=NVARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=NVARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=NVARCHAR},
+      </if>
+      <if test="achievementsandjustice != null">
+        #{achievementsandjustice,jdbcType=NVARCHAR},
+      </if>
+      <if test="avoidinfo != null">
+        #{avoidinfo,jdbcType=NVARCHAR},
+      </if>
+      <if test="unitaddress1 != null">
+        #{unitaddress1,jdbcType=NVARCHAR},
+      </if>
+      <if test="contactsinfo1 != null">
+        #{contactsinfo1,jdbcType=NVARCHAR},
+      </if>
+      <if test="unitaddress2 != null">
+        #{unitaddress2,jdbcType=NVARCHAR},
+      </if>
+      <if test="contactsinfo2 != null">
+        #{contactsinfo2,jdbcType=NVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.generator.model.HrRecruitEntryinfoOther">
+    update HR_Recruit_entryInfo_other
+    <set>
+      <if test="baseid != null">
+        BaseID = #{baseid,jdbcType=INTEGER},
+      </if>
+      <if test="telephone != null">
+        Telephone = #{telephone,jdbcType=NVARCHAR},
+      </if>
+      <if test="email != null">
+        EMail = #{email,jdbcType=NVARCHAR},
+      </if>
+      <if test="address != null">
+        Address = #{address,jdbcType=NVARCHAR},
+      </if>
+      <if test="achievementsandjustice != null">
+        AchievementsAndJustice = #{achievementsandjustice,jdbcType=NVARCHAR},
+      </if>
+      <if test="avoidinfo != null">
+        AvoidInfo = #{avoidinfo,jdbcType=NVARCHAR},
+      </if>
+      <if test="unitaddress1 != null">
+        UnitAddress1 = #{unitaddress1,jdbcType=NVARCHAR},
+      </if>
+      <if test="contactsinfo1 != null">
+        ContactsInfo1 = #{contactsinfo1,jdbcType=NVARCHAR},
+      </if>
+      <if test="unitaddress2 != null">
+        UnitAddress2 = #{unitaddress2,jdbcType=NVARCHAR},
+      </if>
+      <if test="contactsinfo2 != null">
+        ContactsInfo2 = #{contactsinfo2,jdbcType=NVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.generator.model.HrRecruitEntryinfoOther">
+    update HR_Recruit_entryInfo_other
+    set BaseID = #{baseid,jdbcType=INTEGER},
+      Telephone = #{telephone,jdbcType=NVARCHAR},
+      EMail = #{email,jdbcType=NVARCHAR},
+      Address = #{address,jdbcType=NVARCHAR},
+      AchievementsAndJustice = #{achievementsandjustice,jdbcType=NVARCHAR},
+      AvoidInfo = #{avoidinfo,jdbcType=NVARCHAR},
+      UnitAddress1 = #{unitaddress1,jdbcType=NVARCHAR},
+      ContactsInfo1 = #{contactsinfo1,jdbcType=NVARCHAR},
+      UnitAddress2 = #{unitaddress2,jdbcType=NVARCHAR},
+      ContactsInfo2 = #{contactsinfo2,jdbcType=NVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.generator.model.HrRecruitEntryinfoOther">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="BaseID" jdbcType="INTEGER" property="baseid" />
+    <result column="Telephone" jdbcType="NVARCHAR" property="telephone" />
+    <result column="EMail" jdbcType="NVARCHAR" property="email" />
+    <result column="Address" jdbcType="NVARCHAR" property="address" />
+    <result column="AchievementsAndJustice" jdbcType="NVARCHAR" property="achievementsandjustice" />
+    <result column="AvoidInfo" jdbcType="NVARCHAR" property="avoidinfo" />
+    <result column="UnitAddress1" jdbcType="NVARCHAR" property="unitaddress1" />
+    <result column="ContactsInfo1" jdbcType="NVARCHAR" property="contactsinfo1" />
+    <result column="UnitAddress2" jdbcType="NVARCHAR" property="unitaddress2" />
+    <result column="ContactsInfo2" jdbcType="NVARCHAR" property="contactsinfo2" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, BaseID, Telephone, EMail, Address, AchievementsAndJustice, AvoidInfo, UnitAddress1, 
+    ContactsInfo1, UnitAddress2, ContactsInfo2
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from HR_Recruit_entryInfo_other
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from HR_Recruit_entryInfo_other
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.generator.model.HrRecruitEntryinfoOther">
+    insert into HR_Recruit_entryInfo_other (ID, BaseID, Telephone, 
+      EMail, Address, AchievementsAndJustice, 
+      AvoidInfo, UnitAddress1, ContactsInfo1, 
+      UnitAddress2, ContactsInfo2)
+    values (#{id,jdbcType=INTEGER}, #{baseid,jdbcType=INTEGER}, #{telephone,jdbcType=NVARCHAR}, 
+      #{email,jdbcType=NVARCHAR}, #{address,jdbcType=NVARCHAR}, #{achievementsandjustice,jdbcType=NVARCHAR}, 
+      #{avoidinfo,jdbcType=NVARCHAR}, #{unitaddress1,jdbcType=NVARCHAR}, #{contactsinfo1,jdbcType=NVARCHAR}, 
+      #{unitaddress2,jdbcType=NVARCHAR}, #{contactsinfo2,jdbcType=NVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.generator.model.HrRecruitEntryinfoOther">
+    insert into HR_Recruit_entryInfo_other
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="baseid != null">
+        BaseID,
+      </if>
+      <if test="telephone != null">
+        Telephone,
+      </if>
+      <if test="email != null">
+        EMail,
+      </if>
+      <if test="address != null">
+        Address,
+      </if>
+      <if test="achievementsandjustice != null">
+        AchievementsAndJustice,
+      </if>
+      <if test="avoidinfo != null">
+        AvoidInfo,
+      </if>
+      <if test="unitaddress1 != null">
+        UnitAddress1,
+      </if>
+      <if test="contactsinfo1 != null">
+        ContactsInfo1,
+      </if>
+      <if test="unitaddress2 != null">
+        UnitAddress2,
+      </if>
+      <if test="contactsinfo2 != null">
+        ContactsInfo2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="baseid != null">
+        #{baseid,jdbcType=INTEGER},
+      </if>
+      <if test="telephone != null">
+        #{telephone,jdbcType=NVARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=NVARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=NVARCHAR},
+      </if>
+      <if test="achievementsandjustice != null">
+        #{achievementsandjustice,jdbcType=NVARCHAR},
+      </if>
+      <if test="avoidinfo != null">
+        #{avoidinfo,jdbcType=NVARCHAR},
+      </if>
+      <if test="unitaddress1 != null">
+        #{unitaddress1,jdbcType=NVARCHAR},
+      </if>
+      <if test="contactsinfo1 != null">
+        #{contactsinfo1,jdbcType=NVARCHAR},
+      </if>
+      <if test="unitaddress2 != null">
+        #{unitaddress2,jdbcType=NVARCHAR},
+      </if>
+      <if test="contactsinfo2 != null">
+        #{contactsinfo2,jdbcType=NVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.generator.model.HrRecruitEntryinfoOther">
+    update HR_Recruit_entryInfo_other
+    <set>
+      <if test="baseid != null">
+        BaseID = #{baseid,jdbcType=INTEGER},
+      </if>
+      <if test="telephone != null">
+        Telephone = #{telephone,jdbcType=NVARCHAR},
+      </if>
+      <if test="email != null">
+        EMail = #{email,jdbcType=NVARCHAR},
+      </if>
+      <if test="address != null">
+        Address = #{address,jdbcType=NVARCHAR},
+      </if>
+      <if test="achievementsandjustice != null">
+        AchievementsAndJustice = #{achievementsandjustice,jdbcType=NVARCHAR},
+      </if>
+      <if test="avoidinfo != null">
+        AvoidInfo = #{avoidinfo,jdbcType=NVARCHAR},
+      </if>
+      <if test="unitaddress1 != null">
+        UnitAddress1 = #{unitaddress1,jdbcType=NVARCHAR},
+      </if>
+      <if test="contactsinfo1 != null">
+        ContactsInfo1 = #{contactsinfo1,jdbcType=NVARCHAR},
+      </if>
+      <if test="unitaddress2 != null">
+        UnitAddress2 = #{unitaddress2,jdbcType=NVARCHAR},
+      </if>
+      <if test="contactsinfo2 != null">
+        ContactsInfo2 = #{contactsinfo2,jdbcType=NVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.generator.model.HrRecruitEntryinfoOther">
+    update HR_Recruit_entryInfo_other
+    set BaseID = #{baseid,jdbcType=INTEGER},
+      Telephone = #{telephone,jdbcType=NVARCHAR},
+      EMail = #{email,jdbcType=NVARCHAR},
+      Address = #{address,jdbcType=NVARCHAR},
+      AchievementsAndJustice = #{achievementsandjustice,jdbcType=NVARCHAR},
+      AvoidInfo = #{avoidinfo,jdbcType=NVARCHAR},
+      UnitAddress1 = #{unitaddress1,jdbcType=NVARCHAR},
+      ContactsInfo1 = #{contactsinfo1,jdbcType=NVARCHAR},
+      UnitAddress2 = #{unitaddress2,jdbcType=NVARCHAR},
+      ContactsInfo2 = #{contactsinfo2,jdbcType=NVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

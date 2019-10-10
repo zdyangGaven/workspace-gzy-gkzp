@@ -1,0 +1,928 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.generator.mapper.HrRecuritPlanDetailsMapper">
+  <resultMap id="BaseResultMap" type="com.generator.model.HrRecuritPlanDetails">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="Plan_id" jdbcType="NVARCHAR" property="planId" />
+    <result column="DeptNo" jdbcType="NVARCHAR" property="deptno" />
+    <result column="Details_Status" jdbcType="INTEGER" property="detailsStatus" />
+    <result column="InputMan" jdbcType="NVARCHAR" property="inputman" />
+    <result column="InputTime" jdbcType="TIMESTAMP" property="inputtime" />
+    <result column="DeptExamine" jdbcType="NVARCHAR" property="deptexamine" />
+    <result column="DeptTime" jdbcType="TIMESTAMP" property="depttime" />
+    <result column="DeptOpinion" jdbcType="NVARCHAR" property="deptopinion" />
+    <result column="LeaderMan" jdbcType="NVARCHAR" property="leaderman" />
+    <result column="LeaderTime" jdbcType="TIMESTAMP" property="leadertime" />
+    <result column="LeaderOpinion" jdbcType="NVARCHAR" property="leaderopinion" />
+    <result column="Personnel" jdbcType="NVARCHAR" property="personnel" />
+    <result column="PersonnelTime" jdbcType="TIMESTAMP" property="personneltime" />
+    <result column="PersonnelOpinion" jdbcType="NVARCHAR" property="personnelopinion" />
+    <result column="Affixfile" jdbcType="NVARCHAR" property="affixfile" />
+    <result column="DeptName" jdbcType="NVARCHAR" property="deptname" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, Plan_id, DeptNo, Details_Status, InputMan, InputTime, DeptExamine, DeptTime, 
+    DeptOpinion, LeaderMan, LeaderTime, LeaderOpinion, Personnel, PersonnelTime, PersonnelOpinion, 
+    Affixfile, DeptName
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from HR_Recurit_Plan_Details
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from HR_Recurit_Plan_Details
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.generator.model.HrRecuritPlanDetails">
+    insert into HR_Recurit_Plan_Details (ID, Plan_id, DeptNo, 
+      Details_Status, InputMan, InputTime, 
+      DeptExamine, DeptTime, DeptOpinion, 
+      LeaderMan, LeaderTime, LeaderOpinion, 
+      Personnel, PersonnelTime, PersonnelOpinion, 
+      Affixfile, DeptName)
+    values (#{id,jdbcType=INTEGER}, #{planId,jdbcType=NVARCHAR}, #{deptno,jdbcType=NVARCHAR}, 
+      #{detailsStatus,jdbcType=INTEGER}, #{inputman,jdbcType=NVARCHAR}, #{inputtime,jdbcType=TIMESTAMP}, 
+      #{deptexamine,jdbcType=NVARCHAR}, #{depttime,jdbcType=TIMESTAMP}, #{deptopinion,jdbcType=NVARCHAR}, 
+      #{leaderman,jdbcType=NVARCHAR}, #{leadertime,jdbcType=TIMESTAMP}, #{leaderopinion,jdbcType=NVARCHAR}, 
+      #{personnel,jdbcType=NVARCHAR}, #{personneltime,jdbcType=TIMESTAMP}, #{personnelopinion,jdbcType=NVARCHAR}, 
+      #{affixfile,jdbcType=NVARCHAR}, #{deptname,jdbcType=NVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.generator.model.HrRecuritPlanDetails">
+    insert into HR_Recurit_Plan_Details
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="planId != null">
+        Plan_id,
+      </if>
+      <if test="deptno != null">
+        DeptNo,
+      </if>
+      <if test="detailsStatus != null">
+        Details_Status,
+      </if>
+      <if test="inputman != null">
+        InputMan,
+      </if>
+      <if test="inputtime != null">
+        InputTime,
+      </if>
+      <if test="deptexamine != null">
+        DeptExamine,
+      </if>
+      <if test="depttime != null">
+        DeptTime,
+      </if>
+      <if test="deptopinion != null">
+        DeptOpinion,
+      </if>
+      <if test="leaderman != null">
+        LeaderMan,
+      </if>
+      <if test="leadertime != null">
+        LeaderTime,
+      </if>
+      <if test="leaderopinion != null">
+        LeaderOpinion,
+      </if>
+      <if test="personnel != null">
+        Personnel,
+      </if>
+      <if test="personneltime != null">
+        PersonnelTime,
+      </if>
+      <if test="personnelopinion != null">
+        PersonnelOpinion,
+      </if>
+      <if test="affixfile != null">
+        Affixfile,
+      </if>
+      <if test="deptname != null">
+        DeptName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="planId != null">
+        #{planId,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptno != null">
+        #{deptno,jdbcType=NVARCHAR},
+      </if>
+      <if test="detailsStatus != null">
+        #{detailsStatus,jdbcType=INTEGER},
+      </if>
+      <if test="inputman != null">
+        #{inputman,jdbcType=NVARCHAR},
+      </if>
+      <if test="inputtime != null">
+        #{inputtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deptexamine != null">
+        #{deptexamine,jdbcType=NVARCHAR},
+      </if>
+      <if test="depttime != null">
+        #{depttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deptopinion != null">
+        #{deptopinion,jdbcType=NVARCHAR},
+      </if>
+      <if test="leaderman != null">
+        #{leaderman,jdbcType=NVARCHAR},
+      </if>
+      <if test="leadertime != null">
+        #{leadertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="leaderopinion != null">
+        #{leaderopinion,jdbcType=NVARCHAR},
+      </if>
+      <if test="personnel != null">
+        #{personnel,jdbcType=NVARCHAR},
+      </if>
+      <if test="personneltime != null">
+        #{personneltime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="personnelopinion != null">
+        #{personnelopinion,jdbcType=NVARCHAR},
+      </if>
+      <if test="affixfile != null">
+        #{affixfile,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptname != null">
+        #{deptname,jdbcType=NVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.generator.model.HrRecuritPlanDetails">
+    update HR_Recurit_Plan_Details
+    <set>
+      <if test="planId != null">
+        Plan_id = #{planId,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptno != null">
+        DeptNo = #{deptno,jdbcType=NVARCHAR},
+      </if>
+      <if test="detailsStatus != null">
+        Details_Status = #{detailsStatus,jdbcType=INTEGER},
+      </if>
+      <if test="inputman != null">
+        InputMan = #{inputman,jdbcType=NVARCHAR},
+      </if>
+      <if test="inputtime != null">
+        InputTime = #{inputtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deptexamine != null">
+        DeptExamine = #{deptexamine,jdbcType=NVARCHAR},
+      </if>
+      <if test="depttime != null">
+        DeptTime = #{depttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deptopinion != null">
+        DeptOpinion = #{deptopinion,jdbcType=NVARCHAR},
+      </if>
+      <if test="leaderman != null">
+        LeaderMan = #{leaderman,jdbcType=NVARCHAR},
+      </if>
+      <if test="leadertime != null">
+        LeaderTime = #{leadertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="leaderopinion != null">
+        LeaderOpinion = #{leaderopinion,jdbcType=NVARCHAR},
+      </if>
+      <if test="personnel != null">
+        Personnel = #{personnel,jdbcType=NVARCHAR},
+      </if>
+      <if test="personneltime != null">
+        PersonnelTime = #{personneltime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="personnelopinion != null">
+        PersonnelOpinion = #{personnelopinion,jdbcType=NVARCHAR},
+      </if>
+      <if test="affixfile != null">
+        Affixfile = #{affixfile,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptname != null">
+        DeptName = #{deptname,jdbcType=NVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.generator.model.HrRecuritPlanDetails">
+    update HR_Recurit_Plan_Details
+    set Plan_id = #{planId,jdbcType=NVARCHAR},
+      DeptNo = #{deptno,jdbcType=NVARCHAR},
+      Details_Status = #{detailsStatus,jdbcType=INTEGER},
+      InputMan = #{inputman,jdbcType=NVARCHAR},
+      InputTime = #{inputtime,jdbcType=TIMESTAMP},
+      DeptExamine = #{deptexamine,jdbcType=NVARCHAR},
+      DeptTime = #{depttime,jdbcType=TIMESTAMP},
+      DeptOpinion = #{deptopinion,jdbcType=NVARCHAR},
+      LeaderMan = #{leaderman,jdbcType=NVARCHAR},
+      LeaderTime = #{leadertime,jdbcType=TIMESTAMP},
+      LeaderOpinion = #{leaderopinion,jdbcType=NVARCHAR},
+      Personnel = #{personnel,jdbcType=NVARCHAR},
+      PersonnelTime = #{personneltime,jdbcType=TIMESTAMP},
+      PersonnelOpinion = #{personnelopinion,jdbcType=NVARCHAR},
+      Affixfile = #{affixfile,jdbcType=NVARCHAR},
+      DeptName = #{deptname,jdbcType=NVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.generator.model.HrRecuritPlanDetails">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="Plan_id" jdbcType="NVARCHAR" property="planId" />
+    <result column="DeptNo" jdbcType="NVARCHAR" property="deptno" />
+    <result column="Details_Status" jdbcType="INTEGER" property="detailsStatus" />
+    <result column="InputMan" jdbcType="NVARCHAR" property="inputman" />
+    <result column="InputTime" jdbcType="TIMESTAMP" property="inputtime" />
+    <result column="DeptExamine" jdbcType="NVARCHAR" property="deptexamine" />
+    <result column="DeptTime" jdbcType="TIMESTAMP" property="depttime" />
+    <result column="DeptOpinion" jdbcType="NVARCHAR" property="deptopinion" />
+    <result column="LeaderMan" jdbcType="NVARCHAR" property="leaderman" />
+    <result column="LeaderTime" jdbcType="TIMESTAMP" property="leadertime" />
+    <result column="LeaderOpinion" jdbcType="NVARCHAR" property="leaderopinion" />
+    <result column="Personnel" jdbcType="NVARCHAR" property="personnel" />
+    <result column="PersonnelTime" jdbcType="TIMESTAMP" property="personneltime" />
+    <result column="PersonnelOpinion" jdbcType="NVARCHAR" property="personnelopinion" />
+    <result column="Affixfile" jdbcType="NVARCHAR" property="affixfile" />
+    <result column="DeptName" jdbcType="NVARCHAR" property="deptname" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, Plan_id, DeptNo, Details_Status, InputMan, InputTime, DeptExamine, DeptTime, 
+    DeptOpinion, LeaderMan, LeaderTime, LeaderOpinion, Personnel, PersonnelTime, PersonnelOpinion, 
+    Affixfile, DeptName
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from HR_Recurit_Plan_Details
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from HR_Recurit_Plan_Details
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.generator.model.HrRecuritPlanDetails">
+    insert into HR_Recurit_Plan_Details (ID, Plan_id, DeptNo, 
+      Details_Status, InputMan, InputTime, 
+      DeptExamine, DeptTime, DeptOpinion, 
+      LeaderMan, LeaderTime, LeaderOpinion, 
+      Personnel, PersonnelTime, PersonnelOpinion, 
+      Affixfile, DeptName)
+    values (#{id,jdbcType=INTEGER}, #{planId,jdbcType=NVARCHAR}, #{deptno,jdbcType=NVARCHAR}, 
+      #{detailsStatus,jdbcType=INTEGER}, #{inputman,jdbcType=NVARCHAR}, #{inputtime,jdbcType=TIMESTAMP}, 
+      #{deptexamine,jdbcType=NVARCHAR}, #{depttime,jdbcType=TIMESTAMP}, #{deptopinion,jdbcType=NVARCHAR}, 
+      #{leaderman,jdbcType=NVARCHAR}, #{leadertime,jdbcType=TIMESTAMP}, #{leaderopinion,jdbcType=NVARCHAR}, 
+      #{personnel,jdbcType=NVARCHAR}, #{personneltime,jdbcType=TIMESTAMP}, #{personnelopinion,jdbcType=NVARCHAR}, 
+      #{affixfile,jdbcType=NVARCHAR}, #{deptname,jdbcType=NVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.generator.model.HrRecuritPlanDetails">
+    insert into HR_Recurit_Plan_Details
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="planId != null">
+        Plan_id,
+      </if>
+      <if test="deptno != null">
+        DeptNo,
+      </if>
+      <if test="detailsStatus != null">
+        Details_Status,
+      </if>
+      <if test="inputman != null">
+        InputMan,
+      </if>
+      <if test="inputtime != null">
+        InputTime,
+      </if>
+      <if test="deptexamine != null">
+        DeptExamine,
+      </if>
+      <if test="depttime != null">
+        DeptTime,
+      </if>
+      <if test="deptopinion != null">
+        DeptOpinion,
+      </if>
+      <if test="leaderman != null">
+        LeaderMan,
+      </if>
+      <if test="leadertime != null">
+        LeaderTime,
+      </if>
+      <if test="leaderopinion != null">
+        LeaderOpinion,
+      </if>
+      <if test="personnel != null">
+        Personnel,
+      </if>
+      <if test="personneltime != null">
+        PersonnelTime,
+      </if>
+      <if test="personnelopinion != null">
+        PersonnelOpinion,
+      </if>
+      <if test="affixfile != null">
+        Affixfile,
+      </if>
+      <if test="deptname != null">
+        DeptName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="planId != null">
+        #{planId,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptno != null">
+        #{deptno,jdbcType=NVARCHAR},
+      </if>
+      <if test="detailsStatus != null">
+        #{detailsStatus,jdbcType=INTEGER},
+      </if>
+      <if test="inputman != null">
+        #{inputman,jdbcType=NVARCHAR},
+      </if>
+      <if test="inputtime != null">
+        #{inputtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deptexamine != null">
+        #{deptexamine,jdbcType=NVARCHAR},
+      </if>
+      <if test="depttime != null">
+        #{depttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deptopinion != null">
+        #{deptopinion,jdbcType=NVARCHAR},
+      </if>
+      <if test="leaderman != null">
+        #{leaderman,jdbcType=NVARCHAR},
+      </if>
+      <if test="leadertime != null">
+        #{leadertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="leaderopinion != null">
+        #{leaderopinion,jdbcType=NVARCHAR},
+      </if>
+      <if test="personnel != null">
+        #{personnel,jdbcType=NVARCHAR},
+      </if>
+      <if test="personneltime != null">
+        #{personneltime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="personnelopinion != null">
+        #{personnelopinion,jdbcType=NVARCHAR},
+      </if>
+      <if test="affixfile != null">
+        #{affixfile,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptname != null">
+        #{deptname,jdbcType=NVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.generator.model.HrRecuritPlanDetails">
+    update HR_Recurit_Plan_Details
+    <set>
+      <if test="planId != null">
+        Plan_id = #{planId,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptno != null">
+        DeptNo = #{deptno,jdbcType=NVARCHAR},
+      </if>
+      <if test="detailsStatus != null">
+        Details_Status = #{detailsStatus,jdbcType=INTEGER},
+      </if>
+      <if test="inputman != null">
+        InputMan = #{inputman,jdbcType=NVARCHAR},
+      </if>
+      <if test="inputtime != null">
+        InputTime = #{inputtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deptexamine != null">
+        DeptExamine = #{deptexamine,jdbcType=NVARCHAR},
+      </if>
+      <if test="depttime != null">
+        DeptTime = #{depttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deptopinion != null">
+        DeptOpinion = #{deptopinion,jdbcType=NVARCHAR},
+      </if>
+      <if test="leaderman != null">
+        LeaderMan = #{leaderman,jdbcType=NVARCHAR},
+      </if>
+      <if test="leadertime != null">
+        LeaderTime = #{leadertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="leaderopinion != null">
+        LeaderOpinion = #{leaderopinion,jdbcType=NVARCHAR},
+      </if>
+      <if test="personnel != null">
+        Personnel = #{personnel,jdbcType=NVARCHAR},
+      </if>
+      <if test="personneltime != null">
+        PersonnelTime = #{personneltime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="personnelopinion != null">
+        PersonnelOpinion = #{personnelopinion,jdbcType=NVARCHAR},
+      </if>
+      <if test="affixfile != null">
+        Affixfile = #{affixfile,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptname != null">
+        DeptName = #{deptname,jdbcType=NVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.generator.model.HrRecuritPlanDetails">
+    update HR_Recurit_Plan_Details
+    set Plan_id = #{planId,jdbcType=NVARCHAR},
+      DeptNo = #{deptno,jdbcType=NVARCHAR},
+      Details_Status = #{detailsStatus,jdbcType=INTEGER},
+      InputMan = #{inputman,jdbcType=NVARCHAR},
+      InputTime = #{inputtime,jdbcType=TIMESTAMP},
+      DeptExamine = #{deptexamine,jdbcType=NVARCHAR},
+      DeptTime = #{depttime,jdbcType=TIMESTAMP},
+      DeptOpinion = #{deptopinion,jdbcType=NVARCHAR},
+      LeaderMan = #{leaderman,jdbcType=NVARCHAR},
+      LeaderTime = #{leadertime,jdbcType=TIMESTAMP},
+      LeaderOpinion = #{leaderopinion,jdbcType=NVARCHAR},
+      Personnel = #{personnel,jdbcType=NVARCHAR},
+      PersonnelTime = #{personneltime,jdbcType=TIMESTAMP},
+      PersonnelOpinion = #{personnelopinion,jdbcType=NVARCHAR},
+      Affixfile = #{affixfile,jdbcType=NVARCHAR},
+      DeptName = #{deptname,jdbcType=NVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.generator.model.HrRecuritPlanDetails">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="Plan_id" jdbcType="NVARCHAR" property="planId" />
+    <result column="DeptNo" jdbcType="NVARCHAR" property="deptno" />
+    <result column="Details_Status" jdbcType="INTEGER" property="detailsStatus" />
+    <result column="InputMan" jdbcType="NVARCHAR" property="inputman" />
+    <result column="InputTime" jdbcType="TIMESTAMP" property="inputtime" />
+    <result column="DeptExamine" jdbcType="NVARCHAR" property="deptexamine" />
+    <result column="DeptTime" jdbcType="TIMESTAMP" property="depttime" />
+    <result column="DeptOpinion" jdbcType="NVARCHAR" property="deptopinion" />
+    <result column="LeaderMan" jdbcType="NVARCHAR" property="leaderman" />
+    <result column="LeaderTime" jdbcType="TIMESTAMP" property="leadertime" />
+    <result column="LeaderOpinion" jdbcType="NVARCHAR" property="leaderopinion" />
+    <result column="Personnel" jdbcType="NVARCHAR" property="personnel" />
+    <result column="PersonnelTime" jdbcType="TIMESTAMP" property="personneltime" />
+    <result column="PersonnelOpinion" jdbcType="NVARCHAR" property="personnelopinion" />
+    <result column="Affixfile" jdbcType="NVARCHAR" property="affixfile" />
+    <result column="DeptName" jdbcType="NVARCHAR" property="deptname" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, Plan_id, DeptNo, Details_Status, InputMan, InputTime, DeptExamine, DeptTime, 
+    DeptOpinion, LeaderMan, LeaderTime, LeaderOpinion, Personnel, PersonnelTime, PersonnelOpinion, 
+    Affixfile, DeptName
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from HR_Recurit_Plan_Details
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from HR_Recurit_Plan_Details
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.generator.model.HrRecuritPlanDetails">
+    insert into HR_Recurit_Plan_Details (ID, Plan_id, DeptNo, 
+      Details_Status, InputMan, InputTime, 
+      DeptExamine, DeptTime, DeptOpinion, 
+      LeaderMan, LeaderTime, LeaderOpinion, 
+      Personnel, PersonnelTime, PersonnelOpinion, 
+      Affixfile, DeptName)
+    values (#{id,jdbcType=INTEGER}, #{planId,jdbcType=NVARCHAR}, #{deptno,jdbcType=NVARCHAR}, 
+      #{detailsStatus,jdbcType=INTEGER}, #{inputman,jdbcType=NVARCHAR}, #{inputtime,jdbcType=TIMESTAMP}, 
+      #{deptexamine,jdbcType=NVARCHAR}, #{depttime,jdbcType=TIMESTAMP}, #{deptopinion,jdbcType=NVARCHAR}, 
+      #{leaderman,jdbcType=NVARCHAR}, #{leadertime,jdbcType=TIMESTAMP}, #{leaderopinion,jdbcType=NVARCHAR}, 
+      #{personnel,jdbcType=NVARCHAR}, #{personneltime,jdbcType=TIMESTAMP}, #{personnelopinion,jdbcType=NVARCHAR}, 
+      #{affixfile,jdbcType=NVARCHAR}, #{deptname,jdbcType=NVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.generator.model.HrRecuritPlanDetails">
+    insert into HR_Recurit_Plan_Details
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="planId != null">
+        Plan_id,
+      </if>
+      <if test="deptno != null">
+        DeptNo,
+      </if>
+      <if test="detailsStatus != null">
+        Details_Status,
+      </if>
+      <if test="inputman != null">
+        InputMan,
+      </if>
+      <if test="inputtime != null">
+        InputTime,
+      </if>
+      <if test="deptexamine != null">
+        DeptExamine,
+      </if>
+      <if test="depttime != null">
+        DeptTime,
+      </if>
+      <if test="deptopinion != null">
+        DeptOpinion,
+      </if>
+      <if test="leaderman != null">
+        LeaderMan,
+      </if>
+      <if test="leadertime != null">
+        LeaderTime,
+      </if>
+      <if test="leaderopinion != null">
+        LeaderOpinion,
+      </if>
+      <if test="personnel != null">
+        Personnel,
+      </if>
+      <if test="personneltime != null">
+        PersonnelTime,
+      </if>
+      <if test="personnelopinion != null">
+        PersonnelOpinion,
+      </if>
+      <if test="affixfile != null">
+        Affixfile,
+      </if>
+      <if test="deptname != null">
+        DeptName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="planId != null">
+        #{planId,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptno != null">
+        #{deptno,jdbcType=NVARCHAR},
+      </if>
+      <if test="detailsStatus != null">
+        #{detailsStatus,jdbcType=INTEGER},
+      </if>
+      <if test="inputman != null">
+        #{inputman,jdbcType=NVARCHAR},
+      </if>
+      <if test="inputtime != null">
+        #{inputtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deptexamine != null">
+        #{deptexamine,jdbcType=NVARCHAR},
+      </if>
+      <if test="depttime != null">
+        #{depttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deptopinion != null">
+        #{deptopinion,jdbcType=NVARCHAR},
+      </if>
+      <if test="leaderman != null">
+        #{leaderman,jdbcType=NVARCHAR},
+      </if>
+      <if test="leadertime != null">
+        #{leadertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="leaderopinion != null">
+        #{leaderopinion,jdbcType=NVARCHAR},
+      </if>
+      <if test="personnel != null">
+        #{personnel,jdbcType=NVARCHAR},
+      </if>
+      <if test="personneltime != null">
+        #{personneltime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="personnelopinion != null">
+        #{personnelopinion,jdbcType=NVARCHAR},
+      </if>
+      <if test="affixfile != null">
+        #{affixfile,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptname != null">
+        #{deptname,jdbcType=NVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.generator.model.HrRecuritPlanDetails">
+    update HR_Recurit_Plan_Details
+    <set>
+      <if test="planId != null">
+        Plan_id = #{planId,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptno != null">
+        DeptNo = #{deptno,jdbcType=NVARCHAR},
+      </if>
+      <if test="detailsStatus != null">
+        Details_Status = #{detailsStatus,jdbcType=INTEGER},
+      </if>
+      <if test="inputman != null">
+        InputMan = #{inputman,jdbcType=NVARCHAR},
+      </if>
+      <if test="inputtime != null">
+        InputTime = #{inputtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deptexamine != null">
+        DeptExamine = #{deptexamine,jdbcType=NVARCHAR},
+      </if>
+      <if test="depttime != null">
+        DeptTime = #{depttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deptopinion != null">
+        DeptOpinion = #{deptopinion,jdbcType=NVARCHAR},
+      </if>
+      <if test="leaderman != null">
+        LeaderMan = #{leaderman,jdbcType=NVARCHAR},
+      </if>
+      <if test="leadertime != null">
+        LeaderTime = #{leadertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="leaderopinion != null">
+        LeaderOpinion = #{leaderopinion,jdbcType=NVARCHAR},
+      </if>
+      <if test="personnel != null">
+        Personnel = #{personnel,jdbcType=NVARCHAR},
+      </if>
+      <if test="personneltime != null">
+        PersonnelTime = #{personneltime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="personnelopinion != null">
+        PersonnelOpinion = #{personnelopinion,jdbcType=NVARCHAR},
+      </if>
+      <if test="affixfile != null">
+        Affixfile = #{affixfile,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptname != null">
+        DeptName = #{deptname,jdbcType=NVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.generator.model.HrRecuritPlanDetails">
+    update HR_Recurit_Plan_Details
+    set Plan_id = #{planId,jdbcType=NVARCHAR},
+      DeptNo = #{deptno,jdbcType=NVARCHAR},
+      Details_Status = #{detailsStatus,jdbcType=INTEGER},
+      InputMan = #{inputman,jdbcType=NVARCHAR},
+      InputTime = #{inputtime,jdbcType=TIMESTAMP},
+      DeptExamine = #{deptexamine,jdbcType=NVARCHAR},
+      DeptTime = #{depttime,jdbcType=TIMESTAMP},
+      DeptOpinion = #{deptopinion,jdbcType=NVARCHAR},
+      LeaderMan = #{leaderman,jdbcType=NVARCHAR},
+      LeaderTime = #{leadertime,jdbcType=TIMESTAMP},
+      LeaderOpinion = #{leaderopinion,jdbcType=NVARCHAR},
+      Personnel = #{personnel,jdbcType=NVARCHAR},
+      PersonnelTime = #{personneltime,jdbcType=TIMESTAMP},
+      PersonnelOpinion = #{personnelopinion,jdbcType=NVARCHAR},
+      Affixfile = #{affixfile,jdbcType=NVARCHAR},
+      DeptName = #{deptname,jdbcType=NVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.generator.model.HrRecuritPlanDetails">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="Plan_id" jdbcType="NVARCHAR" property="planId" />
+    <result column="DeptNo" jdbcType="NVARCHAR" property="deptno" />
+    <result column="Details_Status" jdbcType="INTEGER" property="detailsStatus" />
+    <result column="InputMan" jdbcType="NVARCHAR" property="inputman" />
+    <result column="InputTime" jdbcType="TIMESTAMP" property="inputtime" />
+    <result column="DeptExamine" jdbcType="NVARCHAR" property="deptexamine" />
+    <result column="DeptTime" jdbcType="TIMESTAMP" property="depttime" />
+    <result column="DeptOpinion" jdbcType="NVARCHAR" property="deptopinion" />
+    <result column="LeaderMan" jdbcType="NVARCHAR" property="leaderman" />
+    <result column="LeaderTime" jdbcType="TIMESTAMP" property="leadertime" />
+    <result column="LeaderOpinion" jdbcType="NVARCHAR" property="leaderopinion" />
+    <result column="Personnel" jdbcType="NVARCHAR" property="personnel" />
+    <result column="PersonnelTime" jdbcType="TIMESTAMP" property="personneltime" />
+    <result column="PersonnelOpinion" jdbcType="NVARCHAR" property="personnelopinion" />
+    <result column="Affixfile" jdbcType="NVARCHAR" property="affixfile" />
+    <result column="DeptName" jdbcType="NVARCHAR" property="deptname" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, Plan_id, DeptNo, Details_Status, InputMan, InputTime, DeptExamine, DeptTime, 
+    DeptOpinion, LeaderMan, LeaderTime, LeaderOpinion, Personnel, PersonnelTime, PersonnelOpinion, 
+    Affixfile, DeptName
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from HR_Recurit_Plan_Details
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from HR_Recurit_Plan_Details
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.generator.model.HrRecuritPlanDetails">
+    insert into HR_Recurit_Plan_Details (ID, Plan_id, DeptNo, 
+      Details_Status, InputMan, InputTime, 
+      DeptExamine, DeptTime, DeptOpinion, 
+      LeaderMan, LeaderTime, LeaderOpinion, 
+      Personnel, PersonnelTime, PersonnelOpinion, 
+      Affixfile, DeptName)
+    values (#{id,jdbcType=INTEGER}, #{planId,jdbcType=NVARCHAR}, #{deptno,jdbcType=NVARCHAR}, 
+      #{detailsStatus,jdbcType=INTEGER}, #{inputman,jdbcType=NVARCHAR}, #{inputtime,jdbcType=TIMESTAMP}, 
+      #{deptexamine,jdbcType=NVARCHAR}, #{depttime,jdbcType=TIMESTAMP}, #{deptopinion,jdbcType=NVARCHAR}, 
+      #{leaderman,jdbcType=NVARCHAR}, #{leadertime,jdbcType=TIMESTAMP}, #{leaderopinion,jdbcType=NVARCHAR}, 
+      #{personnel,jdbcType=NVARCHAR}, #{personneltime,jdbcType=TIMESTAMP}, #{personnelopinion,jdbcType=NVARCHAR}, 
+      #{affixfile,jdbcType=NVARCHAR}, #{deptname,jdbcType=NVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.generator.model.HrRecuritPlanDetails">
+    insert into HR_Recurit_Plan_Details
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="planId != null">
+        Plan_id,
+      </if>
+      <if test="deptno != null">
+        DeptNo,
+      </if>
+      <if test="detailsStatus != null">
+        Details_Status,
+      </if>
+      <if test="inputman != null">
+        InputMan,
+      </if>
+      <if test="inputtime != null">
+        InputTime,
+      </if>
+      <if test="deptexamine != null">
+        DeptExamine,
+      </if>
+      <if test="depttime != null">
+        DeptTime,
+      </if>
+      <if test="deptopinion != null">
+        DeptOpinion,
+      </if>
+      <if test="leaderman != null">
+        LeaderMan,
+      </if>
+      <if test="leadertime != null">
+        LeaderTime,
+      </if>
+      <if test="leaderopinion != null">
+        LeaderOpinion,
+      </if>
+      <if test="personnel != null">
+        Personnel,
+      </if>
+      <if test="personneltime != null">
+        PersonnelTime,
+      </if>
+      <if test="personnelopinion != null">
+        PersonnelOpinion,
+      </if>
+      <if test="affixfile != null">
+        Affixfile,
+      </if>
+      <if test="deptname != null">
+        DeptName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="planId != null">
+        #{planId,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptno != null">
+        #{deptno,jdbcType=NVARCHAR},
+      </if>
+      <if test="detailsStatus != null">
+        #{detailsStatus,jdbcType=INTEGER},
+      </if>
+      <if test="inputman != null">
+        #{inputman,jdbcType=NVARCHAR},
+      </if>
+      <if test="inputtime != null">
+        #{inputtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deptexamine != null">
+        #{deptexamine,jdbcType=NVARCHAR},
+      </if>
+      <if test="depttime != null">
+        #{depttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deptopinion != null">
+        #{deptopinion,jdbcType=NVARCHAR},
+      </if>
+      <if test="leaderman != null">
+        #{leaderman,jdbcType=NVARCHAR},
+      </if>
+      <if test="leadertime != null">
+        #{leadertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="leaderopinion != null">
+        #{leaderopinion,jdbcType=NVARCHAR},
+      </if>
+      <if test="personnel != null">
+        #{personnel,jdbcType=NVARCHAR},
+      </if>
+      <if test="personneltime != null">
+        #{personneltime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="personnelopinion != null">
+        #{personnelopinion,jdbcType=NVARCHAR},
+      </if>
+      <if test="affixfile != null">
+        #{affixfile,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptname != null">
+        #{deptname,jdbcType=NVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.generator.model.HrRecuritPlanDetails">
+    update HR_Recurit_Plan_Details
+    <set>
+      <if test="planId != null">
+        Plan_id = #{planId,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptno != null">
+        DeptNo = #{deptno,jdbcType=NVARCHAR},
+      </if>
+      <if test="detailsStatus != null">
+        Details_Status = #{detailsStatus,jdbcType=INTEGER},
+      </if>
+      <if test="inputman != null">
+        InputMan = #{inputman,jdbcType=NVARCHAR},
+      </if>
+      <if test="inputtime != null">
+        InputTime = #{inputtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deptexamine != null">
+        DeptExamine = #{deptexamine,jdbcType=NVARCHAR},
+      </if>
+      <if test="depttime != null">
+        DeptTime = #{depttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deptopinion != null">
+        DeptOpinion = #{deptopinion,jdbcType=NVARCHAR},
+      </if>
+      <if test="leaderman != null">
+        LeaderMan = #{leaderman,jdbcType=NVARCHAR},
+      </if>
+      <if test="leadertime != null">
+        LeaderTime = #{leadertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="leaderopinion != null">
+        LeaderOpinion = #{leaderopinion,jdbcType=NVARCHAR},
+      </if>
+      <if test="personnel != null">
+        Personnel = #{personnel,jdbcType=NVARCHAR},
+      </if>
+      <if test="personneltime != null">
+        PersonnelTime = #{personneltime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="personnelopinion != null">
+        PersonnelOpinion = #{personnelopinion,jdbcType=NVARCHAR},
+      </if>
+      <if test="affixfile != null">
+        Affixfile = #{affixfile,jdbcType=NVARCHAR},
+      </if>
+      <if test="deptname != null">
+        DeptName = #{deptname,jdbcType=NVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.generator.model.HrRecuritPlanDetails">
+    update HR_Recurit_Plan_Details
+    set Plan_id = #{planId,jdbcType=NVARCHAR},
+      DeptNo = #{deptno,jdbcType=NVARCHAR},
+      Details_Status = #{detailsStatus,jdbcType=INTEGER},
+      InputMan = #{inputman,jdbcType=NVARCHAR},
+      InputTime = #{inputtime,jdbcType=TIMESTAMP},
+      DeptExamine = #{deptexamine,jdbcType=NVARCHAR},
+      DeptTime = #{depttime,jdbcType=TIMESTAMP},
+      DeptOpinion = #{deptopinion,jdbcType=NVARCHAR},
+      LeaderMan = #{leaderman,jdbcType=NVARCHAR},
+      LeaderTime = #{leadertime,jdbcType=TIMESTAMP},
+      LeaderOpinion = #{leaderopinion,jdbcType=NVARCHAR},
+      Personnel = #{personnel,jdbcType=NVARCHAR},
+      PersonnelTime = #{personneltime,jdbcType=TIMESTAMP},
+      PersonnelOpinion = #{personnelopinion,jdbcType=NVARCHAR},
+      Affixfile = #{affixfile,jdbcType=NVARCHAR},
+      DeptName = #{deptname,jdbcType=NVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
