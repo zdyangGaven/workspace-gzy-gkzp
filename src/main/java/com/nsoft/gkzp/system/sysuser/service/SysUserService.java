@@ -3,6 +3,7 @@ package com.nsoft.gkzp.system.sysuser.service;
 import com.nsoft.gkzp.syscore.service.ServiceException;
 import com.nsoft.gkzp.system.sysuser.entity.SysUser;
 
+import java.awt.*;
 import java.util.List;
 
 public interface SysUserService {
@@ -27,10 +28,37 @@ public interface SysUserService {
     /**
      * 保存 用户注册信息
      * @param loginName 用户名
-     * @param passWord  用户密码
+     * @param password  用户密码
      * @throws ServiceException
      */
     public void saveRegister(String loginName,String  password) throws ServiceException;
+
+    /**
+     * 验证码相关
+     * @param fc
+     * @param bc
+     * @return
+     */
+    public Color getRandColor(int fc, int bc) ;
+
+    /**
+     * 验证码相关
+     * @return
+     */
+    public  int getRandomIntColor();
+
+    /**
+     * 验证码相关
+     * @param g
+     * @param w1
+     * @param h1
+     * @param color
+     */
+    public  void shear(Graphics g, int w1, int h1, Color color) ;
+
+
+
+
 
 
 
@@ -48,6 +76,9 @@ public interface SysUserService {
      * @param user
      */
     public void saveSysUserInformation(SysUser user) throws ServiceException;
+
+
+
 
 
 

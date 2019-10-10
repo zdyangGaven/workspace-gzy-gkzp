@@ -1,7 +1,6 @@
 package com.nsoft.gkzp.syscore.web;
 import java.io.Serializable;
 import java.util.Date;
-import com.nsoft.gkzp.system.sysuser.entity.SysUser;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,41 +11,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserContext implements Serializable {
 
-    /**
-     * 登录语言
-     */
-    private String local = "zh_CN";
 
-    /**
-     * 登录时间
-     */
-    private Date loginDate = null;
+    private String local = "zh_CN";//登录语言
+    private Date loginDate = null;//登录时间
 
     /**
      * 用户信息
      */
-    private SysUser sysUser = null;
-    /**
-     * 用户ID (=sysUser.getId())
-     */
-    private int loginUserId = -1;
+    private int loginUserId = -1; //用户ID (=sysUser.getId())
+    private String loginName = "";//用户登录名
 
-
-    /**
-     * 业务提示信息
-     */
-    private String message = "";
-    private long messageType = MessageType.NONE;
-
-    /**
-     * 业务提示信息类型
-     *
-     */
-    public static class MessageType {
-        final public static long NONE  = 0;
-        final public static long INFO  = 1;
-        final public static long ERROR = 2;
-    }
 
     public UserContext(){
 
@@ -60,37 +34,6 @@ public class UserContext implements Serializable {
 
     public String getLocal() {
         return local;
-    }
-
-    public void setSysUser(SysUser sysUser) {
-        this.sysUser = sysUser;
-    }
-
-    public SysUser getSysUser() {
-        return sysUser;
-    }
-
-
-
-    public void setErrorMessage(String errorMessage) {
-        this.message = errorMessage;
-        this.messageType = MessageType.ERROR;
-    }
-
-    public void setInfoMessage(String infoMessage) {
-        this.message = infoMessage;
-        this.messageType = MessageType.INFO;
-    }
-
-    public long getMessageType() {
-        return messageType;
-    }
-
-    public String getMessage() {
-        String temp = this.message;
-        this.messageType = MessageType.NONE;
-        this.message = "";
-        return temp;
     }
 
     public Date getLoginDate() {
@@ -108,6 +51,15 @@ public class UserContext implements Serializable {
     public void setLoginUserId(int loginUserId) {
         this.loginUserId = loginUserId;
     }
+
+    public String getLoginName() {
+        return loginName;
+    }
+
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
+    }
+
     /**
      * 用户拥有岗位列表
      */

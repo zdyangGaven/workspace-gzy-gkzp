@@ -26,14 +26,6 @@ public abstract class AbstractController {
         this.userContext = userContext;
     }
 
-    public void addErrorMessage(String message){
-        userContext.setErrorMessage(message);
-    }
-
-    public void addInfoMessage(String message){
-        userContext.setInfoMessage(message);
-    }
-
 
 
 

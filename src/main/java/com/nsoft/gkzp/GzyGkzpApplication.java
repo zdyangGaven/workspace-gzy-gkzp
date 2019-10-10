@@ -6,14 +6,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.server.ConfigurableWebServerFactory;
 import org.springframework.boot.web.server.ErrorPage;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 
 /**
  * springboot入口
  * MapperScan("com.nsoft.gkzp.**.dao")为扫描mapper, 所以dao下面的类就不需要添加@mapper注解了
+ * ServletComponentScan  添加了过滤器,故这里要添加@ServletComponentScan注解，spring才会扫描到过滤器（eg:com.nsoft.gkzp.syscore.config.filter.CorsFilter)
  */
 @SpringBootApplication
+@ServletComponentScan
 @MapperScan("com.nsoft.gkzp.**.dao")
 public class GzyGkzpApplication {
 
@@ -33,7 +36,5 @@ public class GzyGkzpApplication {
             factory.addErrorPages(error404Page);
         };
     }
-
-
 
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
+import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,8 +28,8 @@ public class LoginHandlerInterceptor  implements HandlerInterceptor {
     UserContext userContext;
 
     final private static Logger logger = LogManager.getLogger(LoginHandlerInterceptor.class);
-    final private String ERRORMESSAGE = "errorMessage";
-    final private String LOGINPAGE = "login.jsp";
+   // final private String ERRORMESSAGE = "errorMessage";
+   // final private String LOGINPAGE = "login.jsp";
 
     /**
      * 在Controller请求之前被调用
@@ -43,31 +44,22 @@ public class LoginHandlerInterceptor  implements HandlerInterceptor {
                return true;
            }
         logger.info("***********************************拦截器111-"+handler.toString()+"*************************");
-           int a=1;
-           if(a==1){
-               return true;
-           }
-        Object user = request.getSession().getAttribute("userContext");
+
+
+        Object user =  WebUtils.getSessionAttribute(request,"userContext");
         if (user == null) {// 如果获取的request的session中的loginUser参数为空（未登录），就返回登录页，否则放行访问
-            // 未登录，给出错误信息，
-            request.setAttribute("msg","无权限请先登录");
-            // 获取request返回页面到登录页
-            request.getRequestDispatcher("/jsp/login.jsp").forward(request, response);
+            response.sendError(401);//session超时,页面响应401错误
             return false;
         } else {
             userContext = (UserContext)user;
             //验证当前请求的session是否是已登录的session
             String loginSessionId = stringRedisTemplate.opsForValue().get("loginUser:" +userContext.getLoginUserId());
-            if (loginSessionId != null && loginSessionId.equals(request.getSession().getId()))
+            if (loginSessionId == null || loginSessionId.equals(request.getSession().getId()))
             {
-
                 stringRedisTemplate.opsForValue().set("loginUser:" +userContext.getLoginUserId(), loginSessionId,1, TimeUnit.HOURS);//相当于重新设置redis里存的有效时间
                 return true;
             }else{
-                //重复登录
-                request.setAttribute("msg","用户已在其他地方登录，请重新登录！");
-                // 获取request返回页面到登录页
-                request.getRequestDispatcher("/jsp/login.jsp").forward(request, response);
+                response.sendError(401);//用户已在其他地方登录，请重新登录
                 return false;
             }
         }

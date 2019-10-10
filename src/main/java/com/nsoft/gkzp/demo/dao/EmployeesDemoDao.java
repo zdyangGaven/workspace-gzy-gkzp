@@ -16,6 +16,7 @@ import java.util.HashMap;
  * @date 2019.08.27
  *
  */
+
 //@Mapper  //在启动类中加了@MapperScan("com.nsoft.gkzp.**.dao"),故这里可不添加@Mapper注解
 @Repository
 public interface EmployeesDemoDao {

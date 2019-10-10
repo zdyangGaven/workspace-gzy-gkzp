@@ -7,8 +7,6 @@ import com.nsoft.gkzp.demo.service.EmployeesDemoService;
 import com.nsoft.gkzp.syscore.web.AbstractController;
 import com.nsoft.gkzp.syscore.web.ControllerException;
 import com.nsoft.gkzp.syscore.web.UserContext;
-import com.nsoft.gkzp.syscore.web.JSONFactory;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,13 +51,13 @@ public class EmployeesDemoController extends AbstractController {
 
             if(demoInfo != null &&!"".equals(demoInfo.getName())){
              //   demoService.save(demoInfo);
-                this.addErrorMessage("dadadadada");
+                //this.addErrorMessage("dadadadada");
             }
-            writer.write(JSONFactory.toJSONString(userContext));
+          //  writer.write(JSONFactory.toJSONString(userContext));
 
         }catch (Exception e){
             e.printStackTrace();
-            throw new ControllerException("雇员信息保存失败",e,userContext);
+          //  throw new ControllerException("雇员信息保存失败",e,userContext);
         }finally {
             try {
                 writer.flush();
@@ -69,7 +67,7 @@ public class EmployeesDemoController extends AbstractController {
             }
 
         }
-        throw new ControllerException("故意的抛出异常",userContext);
+     //   throw new ControllerException("故意的抛出异常",userContext);
     }
 
     /**
@@ -95,7 +93,7 @@ public class EmployeesDemoController extends AbstractController {
 
         }catch (Exception e){
             e.printStackTrace();
-            throw new ControllerException("获得ID失败",e,userContext);
+           // throw new ControllerException("获得ID失败",e,userContext);
         }
         return "demo/test2";
 
@@ -140,7 +138,7 @@ public class EmployeesDemoController extends AbstractController {
             }
         }catch (Exception e){
             e.printStackTrace();
-            throw new ControllerException("查询信息失败",e,userContext);
+           // throw new ControllerException("查询信息失败",e,userContext);
         }
         return type==1?userList:userList2;
     }
@@ -192,7 +190,7 @@ public class EmployeesDemoController extends AbstractController {
 
         }catch (Exception e){
             e.printStackTrace();
-            throw new ControllerException("查询信息失败",e,userContext);
+        //    throw new ControllerException("查询信息失败",e,userContext);
         }
 
         return "/jsp/demo/test1";
@@ -220,7 +218,7 @@ public class EmployeesDemoController extends AbstractController {
             result.put("total",data.getTotal());
         }catch (Exception e){
             e.printStackTrace();
-            throw new ControllerException("分页查询失败",e,userContext);
+         //   throw new ControllerException("分页查询失败",e,userContext);
         }
 
         return result !=null?result.toString():null;
