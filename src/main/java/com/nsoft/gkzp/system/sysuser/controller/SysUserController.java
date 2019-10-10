@@ -18,10 +18,8 @@ import org.springframework.web.util.WebUtils;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -49,12 +47,11 @@ public class SysUserController {
 
 
 
-    private String MESSAGE      = "msg";//异常信息
-    private String ERRORPAGE    = "redirect:/jsp/login.jsp"; //登录失败返回页面
-    private String SUCCESSRPAGE = "redirect:/jsp/index.jsp"; //登录成功页面（redirect:重定向，防止页面刷新重新提交请求）
-
-    private String REGISTER_ERRORPAGE    = "/jsp/register.jsp"; //注册失败返回页面
-    private String REGISTER_SUCCESSRPAGE = "redirect:/jsp/login.jsp"; //注册成功，返回登录页面（redirect:重定向，防止页面刷新重新提交请求）
+   // private String MESSAGE      = "msg";//异常信息
+   // private String ERRORPAGE    = "redirect:/jsp/login.jsp"; //登录失败返回页面
+   // private String SUCCESSRPAGE = "redirect:/jsp/index.jsp"; //登录成功页面（redirect:重定向，防止页面刷新重新提交请求）
+   // private String REGISTER_ERRORPAGE    = "/jsp/register.jsp"; //注册失败返回页面
+   // private String REGISTER_SUCCESSRPAGE = "redirect:/jsp/login.jsp"; //注册成功，返回登录页面（redirect:重定向，防止页面刷新重新提交请求）
 
     /**
      * 登录
@@ -80,7 +77,7 @@ public class SysUserController {
 
             //验证码校验
             if(StringUtils.isEmpty(checkCode)  ){
-                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"注册失败，验证码不能为空,请检查!");
+                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"登录失败，验证码不能为空,请检查!");
                 return resultMsg;
             }else{
                 String checkCodeByRedis = stringRedisTemplate.opsForValue().get("loginUser:checkCode-"+arg0.getSession().getId());
@@ -132,28 +129,6 @@ public class SysUserController {
 
     }
 
-
-    /**
-     * 测试
-     * @return
-     */
-    @ResponseBody   //返回json数据
-    @RequestMapping("/user/getUsers")
-       public List<SysUser> getUsers(){
-        List<SysUser> userList =  null;
-        userList = sysUserService.selectUsers();
-        SysUser aa = null;
-        if(userList !=null && !userList.isEmpty()){
-            Iterator it = userList.iterator();
-            while(it.hasNext()) {
-               aa = (SysUser)it.next();
-                logger.info(aa);
-            }
-        }
-        logger.info("userList="+userList);
-        return userList;
-    }
-
     /**
      * 注册
      * @param loginName 用户名
@@ -165,7 +140,7 @@ public class SysUserController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/user/register.json")
+    @RequestMapping("/user/register")
     public ResultMsg register(String loginName,String password,String rePassword,String checkCode, HttpServletRequest request, HttpServletResponse response) throws Exception{
         int id = -1;
 
@@ -380,7 +355,6 @@ public class SysUserController {
                 int yl = random.nextInt(12) + 1;
                 g2.drawLine(x, y, x + xl + 40, y + yl + 20);
             }
-
     // 添加噪点
 //            float yawpRate = 0.05f;// 噪声率
 //            int area = (int) (yawpRate * w * h);
@@ -390,7 +364,6 @@ public class SysUserController {
 //                int rgb = sysUserService.getRandomIntColor();
 //                image.setRGB(x, y, rgb);
 //            }
-
             sysUserService.shear(g2, w, h, c);// 使图片扭曲
 
             g2.setColor(sysUserService.getRandColor(100, 160));
@@ -404,12 +377,9 @@ public class SysUserController {
                 g2.setTransform(affine);
                 g2.drawChars(chars, i, 1, ((w-10) / verifySize) * i + 5, h/2 + fontSize/2 - 5);
             }
-
             g2.dispose();
             ImageIO.write(image, "JPEG", response.getOutputStream());
             response.flushBuffer();
-
-
 
         //将图像传到客户端
             ServletOutputStream sos=response.getOutputStream();
@@ -420,17 +390,33 @@ public class SysUserController {
             sos.write(buffer);
             baos.close();
             sos.close();
-
         }catch (Exception e) {
             e.printStackTrace();
 
         }
-
-
     }
 
 
-
+    /**
+     * 测试
+     * @return
+     */
+    @ResponseBody   //返回json数据
+    @RequestMapping("/user/getUsers")
+    public List<SysUser> getUsers(){
+        List<SysUser> userList =  null;
+        userList = sysUserService.selectUsers();
+        SysUser aa = null;
+        if(userList !=null && !userList.isEmpty()){
+            Iterator it = userList.iterator();
+            while(it.hasNext()) {
+                aa = (SysUser)it.next();
+                logger.info(aa);
+            }
+        }
+        logger.info("userList="+userList);
+        return userList;
+    }
 
 
 

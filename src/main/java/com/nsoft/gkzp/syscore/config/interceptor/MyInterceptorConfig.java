@@ -2,7 +2,6 @@ package com.nsoft.gkzp.syscore.config.interceptor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -24,13 +23,17 @@ public class MyInterceptorConfig implements WebMvcConfigurer {
      *  注册拦截器 ，我们自己写好的拦截器需要通过这里添加注册才能生效 (addPathPatterns 用来设置拦截路径，excludePathPatterns 用来设置白名单)
      *  LoginHandlerInterceptor 拦截器-登录检测
      * @param registry
+     *
+     * /user/login 用户登录     /user/register 用户注册   /user/imgCode 获取验证码
+     *
+     *
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
        //这里添加多个拦截器
         // 登录检测        添加拦截的请求，并排除几个不拦截的请求  ----- 登录检测拦截规则:  /**     排除： 登录、注册相关页
         registry.addInterceptor(loginHandlerInterceptor).addPathPatterns("/**")
-                .excludePathPatterns( "/","/login","/user/login","/register","/user/register","/demo/getTest");
+                .excludePathPatterns( "/","/user/login","/user/register","/user/imgCode");
                 //.excludePathPatterns( "/user/register","/user/getUsers");
 
     }

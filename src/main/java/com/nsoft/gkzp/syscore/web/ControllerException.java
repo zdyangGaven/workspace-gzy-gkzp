@@ -8,27 +8,6 @@ package com.nsoft.gkzp.syscore.web;
  */
 public class ControllerException extends RuntimeException {
 
-    /**
-     * 向Web层通知异常
-     *
-     * @param string
-     * @param e
-     * @param userContext
-     */
-    public ControllerException(String string, Throwable e, UserContext userContext) {
-        super(string, e);
-        userContext.setErrorMessage(string);
-    }
-
-    /**
-     * 向Web层通知异常
-     * @param string
-     * @param userContext
-     */
-    public ControllerException(String string, UserContext userContext) {
-        super(string);
-        userContext.setErrorMessage(string);
-    }
 
 
     /**
