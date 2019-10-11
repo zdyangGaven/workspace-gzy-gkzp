@@ -2,7 +2,6 @@ package com.nsoft.gkzp.plan.entity;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
 import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Date;
@@ -18,9 +17,9 @@ public class HrRecuritPlan implements Serializable {
 
     private Integer isreport;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date starttime;
 
-    @Column(name = "endtime")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date endtime;
 

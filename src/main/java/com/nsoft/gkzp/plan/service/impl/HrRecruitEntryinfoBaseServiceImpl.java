@@ -1,11 +1,12 @@
 package com.nsoft.gkzp.plan.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.nsoft.gkzp.plan.dao.*;
+import com.nsoft.gkzp.plan.dao.HrRecruitEntryinfoBaseDao;
 import com.nsoft.gkzp.plan.entity.*;
 import com.nsoft.gkzp.plan.service.*;
 import com.nsoft.gkzp.syscore.service.AbstractService;
 import com.nsoft.gkzp.syscore.service.ServiceException;
+import com.nsoft.gkzp.syscore.web.UserContext;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,13 +37,13 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
 
 
     @Override
-    public HrRecruitEntryinfo getInfoByUser() {
+    public HrRecruitEntryinfo getInfoByUser(UserContext userContext) {
         HrRecruitEntryinfo hrRecruitEntryinfo = new HrRecruitEntryinfo();
 
         //基础信息
         Example example = new Example(HrRecruitEntryinfoBase.class);
         //筛选
-        example.createCriteria().andEqualTo("id",53);
+        example.createCriteria().andEqualTo("loginuserid",userContext.getLoginUserId());
         List<HrRecruitEntryinfoBase> hrRecruitEntryinfoBases = hrRecruitEntryinfoBaseDao.selectByExample(example);
         HrRecruitEntryinfoBase hrRecruitEntryinfoBase = hrRecruitEntryinfoBases.get(0);
         hrRecruitEntryinfo.setBaseInfo(hrRecruitEntryinfoBase);

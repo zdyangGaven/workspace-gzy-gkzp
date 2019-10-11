@@ -1,7 +1,8 @@
 package com.nsoft.gkzp.syscore.web;
+import org.springframework.stereotype.Component;
+
 import java.io.Serializable;
 import java.util.Date;
-import org.springframework.stereotype.Component;
 
 /**
  * session
@@ -142,4 +143,13 @@ public class UserContext implements Serializable {
     }
 */
 
+    @Override
+    public String toString() {
+        return "UserContext{" +
+                "local='" + local + '\'' +
+                ", loginDate=" + loginDate +
+                ", loginUserId=" + loginUserId +
+                ", loginName='" + loginName + '\'' +
+                '}';
+    }
 }
