@@ -23,4 +23,16 @@ public interface HrRecruitEntryinfoWorkService {
      * @return
      */
     public void add(List<HrRecruitEntryinfoWork> hrRecruitEntryinfoWork, int baseId);
+
+    /**
+     * 新增
+     * @param hrRecruitEntryinfoWork
+     */
+    public void add(HrRecruitEntryinfoWork hrRecruitEntryinfoWork);
+
+    /**
+     * 修改
+     * @param hrRecruitEntryinfoWork
+     */
+    public void edit(HrRecruitEntryinfoWork hrRecruitEntryinfoWork);
 }

@@ -28,7 +28,7 @@ public class DeptServiceImpl implements DeptService {
 
         Example example = new Example(Dept.class);
         //排序
-        example.setOrderByClause(order);
+        if(order != null) example.setOrderByClause(order);
 
         //筛选
         example.createCriteria().andEqualTo(dept);

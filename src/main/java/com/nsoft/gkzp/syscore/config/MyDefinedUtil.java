@@ -15,5 +15,8 @@ public class MyDefinedUtil {
     @Value("${system.encoding:UTF-8}")  //冒号后的值为没有配置文件时，制动装载的默认值  //下面的属性不能为static类型，否则获取不到值
     public  String SYSTEM_ENCODING;  //#System Encoding
 
+    //文件管理
+    @Value("${system.file.folder}")
+    public  String SYSTEM_FILE_FOLDER;
 }
 

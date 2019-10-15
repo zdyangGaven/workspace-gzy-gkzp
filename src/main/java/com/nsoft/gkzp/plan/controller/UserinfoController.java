@@ -17,7 +17,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
 @RestController
-public class HrRecruitEntryinfoBaseController extends AbstractController {
+public class UserinfoController extends AbstractController {
     @Autowired
     HrRecruitEntryinfoBaseService hrRecruitEntryinfoBaseService;
 
@@ -30,7 +30,7 @@ public class HrRecruitEntryinfoBaseController extends AbstractController {
      * @param request
      * @return
      */
-    @RequestMapping("HrRecruitEntryinfoBaseController/getInfoByUser")
+    @RequestMapping("plan/userInfo/getInfoByUser")//HrRecruitEntryinfoBaseController/getInfoByUser
     public HrRecruitEntryinfo getInfoByUser(HttpServletRequest request){
         UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
         return hrRecruitEntryinfoBaseService.getInfoByUser(userContext);
@@ -42,7 +42,7 @@ public class HrRecruitEntryinfoBaseController extends AbstractController {
      * @param data
      * @return
      */
-    @RequestMapping(value="HrRecruitEntryinfoBaseController/add",method= RequestMethod.POST)
+    @RequestMapping(value="plan/userInfo/add",method= RequestMethod.POST)//HrRecruitEntryinfoBaseController/add
     public ResultMsg add(String data, HttpServletRequest request){
         try {
 
@@ -65,5 +65,25 @@ public class HrRecruitEntryinfoBaseController extends AbstractController {
         return resultMsg;
     }
 
+    @RequestMapping(value="plan/userInfo/edit",method= RequestMethod.POST)
+    public ResultMsg edit(String data, HttpServletRequest request){
+        try {
 
+            UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
+            //转义转JSON
+            data = URLDecoder.decode(data, "UTF-8");
+            JSONObject jsonObject = new JSONObject(data);
+            //JSONObject jsonObject = new JSONObject();
+            hrRecruitEntryinfoBaseService.edit(jsonObject,userContext);
+
+            //成功信息
+            resultMsg.setResultMsg(ResultMsg.MsgType.NONE,"");
+            return resultMsg;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //错误信息
+        resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"");
+        return resultMsg;
+    }
 }

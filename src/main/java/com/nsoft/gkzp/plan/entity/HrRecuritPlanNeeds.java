@@ -1,6 +1,8 @@
 package com.nsoft.gkzp.plan.entity;
 
-public class HrRecuritPlanNeeds {
+import java.io.Serializable;
+
+public class HrRecuritPlanNeeds implements Serializable {
     private Integer id;
 
     private Integer planId;
@@ -46,6 +48,35 @@ public class HrRecuritPlanNeeds {
     private String postnote;
 
     private String deptname;
+
+    @Override
+    public String toString() {
+        return "HrRecuritPlanNeeds{" +
+                "id=" + id +
+                ", planId=" + planId +
+                ", dept=" + dept +
+                ", postname='" + postname + '\'' +
+                ", postnum='" + postnum + '\'' +
+                ", postintention='" + postintention + '\'' +
+                ", posttype='" + posttype + '\'' +
+                ", postconfig='" + postconfig + '\'' +
+                ", specialities='" + specialities + '\'' +
+                ", degree='" + degree + '\'' +
+                ", age='" + age + '\'' +
+                ", title='" + title + '\'' +
+                ", politic='" + politic + '\'' +
+                ", condition='" + condition + '\'' +
+                ", examination='" + examination + '\'' +
+                ", interview='" + interview + '\'' +
+                ", employment=" + employment +
+                ", reason='" + reason + '\'' +
+                ", remarks='" + remarks + '\'' +
+                ", affixfile='" + affixfile + '\'' +
+                ", status=" + status +
+                ", postnote='" + postnote + '\'' +
+                ", deptname='" + deptname + '\'' +
+                '}';
+    }
 
     public Integer getId() {
         return id;

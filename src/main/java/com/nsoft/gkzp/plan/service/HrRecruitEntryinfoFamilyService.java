@@ -25,5 +25,15 @@ public interface HrRecruitEntryinfoFamilyService {
      */
     public void add(List<HrRecruitEntryinfoFamily> hrRecruitEntryinfoFamily, int baseId);
 
+    /**
+     * 新增
+     * @param hrRecruitEntryinfoFamily
+     */
+    public void add(HrRecruitEntryinfoFamily hrRecruitEntryinfoFamily);
 
+    /**
+     * 修改
+     * @param hrRecruitEntryinfoFamily
+     */
+    public void edit(HrRecruitEntryinfoFamily hrRecruitEntryinfoFamily);
 }

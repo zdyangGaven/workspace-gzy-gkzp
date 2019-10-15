@@ -37,7 +37,7 @@ public class HrRecruitArticleServiceImpl implements HrRecruitArticleService {
         Example example = new Example(HrRecruitArticle.class);
 
         //排序
-        example.setOrderByClause(order);
+        if(order != null) example.setOrderByClause(order);
 
         //筛选
         example.createCriteria().andEqualTo(hrRecruitArticle);

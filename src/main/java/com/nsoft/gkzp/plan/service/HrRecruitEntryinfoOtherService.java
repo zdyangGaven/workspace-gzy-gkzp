@@ -23,4 +23,10 @@ public interface HrRecruitEntryinfoOtherService {
      * @return
      */
     public void add (HrRecruitEntryinfoOther hrRecruitEntryinfoOther);
+
+    /**
+     * 修改
+     * @param hrRecruitEntryinfoOther
+     */
+    public void edit(HrRecruitEntryinfoOther hrRecruitEntryinfoOther);
 }

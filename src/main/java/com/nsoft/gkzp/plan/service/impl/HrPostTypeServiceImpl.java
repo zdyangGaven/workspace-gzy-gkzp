@@ -34,7 +34,7 @@ public class HrPostTypeServiceImpl implements HrPostTypeService {
 
         Example example = new Example(HrPostType.class);
         //排序
-        example.setOrderByClause(order);
+        if(order != null) example.setOrderByClause(order);
 
         //筛选
         example.createCriteria().andEqualTo(hrPostType);

@@ -35,15 +35,20 @@ public class HrRecuritPlanServiceImpl implements HrRecuritPlanService {
 
         Example example = new Example(HrRecuritPlan.class);
         //排序
-        example.setOrderByClause(order);
+        if(order != null) example.setOrderByClause(order);
 
-        //开始时间和结束时间
-        if(hrRecuritPlan.getStarttime() != null) example.createCriteria().andGreaterThanOrEqualTo("starttime",hrRecuritPlan.getStarttime());
-        if(hrRecuritPlan.getEndtime() != null) example.createCriteria().andLessThanOrEqualTo("endtime",hrRecuritPlan.getEndtime());
+        Example.Criteria criteria = example.createCriteria();
+
+        //开始时间小于参数和结束时间大于参数
+        if(hrRecuritPlan.getEndtime() != null) criteria.andGreaterThanOrEqualTo("endtime",hrRecuritPlan.getEndtime());
+        if(hrRecuritPlan.getStarttime() != null) criteria.andLessThanOrEqualTo("starttime",hrRecuritPlan.getStarttime());
+
+        //清除时间
+        hrRecuritPlan.setEndtime(null);
+        hrRecuritPlan.setStarttime(null);
 
         //筛选
-        example.createCriteria().andEqualTo(hrRecuritPlan);
-
+        criteria.andEqualTo(hrRecuritPlan);
 
         List<HrRecuritPlan> list = hrRecuritPlanDao.selectByExample(example);
 

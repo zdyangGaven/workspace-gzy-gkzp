@@ -71,6 +71,42 @@ public class HrRecruitEntryinfoBase implements Serializable {
 
     private Integer loginuserid;
 
+    @Override
+    public String toString() {
+        return "HrRecruitEntryinfoBase{" +
+                "id=" + id +
+                ", planid=" + planid +
+                ", postid=" + postid +
+                ", posttypeid=" + posttypeid +
+                ", headimage=" + headimage +
+                ", name='" + name + '\'' +
+                ", gender=" + gender +
+                ", idcardno='" + idcardno + '\'' +
+                ", nation=" + nation +
+                ", politics=" + politics +
+                ", birthdate='" + birthdate + '\'' +
+                ", maritalstatus=" + maritalstatus +
+                ", nativeplace='" + nativeplace + '\'' +
+                ", faith='" + faith + '\'' +
+                ", height='" + height + '\'' +
+                ", fulltimeschooling='" + fulltimeschooling + '\'' +
+                ", degrees1='" + degrees1 + '\'' +
+                ", inserviceedu='" + inserviceedu + '\'' +
+                ", degrees2='" + degrees2 + '\'' +
+                ", speciality='" + speciality + '\'' +
+                ", workingyears=" + workingyears +
+                ", certifiedinfo1='" + certifiedinfo1 + '\'' +
+                ", certifiedinfo2='" + certifiedinfo2 + '\'' +
+                ", isobey=" + isobey +
+                ", isinternalstaff=" + isinternalstaff +
+                ", isnewest=" + isnewest +
+                ", submitman='" + submitman + '\'' +
+                ", submittime=" + submittime +
+                ", modifytime=" + modifytime +
+                ", loginuserid=" + loginuserid +
+                '}';
+    }
+
     public Integer getId() {
         return id;
     }

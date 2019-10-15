@@ -36,7 +36,7 @@ public class HrRecruitEntryinfoWorkServiceImpl implements HrRecruitEntryinfoWork
 
         Example example = new Example(HrRecruitEntryinfoWork.class);
         //排序
-        example.setOrderByClause(order);
+        if(order != null) example.setOrderByClause(order);
 
         //筛选
         example.createCriteria().andEqualTo(hrRecruitEntryinfoWork);
@@ -65,6 +65,36 @@ public class HrRecruitEntryinfoWorkServiceImpl implements HrRecruitEntryinfoWork
         } catch (Exception e) {
             e.printStackTrace();
             throw new ServiceException("报名-工作经历新增报错",e);
+        }
+    }
+
+    /**
+     * 新增
+     * @param hrRecruitEntryinfoWork
+     */
+    @Override
+    public void add(HrRecruitEntryinfoWork hrRecruitEntryinfoWork) {
+        try {
+            //新增
+            hrRecruitEntryinfoWorkDao.insertSelective(hrRecruitEntryinfoWork);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ServiceException("报名-工作经历新增报错",e);
+        }
+    }
+
+    /**
+     * 修改
+     * @param hrRecruitEntryinfoWork
+     */
+    @Override
+    public void edit(HrRecruitEntryinfoWork hrRecruitEntryinfoWork) {
+        try {
+            //修改
+            hrRecruitEntryinfoWorkDao.updateByPrimaryKeySelective(hrRecruitEntryinfoWork);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ServiceException("报名-工作经历修改报错",e);
         }
     }
 }

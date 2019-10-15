@@ -21,6 +21,37 @@ public class HrRecruitEntryinfoEducationServiceImpl extends AbstractService impl
     HrRecruitEntryinfoEducationDao hrRecruitEntryinfoEducationDao;
     //教育经历
 
+
+
+    /**
+     *
+     * @param page  分页
+     * @param hrRecruitEntryinfoEducation
+     * @param order 排序
+     * @return
+     */
+    @Override
+    public List<HrRecruitEntryinfoEducation> list(Page page, HrRecruitEntryinfoEducation hrRecruitEntryinfoEducation, String order) {
+        //判断都有值通过
+        if(page != null && page.getPageNum() != 0 && page.getPageSize() != 0){
+            //分页处理，显示第一页的10条数据
+            PageHelper.startPage(page.getPageNum(), page.getPageSize());
+        }
+
+        Example example = new Example(HrRecruitEntryinfoEducation.class);
+        //排序
+        if(order != null) example.setOrderByClause(order);
+
+        //筛选
+        example.createCriteria().andEqualTo(hrRecruitEntryinfoEducation);
+
+        List<HrRecruitEntryinfoEducation> list = hrRecruitEntryinfoEducationDao.selectByExample(example);
+
+        // 取分页信息
+        PageInfo<HrRecruitEntryinfoEducation> pageInfo = new PageInfo<HrRecruitEntryinfoEducation>(list);
+        return list;
+    }
+
     /**
      * 新增
      *
@@ -43,31 +74,31 @@ public class HrRecruitEntryinfoEducationServiceImpl extends AbstractService impl
     }
 
     /**
-     *
-     * @param page  分页
+     * 新增
      * @param hrRecruitEntryinfoEducation
-     * @param order 排序
-     * @return
      */
     @Override
-    public List<HrRecruitEntryinfoEducation> list(Page page, HrRecruitEntryinfoEducation hrRecruitEntryinfoEducation, String order) {
-        //判断都有值通过
-        if(page != null && page.getPageNum() != 0 && page.getPageSize() != 0){
-            //分页处理，显示第一页的10条数据
-            PageHelper.startPage(page.getPageNum(), page.getPageSize());
+    public void add(HrRecruitEntryinfoEducation hrRecruitEntryinfoEducation) {
+        try {
+            //新增
+            hrRecruitEntryinfoEducationDao.insertSelective(hrRecruitEntryinfoEducation);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ServiceException("报名-教育经历新增报错", e);
         }
+    }
 
-        Example example = new Example(HrRecruitEntryinfoEducation.class);
-        //排序
-        example.setOrderByClause(order);
-
-        //筛选
-        example.createCriteria().andEqualTo(hrRecruitEntryinfoEducation);
-
-        List<HrRecruitEntryinfoEducation> list = hrRecruitEntryinfoEducationDao.selectByExample(example);
-
-        // 取分页信息
-        PageInfo<HrRecruitEntryinfoEducation> pageInfo = new PageInfo<HrRecruitEntryinfoEducation>(list);
-        return list;
+    /**
+     * 修改
+     * @param hrRecruitEntryinfoEducation
+     */
+    @Override
+    public void edit(HrRecruitEntryinfoEducation hrRecruitEntryinfoEducation) {
+        try {
+            hrRecruitEntryinfoEducationDao.updateByPrimaryKeySelective(hrRecruitEntryinfoEducation);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ServiceException("报名-教育经历修改报错", e);
+        }
     }
 }
