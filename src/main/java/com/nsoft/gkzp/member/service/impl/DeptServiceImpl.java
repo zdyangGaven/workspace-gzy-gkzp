@@ -19,7 +19,7 @@ public class DeptServiceImpl implements DeptService {
     DeptDao deptDao;
 
     @Override
-    public List<Dept> list(Page page, Dept dept, String order) {
+    public List<Dept> list( Dept dept, String order,Page page) {
         //判断都有值通过
         if(page != null && page.getPageNum() != 0 && page.getPageSize() != 0){
             //分页处理，显示第一页的10条数据

@@ -17,7 +17,7 @@ public interface HrRecruitEntryinfoBaseService {
      * @param order 排序
      * @return
      */
-    public List<HrRecruitEntryinfoBase> list(Page page, HrRecruitEntryinfoBase hrRecruitEntryinfoBase, String order);
+    public List<HrRecruitEntryinfoBase> list( HrRecruitEntryinfoBase hrRecruitEntryinfoBase, String order,Page page);
 
 
     /**

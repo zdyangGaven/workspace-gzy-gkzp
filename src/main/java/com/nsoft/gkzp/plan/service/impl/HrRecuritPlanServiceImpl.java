@@ -25,7 +25,7 @@ public class HrRecuritPlanServiceImpl implements HrRecuritPlanService {
      * @return
      */
     @Override
-    public List<HrRecuritPlan> list(Page page, HrRecuritPlan hrRecuritPlan, String order) {
+    public List<HrRecuritPlan> list( HrRecuritPlan hrRecuritPlan, String order,Page page) {
 
         //判断都有值通过
         if(page != null && page.getPageNum() != 0 && page.getPageSize() != 0){

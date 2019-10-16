@@ -13,5 +13,5 @@ public interface HrPostTypeService {
      * @param order 排序
      * @return
      */
-    List<HrPostType> list(Page page, HrPostType hrPostType, String order);
+    List<HrPostType> list(HrPostType hrPostType, String order, Page page);
 }

@@ -27,7 +27,7 @@ public class HrRecruitEntryinfoOtherServiceImpl implements HrRecruitEntryinfoOth
      * @return
      */
     @Override
-    public List<HrRecruitEntryinfoOther> list(Page page, HrRecruitEntryinfoOther hrRecruitEntryinfoOther, String order) {
+    public List<HrRecruitEntryinfoOther> list( HrRecruitEntryinfoOther hrRecruitEntryinfoOther, String order,Page page) {
         //判断都有值通过
         if(page != null && page.getPageNum() != 0 && page.getPageSize() != 0){
             //分页处理，显示第一页的10条数据

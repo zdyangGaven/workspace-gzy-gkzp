@@ -16,7 +16,7 @@ public class MyDefinedUtil {
     public  String SYSTEM_ENCODING;  //#System Encoding
 
     //文件管理
-    @Value("${system.file.folder}")
-    public  String SYSTEM_FILE_FOLDER;
+    @Value("${system.file.folder.img}")
+    public  String SYSTEM_FILE_FOLDER_IMG;
 }
 

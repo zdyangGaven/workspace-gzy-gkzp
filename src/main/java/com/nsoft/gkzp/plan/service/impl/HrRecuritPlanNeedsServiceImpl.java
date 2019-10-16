@@ -53,11 +53,11 @@ public class HrRecuritPlanNeedsServiceImpl implements HrRecuritPlanNeedsService 
      * @return
      */
     @Override
-    public List<HrRecuritPlanNeeds> list(Page page, HrRecuritPlanNeeds hrRecuritPlanNeeds, String order) {
-        return list(page,hrRecuritPlanNeeds,order,null);
+    public List<HrRecuritPlanNeeds> list( HrRecuritPlanNeeds hrRecuritPlanNeeds, String order,Page page) {
+        return list(hrRecuritPlanNeeds,order,page,null);
     }
     @Override
-    public List<HrRecuritPlanNeeds> list(Page page, HrRecuritPlanNeeds hrRecuritPlanNeeds, String order, List<Object> planIdList) {
+    public List<HrRecuritPlanNeeds> list( HrRecuritPlanNeeds hrRecuritPlanNeeds, String order,Page page, List<Object> planIdList) {
         //判断都有值通过
         if(page != null && page.getPageNum() != 0 && page.getPageSize() != 0){
             //分页处理，显示第一页的10条数据
@@ -104,13 +104,13 @@ public class HrRecuritPlanNeedsServiceImpl implements HrRecuritPlanNeedsService 
         //人才需求
         HrRecuritPlanNeeds hrRecuritPlanNeeds = new HrRecuritPlanNeeds();
         hrRecuritPlanNeeds.setId(id);
-        List<HrRecuritPlanNeeds> needs = hrRecuritPlanNeedsService.list(null, hrRecuritPlanNeeds, null);
+        List<HrRecuritPlanNeeds> needs = hrRecuritPlanNeedsService.list( hrRecuritPlanNeeds,null, null);
         hrRecuritPlanNeedsVo.setHrRecuritPlanNeeds(needs.get(0));
 
         //招聘计划
         HrRecuritPlan hrRecuritPlan = new HrRecuritPlan();
         hrRecuritPlan.setId(needs.get(0).getPlanId());
-        List<HrRecuritPlan> plans = hrRecuritPlanService.list(null, hrRecuritPlan, null);
+        List<HrRecuritPlan> plans = hrRecuritPlanService.list( hrRecuritPlan, null,null);
         hrRecuritPlanNeedsVo.setHrRecuritPlan(plans.get(0));
         return hrRecuritPlanNeedsVo;
     }
@@ -122,18 +122,35 @@ public class HrRecuritPlanNeedsServiceImpl implements HrRecuritPlanNeedsService 
      */
     @Override
     public HrRecuritPlanNeedsVo getHrRecuritPlanNeedsVoByUser(UserContext userContext) {
-        HrRecuritPlanNeedsVo hrRecuritPlanNeedsVo = new HrRecuritPlanNeedsVo();
-
         //基础信息
         HrRecruitEntryinfoBase hrRecruitEntryinfoBase = new HrRecruitEntryinfoBase();
         hrRecruitEntryinfoBase.setLoginuserid(userContext.getLoginUserId());
-        List<HrRecruitEntryinfoBase> bases = hrRecruitEntryinfoBaseService.list(null, hrRecruitEntryinfoBase, null);
+        HrRecuritPlanNeedsVo hrRecuritPlanNeedsVo = getHrRecuritPlanNeedsVoByHrRecruitEntryinfoBase(hrRecruitEntryinfoBase);
 
-        //判断是否关联计划id
-        if(bases.size() > 0 && bases.get(0).getPostid() != null){
-            int postId = bases.get(0).getPostid();
-            hrRecuritPlanNeedsVo = getHrRecuritPlanNeedsVoById(postId);
+        return hrRecuritPlanNeedsVo;
+    }
+
+    /**
+     * 根据登录用户获取岗位信息和招聘计划和基础信息
+     * @param hrRecruitEntryinfoBase
+     * @return
+     */
+    @Override
+    public HrRecuritPlanNeedsVo getHrRecuritPlanNeedsVoByHrRecruitEntryinfoBase(HrRecruitEntryinfoBase hrRecruitEntryinfoBase) {
+        HrRecuritPlanNeedsVo hrRecuritPlanNeedsVo = new HrRecuritPlanNeedsVo();
+
+        List<HrRecruitEntryinfoBase> bases = hrRecruitEntryinfoBaseService.list( hrRecruitEntryinfoBase, null,null);
+
+        //判断是否有基础信息
+        if(bases.size() > 0 ){
+            hrRecuritPlanNeedsVo.setHrRecruitEntryinfoBase(bases.get(0));
+            //判断是否关联计划id
+            if(bases.get(0).getPostid() != null){
+                int postId = bases.get(0).getPostid();
+                hrRecuritPlanNeedsVo = getHrRecuritPlanNeedsVoById(postId);
+            }
         }
+
         return hrRecuritPlanNeedsVo;
     }
 
@@ -147,7 +164,7 @@ public class HrRecuritPlanNeedsServiceImpl implements HrRecuritPlanNeedsService 
         HrRecuritPlan hrRecuritPlan = new HrRecuritPlan();
         hrRecuritPlan.setStarttime(new Date());
         hrRecuritPlan.setEndtime(new Date());
-        List<HrRecuritPlan> plans = hrRecuritPlanService.list(null, hrRecuritPlan, null);
+        List<HrRecuritPlan> plans = hrRecuritPlanService.list( hrRecuritPlan,null, null);
 
         //获取招聘计划id的集合
         List<Object> planIds = new ArrayList<>();
@@ -155,6 +172,6 @@ public class HrRecuritPlanNeedsServiceImpl implements HrRecuritPlanNeedsService 
             planIds.add(plan.getId());
         }
 
-        return list(null,new HrRecuritPlanNeeds(),null,planIds);
+        return list(new HrRecuritPlanNeeds(),null,null,planIds);
     }
 }

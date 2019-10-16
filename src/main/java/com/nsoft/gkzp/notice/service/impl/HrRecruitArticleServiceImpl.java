@@ -26,7 +26,7 @@ public class HrRecruitArticleServiceImpl implements HrRecruitArticleService {
      * @return
      */
     @Override
-    public List<HrRecruitArticle> list(Page page, HrRecruitArticle hrRecruitArticle, String order) {
+    public List<HrRecruitArticle> list( HrRecruitArticle hrRecruitArticle, String order,Page page) {
 
         //判断都有值通过
         if(page != null && page.getPageNum() != 0 && page.getPageSize() != 0){

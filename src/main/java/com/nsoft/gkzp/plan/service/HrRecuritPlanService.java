@@ -13,5 +13,5 @@ public interface HrRecuritPlanService {
      * @param order 排序
      * @return
      */
-    List<HrRecuritPlan> list(Page page, HrRecuritPlan hrRecuritPlan, String order);
+    List<HrRecuritPlan> list( HrRecuritPlan hrRecuritPlan, String order,Page page);
 }

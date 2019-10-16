@@ -31,7 +31,7 @@ public class HrRecruitEntryinfoEducationServiceImpl extends AbstractService impl
      * @return
      */
     @Override
-    public List<HrRecruitEntryinfoEducation> list(Page page, HrRecruitEntryinfoEducation hrRecruitEntryinfoEducation, String order) {
+    public List<HrRecruitEntryinfoEducation> list( HrRecruitEntryinfoEducation hrRecruitEntryinfoEducation, String order,Page page) {
         //判断都有值通过
         if(page != null && page.getPageNum() != 0 && page.getPageSize() != 0){
             //分页处理，显示第一页的10条数据

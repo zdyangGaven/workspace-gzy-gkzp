@@ -30,7 +30,7 @@ public class UserinfoController extends AbstractController {
      * @param request
      * @return
      */
-    @RequestMapping("plan/userInfo/getInfoByUser")//HrRecruitEntryinfoBaseController/getInfoByUser
+    @RequestMapping("plan/userInfo/getInfoByUser")
     public HrRecruitEntryinfo getInfoByUser(HttpServletRequest request){
         UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
         return hrRecruitEntryinfoBaseService.getInfoByUser(userContext);
@@ -42,7 +42,7 @@ public class UserinfoController extends AbstractController {
      * @param data
      * @return
      */
-    @RequestMapping(value="plan/userInfo/add",method= RequestMethod.POST)//HrRecruitEntryinfoBaseController/add
+    @RequestMapping(value="plan/userInfo/add",method= RequestMethod.POST)
     public ResultMsg add(String data, HttpServletRequest request){
         try {
 
@@ -65,6 +65,12 @@ public class UserinfoController extends AbstractController {
         return resultMsg;
     }
 
+    /**
+     * 修改
+     * @param data
+     * @param request
+     * @return
+     */
     @RequestMapping(value="plan/userInfo/edit",method= RequestMethod.POST)
     public ResultMsg edit(String data, HttpServletRequest request){
         try {

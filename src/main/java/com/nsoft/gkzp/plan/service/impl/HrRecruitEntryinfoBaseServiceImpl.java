@@ -51,7 +51,7 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
      * @return
      */
     @Override
-    public List<HrRecruitEntryinfoBase> list(Page page, HrRecruitEntryinfoBase hrRecruitEntryinfoBase, String order) {
+    public List<HrRecruitEntryinfoBase> list( HrRecruitEntryinfoBase hrRecruitEntryinfoBase, String order,Page page) {
         //判断都有值通过
         if(page != null && page.getPageNum() != 0 && page.getPageSize() != 0){
             //分页处理，显示第一页的10条数据
@@ -93,28 +93,28 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
         HrRecruitEntryinfoEducation hrRecruitEntryinfoEducation = new HrRecruitEntryinfoEducation();
         //根据基础信息id筛选
         hrRecruitEntryinfoEducation.setBaseid(hrRecruitEntryinfoBase.getId());
-        List<HrRecruitEntryinfoEducation> hrRecruitEntryinfoEducations = hrRecruitEntryinfoEducationService.list(null, hrRecruitEntryinfoEducation, null);
+        List<HrRecruitEntryinfoEducation> hrRecruitEntryinfoEducations = hrRecruitEntryinfoEducationService.list( hrRecruitEntryinfoEducation, null,null);
         hrRecruitEntryinfo.setEducationInfo(hrRecruitEntryinfoEducations);
 
         //家庭成员
         HrRecruitEntryinfoFamily hrRecruitEntryinfoFamily = new HrRecruitEntryinfoFamily();
         //根据基础信息id筛选
         hrRecruitEntryinfoFamily.setBaseid(hrRecruitEntryinfoBase.getId());
-        List<HrRecruitEntryinfoFamily> hrRecruitEntryinfoFamilys = hrRecruitEntryinfoFamilyService.list(null, hrRecruitEntryinfoFamily, null);
+        List<HrRecruitEntryinfoFamily> hrRecruitEntryinfoFamilys = hrRecruitEntryinfoFamilyService.list( hrRecruitEntryinfoFamily, null,null);
         hrRecruitEntryinfo.setFamilyInfo(hrRecruitEntryinfoFamilys);
 
         //其他信息
         HrRecruitEntryinfoOther hrRecruitEntryinfoOther = new HrRecruitEntryinfoOther();
         //根据基础信息id筛选
         hrRecruitEntryinfoOther.setBaseid(hrRecruitEntryinfoBase.getId());
-        List<HrRecruitEntryinfoOther> hrRecruitEntryinfoOthers = hrRecruitEntryinfoOtherService.list(null, hrRecruitEntryinfoOther, null);
+        List<HrRecruitEntryinfoOther> hrRecruitEntryinfoOthers = hrRecruitEntryinfoOtherService.list( hrRecruitEntryinfoOther, null,null);
         hrRecruitEntryinfo.setOtherInfo(hrRecruitEntryinfoOthers.get(0));
 
         //工作经历
         HrRecruitEntryinfoWork hrRecruitEntryinfoWork = new HrRecruitEntryinfoWork();
         //根据基础信息id筛选
         hrRecruitEntryinfoWork.setBaseid(hrRecruitEntryinfoBase.getId());
-        List<HrRecruitEntryinfoWork> hrRecruitEntryinfoWorks = hrRecruitEntryinfoWorkService.list(null, hrRecruitEntryinfoWork, null);
+        List<HrRecruitEntryinfoWork> hrRecruitEntryinfoWorks = hrRecruitEntryinfoWorkService.list( hrRecruitEntryinfoWork,null, null);
         hrRecruitEntryinfo.setWorkInfo(hrRecruitEntryinfoWorks);
 
         return hrRecruitEntryinfo;
@@ -172,7 +172,7 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
             //基础信息
             HrRecruitEntryinfoBase hrRecruitEntryinfoBase = new HrRecruitEntryinfoBase();
             hrRecruitEntryinfoBase.setLoginuserid(2);//userContext.getLoginUserId()
-            List<HrRecruitEntryinfoBase> bases = list(null, hrRecruitEntryinfoBase, null);
+            List<HrRecruitEntryinfoBase> bases = list( hrRecruitEntryinfoBase, null,null);
             //转成bean
             String baseInfo = jsonObject.getJSONObject("baseInfo").toString();
             HrRecruitEntryinfoBase recruitEntryinfoBase = JSON.parseObject(baseInfo, HrRecruitEntryinfoBase.class);

@@ -24,7 +24,7 @@ public class HrRecruitArticleController {
      */
 
     @RequestMapping("/HrRecruitArticleController/list")
-    public List<HrRecruitArticle> list(Page page, HrRecruitArticle hrRecruitArticle, String order){
-        return hrRecruitArticleService.list(page,hrRecruitArticle,order);
+    public List<HrRecruitArticle> list( HrRecruitArticle hrRecruitArticle, String order,Page page){
+        return hrRecruitArticleService.list(hrRecruitArticle,order, page);
     }
 }

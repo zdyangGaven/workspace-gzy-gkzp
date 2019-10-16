@@ -15,7 +15,7 @@ public interface HrRecruitEntryinfoWorkService {
      * @param order 排序
      * @return
      */
-    public List<HrRecruitEntryinfoWork> list(Page page, HrRecruitEntryinfoWork hrRecruitEntryinfoWork, String order);
+    public List<HrRecruitEntryinfoWork> list(HrRecruitEntryinfoWork hrRecruitEntryinfoWork, String order, Page page);
 
     /**
      * 新增

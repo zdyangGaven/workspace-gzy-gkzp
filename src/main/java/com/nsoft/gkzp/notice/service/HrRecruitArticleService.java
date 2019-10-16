@@ -15,5 +15,5 @@ public interface HrRecruitArticleService {
      * @param order 排序
      * @return
      */
-    List<HrRecruitArticle> list(Page page, HrRecruitArticle hrRecruitArticle, String order);
+    List<HrRecruitArticle> list( HrRecruitArticle hrRecruitArticle, String order,Page page);
 }
