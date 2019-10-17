@@ -39,9 +39,9 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
     @Autowired
     HrRecruitEntryinfoWorkService hrRecruitEntryinfoWorkService;
 
-    //人才需求
+    //招聘计划
     @Autowired
-    HrRecuritPlanNeedsService hrRecuritPlanNeedsService;
+    HrRecuritPlanService hrRecuritPlanService;
 
     /**
      * 查询
@@ -121,6 +121,22 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
     }
 
     /**
+     *根据登录用户获取基础信息id
+     * @param userContext 用户信息
+     * @return
+     */
+    @Override
+    public int getBaseIdByUser(UserContext userContext) {
+        HrRecruitEntryinfoBase hrRecruitEntryinfoBase = new HrRecruitEntryinfoBase();
+        hrRecruitEntryinfoBase.setLoginuserid(userContext.getLoginUserId());
+        List<HrRecruitEntryinfoBase> hrRecruitEntryinfoBases = list(hrRecruitEntryinfoBase, "id DESC", null);
+        //用户没有填基础信息退出返回-1
+        if(hrRecruitEntryinfoBases.size() == 0) return -1;
+        //返回基础信息id
+        return hrRecruitEntryinfoBases.get(0).getId();
+    }
+
+    /**
      * 基础信息新增
      * @param jsonObject
      * @return
@@ -165,40 +181,44 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
         }
     }
 
+    /**
+     * 根据用户来进行判断是否修改还是新增
+     * @param jsonObject
+     * @param userContext
+     */
     @Override
     public void edit(JSONObject jsonObject,UserContext userContext) {
         try{
 
-            //基础信息
+            //根据登录用户获取基础信息
             HrRecruitEntryinfoBase hrRecruitEntryinfoBase = new HrRecruitEntryinfoBase();
-            hrRecruitEntryinfoBase.setLoginuserid(2);//userContext.getLoginUserId()
+            hrRecruitEntryinfoBase.setLoginuserid(userContext.getLoginUserId());//userContext.getLoginUserId()
             List<HrRecruitEntryinfoBase> bases = list( hrRecruitEntryinfoBase, null,null);
-            //转成bean
-            String baseInfo = jsonObject.getJSONObject("baseInfo").toString();
-            HrRecruitEntryinfoBase recruitEntryinfoBase = JSON.parseObject(baseInfo, HrRecruitEntryinfoBase.class);
-            hrRecruitEntryinfoBaseDao.updateByPrimaryKeySelective(recruitEntryinfoBase);
-            //判断该登录用户是否没填信息
+            //没有关联基础信息
             if(bases.size() == 0){
-                //System.out.println("为空");
-            } else if(bases.get(0).getPlanid() == null){
-
+                add(jsonObject);
+                return;
+            }else if(bases.get(0).getPlanid() == null){ //计划为空
+                edit(jsonObject);
+                return;
             }
 
-            userContext.setLoginUserId(3);
-            HrRecuritPlanNeedsVo hrRecuritPlanNeedsVoByUser = hrRecuritPlanNeedsService.getHrRecuritPlanNeedsVoByUser(userContext);
-            //System.out.println(hrRecuritPlanNeedsVoByUser);
+                //有基础信息    转成bean进行修改
+            /*String baseInfo = jsonObject.getJSONObject("baseInfo").toString();
+            HrRecruitEntryinfoBase recruitEntryinfoBase = JSON.parseObject(baseInfo, HrRecruitEntryinfoBase.class);
+            hrRecruitEntryinfoBaseDao.updateByPrimaryKeySelective(recruitEntryinfoBase);*/
 
-            HrRecuritPlan hrRecuritPlan = hrRecuritPlanNeedsVoByUser.getHrRecuritPlan();
-
+            //获取计划
+            HrRecuritPlan hrRecuritPlan = hrRecuritPlanService.getHrRecuritPlanById(bases.get(0).getPlanid());
+            //计划结束时间
             Date endTime = null;
             if(hrRecuritPlan != null) endTime = hrRecuritPlan.getEndtime();
 
-            //判断该计划是否结束
-            if(endTime != null && endTime.before(new Date())){
+            if(endTime != null && endTime.before(new Date())){//判断该计划是否结束
                 //结束进行新增
                 add(jsonObject);
             } else {
-
+                edit(jsonObject);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -206,6 +226,10 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
         }
     }
 
+    /**
+     * 修改编辑
+     * @param jsonObject
+     */
     @Override
     public void edit(JSONObject jsonObject) {
         try {

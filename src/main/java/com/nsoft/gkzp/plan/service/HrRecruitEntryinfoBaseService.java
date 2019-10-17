@@ -27,6 +27,12 @@ public interface HrRecruitEntryinfoBaseService {
      */
     public HrRecruitEntryinfo getInfoByUser(UserContext userContext);
 
+    /**
+     * 根据登录用户获取基础信息id
+     * @param userContext 用户信息
+     * @return
+     */
+    public int getBaseIdByUser(UserContext userContext);
 
     /**
      * 基础信息新增

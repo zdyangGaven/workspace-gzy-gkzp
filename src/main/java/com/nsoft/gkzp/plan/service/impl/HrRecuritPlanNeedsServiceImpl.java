@@ -94,7 +94,7 @@ public class HrRecuritPlanNeedsServiceImpl implements HrRecuritPlanNeedsService 
     }
 
     /**
-     * 根据id获取岗位信息和招聘计划
+     * 根据岗位id获取岗位信息和招聘计划
      * @param id 岗位id
      * @return
      */
@@ -131,7 +131,7 @@ public class HrRecuritPlanNeedsServiceImpl implements HrRecuritPlanNeedsService 
     }
 
     /**
-     * 根据登录用户获取岗位信息和招聘计划和基础信息
+     * 根据基础信息获取岗位信息和招聘计划和基础信息
      * @param hrRecruitEntryinfoBase
      * @return
      */
@@ -139,7 +139,7 @@ public class HrRecuritPlanNeedsServiceImpl implements HrRecuritPlanNeedsService 
     public HrRecuritPlanNeedsVo getHrRecuritPlanNeedsVoByHrRecruitEntryinfoBase(HrRecruitEntryinfoBase hrRecruitEntryinfoBase) {
         HrRecuritPlanNeedsVo hrRecuritPlanNeedsVo = new HrRecuritPlanNeedsVo();
 
-        List<HrRecruitEntryinfoBase> bases = hrRecruitEntryinfoBaseService.list( hrRecruitEntryinfoBase, null,null);
+        List<HrRecruitEntryinfoBase> bases = hrRecruitEntryinfoBaseService.list( hrRecruitEntryinfoBase, "id DESC",null);
 
         //判断是否有基础信息
         if(bases.size() > 0 ){

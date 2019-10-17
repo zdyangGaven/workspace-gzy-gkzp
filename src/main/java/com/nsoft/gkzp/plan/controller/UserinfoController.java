@@ -1,7 +1,7 @@
 package com.nsoft.gkzp.plan.controller;
 
-import com.nsoft.gkzp.plan.entity.HrRecruitEntryinfo;
-import com.nsoft.gkzp.plan.service.HrRecruitEntryinfoBaseService;
+import com.nsoft.gkzp.plan.entity.*;
+import com.nsoft.gkzp.plan.service.*;
 import com.nsoft.gkzp.syscore.web.AbstractController;
 import com.nsoft.gkzp.syscore.web.UserContext;
 import com.nsoft.gkzp.util.ResultMsg;
@@ -18,12 +18,28 @@ import java.net.URLDecoder;
 
 @RestController
 public class UserinfoController extends AbstractController {
+    //基础信息
     @Autowired
     HrRecruitEntryinfoBaseService hrRecruitEntryinfoBaseService;
 
     @Autowired
     ResultMsg resultMsg;
 
+    //体检
+    @Autowired
+    HrRecruitHealthchkService hrRecruitHealthchkService;
+
+    //面试
+    @Autowired
+    HrRecuritInterviewService hrRecuritInterviewService;
+
+    //笔试
+    @Autowired
+    HrRecuritWriteService hrRecuritWriteService;
+
+    //资格审核
+    @Autowired
+    HrRecruitReviewRecordService hrRecruitReviewRecordService;
 
     /**
      * 根据登录用户查询信息
@@ -91,5 +107,59 @@ public class UserinfoController extends AbstractController {
         //错误信息
         resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"");
         return resultMsg;
+    }
+
+    /**
+     * 通过用户获取体检数据
+     * @param request
+     * @return
+     */
+    @RequestMapping("plan/userInfo/getHrRecruitHealthchkByUser")
+    public HrRecruitHealthchk getHrRecruitHealthchkByUser(HttpServletRequest request) {
+        UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
+        return hrRecruitHealthchkService.getHrRecruitHealthchkByUser(userContext);
+    }
+
+    /**
+     * 通过用户获取面试数据
+     * @param request
+     * @return
+     */
+    @RequestMapping("plan/userInfo/getHrRecuritInterviewByUser")
+    public HrRecuritInterview getHrRecuritInterviewByUser(HttpServletRequest request) {
+        UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
+        return hrRecuritInterviewService.getHrRecuritInterviewByUser(userContext);
+    }
+
+    /**
+     * 通过用户获取笔试数据
+     * @param request
+     * @return
+     */
+    @RequestMapping("plan/userInfo/getHrRecuritWriteByUser")
+    public HrRecuritWrite getHrRecuritWriteByUser(HttpServletRequest request) {
+        UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
+        return hrRecuritWriteService.getHrRecuritWriteByUser(userContext);
+    }
+
+    /**
+     * 通过用户获取资格审核
+     * @param request
+     * @return
+     */
+    @RequestMapping("plan/userInfo/getHrRecruitReviewRecordVoByUser")
+    public HrRecruitReviewRecordVo getHrRecruitReviewRecordVoByUser(HttpServletRequest request) {
+        HrRecruitReviewRecordVo result = new HrRecruitReviewRecordVo();
+        
+        UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
+        HrRecruitReviewRecordVo hrRecruitReviewRecordVo = hrRecruitReviewRecordService.getHrRecruitReviewRecordVoByUser(userContext);
+
+        result.setHrRecruitReviewRecord(hrRecruitReviewRecordVo.getHrRecruitReviewRecord());
+        //建一个新的基础信息
+        HrRecruitEntryinfoBase hrRecruitEntryinfoBase = new HrRecruitEntryinfoBase();
+        //只获取提交时间
+        hrRecruitEntryinfoBase.setSubmittime(hrRecruitReviewRecordVo.getHrRecruitEntryinfoBase().getSubmittime());
+        result.setHrRecruitEntryinfoBase(hrRecruitEntryinfoBase);
+        return result;
     }
 }

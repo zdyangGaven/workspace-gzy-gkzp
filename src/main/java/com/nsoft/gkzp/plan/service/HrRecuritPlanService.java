@@ -14,4 +14,11 @@ public interface HrRecuritPlanService {
      * @return
      */
     List<HrRecuritPlan> list( HrRecuritPlan hrRecuritPlan, String order,Page page);
+
+    /**
+     * 通过id查询计划
+     * @param id
+     * @return
+     */
+    public HrRecuritPlan getHrRecuritPlanById(int id);
 }

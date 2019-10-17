@@ -8,6 +8,7 @@ import com.nsoft.gkzp.plan.entity.HrRecruitReviewRecord;
 import com.nsoft.gkzp.plan.entity.HrRecruitReviewRecordVo;
 import com.nsoft.gkzp.plan.service.HrRecruitEntryinfoBaseService;
 import com.nsoft.gkzp.plan.service.HrRecruitReviewRecordService;
+import com.nsoft.gkzp.syscore.web.UserContext;
 import com.nsoft.gkzp.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,11 +47,9 @@ public class HrRecruitReviewRecordServiceImpl implements HrRecruitReviewRecordSe
     }
 
     @Override
-    public HrRecruitReviewRecordVo getHrRecruitReviewRecordVoByName(String name) {
+    public HrRecruitReviewRecordVo getHrRecruitReviewRecordVoByInfoBase(HrRecruitEntryinfoBase hrRecruitEntryinfoBase) {
         HrRecruitReviewRecordVo hrRecruitReviewRecordVo = new HrRecruitReviewRecordVo();
         //获取基础信息
-        HrRecruitEntryinfoBase hrRecruitEntryinfoBase = new HrRecruitEntryinfoBase();
-        hrRecruitEntryinfoBase.setName(name);
         List<HrRecruitEntryinfoBase> hrRecruitEntryinfoBases = hrRecruitEntryinfoBaseService.list(hrRecruitEntryinfoBase, "id DESC", null);
 
         //判断基础信息为空退出
@@ -70,5 +69,12 @@ public class HrRecruitReviewRecordServiceImpl implements HrRecruitReviewRecordSe
         hrRecruitReviewRecordVo.setHrRecruitReviewRecord(hrRecruitReviewRecords.get(0));
 
         return hrRecruitReviewRecordVo;
+    }
+
+    @Override
+    public HrRecruitReviewRecordVo getHrRecruitReviewRecordVoByUser(UserContext userContext) {
+        HrRecruitEntryinfoBase hrRecruitEntryinfoBase = new HrRecruitEntryinfoBase();
+        hrRecruitEntryinfoBase.setLoginuserid(userContext.getLoginUserId());
+        return getHrRecruitReviewRecordVoByInfoBase(hrRecruitEntryinfoBase);
     }
 }

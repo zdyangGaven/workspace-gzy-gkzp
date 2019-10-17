@@ -114,11 +114,13 @@ public class PlanController extends AbstractController {
     public HrRecruitReviewRecordVo getHrRecruitReviewRecordVoByName(String name){
         HrRecruitReviewRecordVo result = new HrRecruitReviewRecordVo();
 
-        HrRecruitReviewRecordVo hrRecruitReviewRecordVo = hrRecruitReviewRecordService.getHrRecruitReviewRecordVoByName(name);
+        HrRecruitEntryinfoBase infoBase = new HrRecruitEntryinfoBase();
+        infoBase.setName(name);
+        HrRecruitReviewRecordVo hrRecruitReviewRecordVo = hrRecruitReviewRecordService.getHrRecruitReviewRecordVoByInfoBase(infoBase);
         result.setHrRecruitReviewRecord(hrRecruitReviewRecordVo.getHrRecruitReviewRecord());
-        //基础信息
+        //建一个新的基础信息
         HrRecruitEntryinfoBase hrRecruitEntryinfoBase = new HrRecruitEntryinfoBase();
-        //获取提交时间
+        //只获取提交时间
         hrRecruitEntryinfoBase.setSubmittime(hrRecruitReviewRecordVo.getHrRecruitEntryinfoBase().getSubmittime());
         result.setHrRecruitEntryinfoBase(hrRecruitEntryinfoBase);
         return result;

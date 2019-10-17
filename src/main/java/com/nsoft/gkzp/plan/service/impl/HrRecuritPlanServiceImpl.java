@@ -56,4 +56,14 @@ public class HrRecuritPlanServiceImpl implements HrRecuritPlanService {
         PageInfo<HrRecuritPlan> pageInfo = new PageInfo<HrRecuritPlan>(list);
         return list;
     }
+
+    /**
+     * 通过id查询计划
+     * @param id
+     * @return
+     */
+    @Override
+    public HrRecuritPlan getHrRecuritPlanById(int id) {
+        return hrRecuritPlanDao.selectByPrimaryKey(id);
+    }
 }
