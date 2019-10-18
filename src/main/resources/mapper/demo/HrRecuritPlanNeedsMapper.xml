@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nsoft.gkzp.plan.dao.HrRecuritPlanNeedsMapper">
+  <resultMap id="BaseResultMap" type="com.nsoft.gkzp.plan.entity.HrRecuritPlanNeedsDo">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="Plan_id" jdbcType="INTEGER" property="planId" />
+    <result column="Dept" jdbcType="INTEGER" property="dept" />
+    <result column="PostName" jdbcType="NVARCHAR" property="postname" />
+    <result column="PostNum" jdbcType="NVARCHAR" property="postnum" />
+    <result column="PostIntention" jdbcType="INTEGER" property="postintention" />
+    <result column="PostType" jdbcType="INTEGER" property="posttype" />
+    <result column="PostConfig" jdbcType="NVARCHAR" property="postconfig" />
+    <result column="Specialities" jdbcType="NVARCHAR" property="specialities" />
+    <result column="Degree" jdbcType="INTEGER" property="degree" />
+    <result column="Age" jdbcType="NVARCHAR" property="age" />
+    <result column="Title" jdbcType="INTEGER" property="title" />
+    <result column="Politic" jdbcType="INTEGER" property="politic" />
+    <result column="Condition" jdbcType="NVARCHAR" property="condition" />
+    <result column="Examination" jdbcType="NVARCHAR" property="examination" />
+    <result column="Interview" jdbcType="NVARCHAR" property="interview" />
+    <result column="Employment" jdbcType="INTEGER" property="employment" />
+    <result column="Reason" jdbcType="NVARCHAR" property="reason" />
+    <result column="Remarks" jdbcType="NVARCHAR" property="remarks" />
+    <result column="AffixFile" jdbcType="NVARCHAR" property="affixfile" />
+    <result column="Status" jdbcType="INTEGER" property="status" />
+    <result column="PostNote" jdbcType="NVARCHAR" property="postnote" />
+    <result column="DeptName" jdbcType="NVARCHAR" property="deptname" />
+    <!--把int转成对应的类别的名称-->
+    <result column="PostTypeName" jdbcType="NVARCHAR" property="postTypeName" />
+
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, Plan_id, Dept, PostName, PostNum, PostIntention, PostType, PostConfig, Specialities, 
+    Degree, Age, Title, Politic, Condition, Examination, Interview, Employment, Reason, 
+    Remarks, AffixFile, Status, PostNote, DeptName
+  </sql>
+  <select id="selectByExample" parameterType="com.nsoft.gkzp.plan.entity.HrRecuritPlanNeedsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,( SELECT TypeName FROM HR_Post_Type WHERE n.PostType = ID ) PostTypeName
+    from HR_Recurit_Plan_Needs AS n
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>
