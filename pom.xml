@@ -62,7 +62,7 @@
             <version>1.2.3</version><!--注意版本-->
         </dependency>
 
-        <!-- 通用mapper -->
+        <!-- 通用mapper   用于mabatis封装的基础增删改查的功能-->
         <dependency>
             <groupId>tk.mybatis</groupId>
             <artifactId>mapper-spring-boot-starter</artifactId>
@@ -70,16 +70,16 @@
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-jdbc</artifactId>
+                    <artifactId>spring-boot-starter-jdbc</artifactId><!--已引入了这个，故此处例外掉其默认自带的-->
                 </exclusion>
             </exclusions>
         </dependency>
-
         <!-- 逆向工程 -->
         <dependency>
             <groupId>org.mybatis.generator</groupId>
             <artifactId>mybatis-generator-core</artifactId>
             <version>1.3.5</version>
+            <scope>provided</scope>
         </dependency>
 
 
@@ -103,17 +103,6 @@
             <artifactId>spring-session-data-redis</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-jasper</artifactId><!--SpringBoot默认不支持JSP。为了支持JSP，故引入此依赖-->
-            <version>9.0.21</version>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId><!--jsp标签库-->
-            <version>1.2</version>
-        </dependency>
 
         <dependency>
             <groupId>org.json</groupId> <!--json IN JAVA-->
@@ -132,11 +121,7 @@
             <version>1.2.4</version>
         </dependency>
 
-        <dependency><!--发送邮件-->
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-email</artifactId>
-            <version>1.5</version>
-        </dependency>
+
 
 <!--
         <dependency>
@@ -149,20 +134,29 @@
 
 
 <!--*************************前期上面是必备的，下面的后面再调**********************************-->
-        <!-- alibaba的druid数据库连接池 -->
-<!--
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.1.17</version>
-        </dependency>
--->
 <!--
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
  -->
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId><!--SpringBoot默认不支持JSP。为了支持JSP，故引入此依赖-->
+            <version>9.0.21</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId><!--jsp标签库-->
+            <version>1.2</version>
+        </dependency>
+
+        <dependency><!--发送邮件-->
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-email</artifactId>
+            <version>1.5</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId><!--tomcat依赖 内置tomcat-->
