@@ -75,7 +75,7 @@ public class CheckDataType {
 	public static void main(String[] args){
 		String aa = "_a23_56";
 		boolean b = checkName(aa);
-		System.out.println(b);
+
 
 	}
 

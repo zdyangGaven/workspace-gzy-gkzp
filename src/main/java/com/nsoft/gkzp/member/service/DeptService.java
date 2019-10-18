@@ -6,5 +6,5 @@ import com.nsoft.gkzp.util.Page;
 import java.util.List;
 
 public interface DeptService {
-    List<Dept> list(Page page, Dept dept, String order);
+    List<Dept> list( Dept dept, String order,Page page);
 }

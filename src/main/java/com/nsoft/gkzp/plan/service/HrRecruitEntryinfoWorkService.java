@@ -15,7 +15,7 @@ public interface HrRecruitEntryinfoWorkService {
      * @param order 排序
      * @return
      */
-    public List<HrRecruitEntryinfoWork> list(Page page, HrRecruitEntryinfoWork hrRecruitEntryinfoWork, String order);
+    public List<HrRecruitEntryinfoWork> list(HrRecruitEntryinfoWork hrRecruitEntryinfoWork, String order, Page page);
 
     /**
      * 新增
@@ -23,4 +23,16 @@ public interface HrRecruitEntryinfoWorkService {
      * @return
      */
     public void add(List<HrRecruitEntryinfoWork> hrRecruitEntryinfoWork, int baseId);
+
+    /**
+     * 新增
+     * @param hrRecruitEntryinfoWork
+     */
+    public void add(HrRecruitEntryinfoWork hrRecruitEntryinfoWork);
+
+    /**
+     * 修改
+     * @param hrRecruitEntryinfoWork
+     */
+    public void edit(HrRecruitEntryinfoWork hrRecruitEntryinfoWork);
 }

@@ -15,7 +15,7 @@ public interface HrRecruitEntryinfoEducationService {
      * @param order 排序
      * @return
      */
-    public List<HrRecruitEntryinfoEducation> list(Page page, HrRecruitEntryinfoEducation hrRecruitEntryinfoEducation, String order);
+    public List<HrRecruitEntryinfoEducation> list( HrRecruitEntryinfoEducation hrRecruitEntryinfoEducation, String order,Page page);
 
     /**
      * 新增
@@ -24,5 +24,15 @@ public interface HrRecruitEntryinfoEducationService {
      */
     public void add(List<HrRecruitEntryinfoEducation> hrRecruitEntryinfoEducation,int baseId);
 
+    /**
+     * 新增
+     * @param hrRecruitEntryinfoEducation
+     */
+    public void add(HrRecruitEntryinfoEducation hrRecruitEntryinfoEducation);
 
+    /**
+     * 修改
+     * @param hrRecruitEntryinfoEducation
+     */
+    public void edit(HrRecruitEntryinfoEducation hrRecruitEntryinfoEducation);
 }

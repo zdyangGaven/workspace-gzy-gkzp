@@ -1,11 +1,13 @@
 package com.nsoft.gkzp.plan.entity;
 
-public class HrRecuritPlanNeeds {
+import java.io.Serializable;
+
+public class HrRecuritPlanNeeds implements Serializable {
     private Integer id;
 
-    private String planId;
+    private Integer planId;
 
-    private String dept;
+    private Integer dept;
 
     private String postname;
 
@@ -33,7 +35,7 @@ public class HrRecuritPlanNeeds {
 
     private String interview;
 
-    private String employment;
+    private Integer employment;
 
     private String reason;
 
@@ -47,6 +49,35 @@ public class HrRecuritPlanNeeds {
 
     private String deptname;
 
+    @Override
+    public String toString() {
+        return "HrRecuritPlanNeeds{" +
+                "id=" + id +
+                ", planId=" + planId +
+                ", dept=" + dept +
+                ", postname='" + postname + '\'' +
+                ", postnum='" + postnum + '\'' +
+                ", postintention='" + postintention + '\'' +
+                ", posttype='" + posttype + '\'' +
+                ", postconfig='" + postconfig + '\'' +
+                ", specialities='" + specialities + '\'' +
+                ", degree='" + degree + '\'' +
+                ", age='" + age + '\'' +
+                ", title='" + title + '\'' +
+                ", politic='" + politic + '\'' +
+                ", condition='" + condition + '\'' +
+                ", examination='" + examination + '\'' +
+                ", interview='" + interview + '\'' +
+                ", employment=" + employment +
+                ", reason='" + reason + '\'' +
+                ", remarks='" + remarks + '\'' +
+                ", affixfile='" + affixfile + '\'' +
+                ", status=" + status +
+                ", postnote='" + postnote + '\'' +
+                ", deptname='" + deptname + '\'' +
+                '}';
+    }
+
     public Integer getId() {
         return id;
     }
@@ -55,20 +86,20 @@ public class HrRecuritPlanNeeds {
         this.id = id;
     }
 
-    public String getPlanId() {
+    public Integer getPlanId() {
         return planId;
     }
 
-    public void setPlanId(String planId) {
-        this.planId = planId == null ? null : planId.trim();
+    public void setPlanId(Integer planId) {
+        this.planId = planId;
     }
 
-    public String getDept() {
+    public Integer getDept() {
         return dept;
     }
 
-    public void setDept(String dept) {
-        this.dept = dept == null ? null : dept.trim();
+    public void setDept(Integer dept) {
+        this.dept = dept;
     }
 
     public String getPostname() {
@@ -175,12 +206,12 @@ public class HrRecuritPlanNeeds {
         this.interview = interview == null ? null : interview.trim();
     }
 
-    public String getEmployment() {
+    public Integer getEmployment() {
         return employment;
     }
 
-    public void setEmployment(String employment) {
-        this.employment = employment == null ? null : employment.trim();
+    public void setEmployment(Integer employment) {
+        this.employment = employment;
     }
 
     public String getReason() {
@@ -229,34 +260,5 @@ public class HrRecuritPlanNeeds {
 
     public void setDeptname(String deptname) {
         this.deptname = deptname == null ? null : deptname.trim();
-    }
-
-    @Override
-    public String toString() {
-        return "HrRecuritPlanNeeds{" +
-                "id=" + id +
-                ", planId='" + planId + '\'' +
-                ", dept='" + dept + '\'' +
-                ", postname='" + postname + '\'' +
-                ", postnum='" + postnum + '\'' +
-                ", postintention='" + postintention + '\'' +
-                ", posttype='" + posttype + '\'' +
-                ", postconfig='" + postconfig + '\'' +
-                ", specialities='" + specialities + '\'' +
-                ", degree='" + degree + '\'' +
-                ", age='" + age + '\'' +
-                ", title='" + title + '\'' +
-                ", politic='" + politic + '\'' +
-                ", condition='" + condition + '\'' +
-                ", examination='" + examination + '\'' +
-                ", interview='" + interview + '\'' +
-                ", employment='" + employment + '\'' +
-                ", reason='" + reason + '\'' +
-                ", remarks='" + remarks + '\'' +
-                ", affixfile='" + affixfile + '\'' +
-                ", status=" + status +
-                ", postnote='" + postnote + '\'' +
-                ", deptname='" + deptname + '\'' +
-                '}';
     }
 }

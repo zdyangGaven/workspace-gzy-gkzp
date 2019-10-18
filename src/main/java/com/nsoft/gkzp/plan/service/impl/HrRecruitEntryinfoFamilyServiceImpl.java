@@ -29,7 +29,7 @@ public class HrRecruitEntryinfoFamilyServiceImpl extends AbstractService impleme
      * @return
      */
     @Override
-    public List<HrRecruitEntryinfoFamily> list(Page page, HrRecruitEntryinfoFamily hrRecruitEntryinfoFamily, String order) {
+    public List<HrRecruitEntryinfoFamily> list( HrRecruitEntryinfoFamily hrRecruitEntryinfoFamily, String order,Page page) {
         //判断都有值通过
         if(page != null && page.getPageNum() != 0 && page.getPageSize() != 0){
             //分页处理，显示第一页的10条数据
@@ -38,7 +38,7 @@ public class HrRecruitEntryinfoFamilyServiceImpl extends AbstractService impleme
 
         Example example = new Example(HrRecruitEntryinfoFamily.class);
         //排序
-        example.setOrderByClause(order);
+        if(order != null) example.setOrderByClause(order);
 
         //筛选
         example.createCriteria().andEqualTo(hrRecruitEntryinfoFamily);
@@ -72,5 +72,34 @@ public class HrRecruitEntryinfoFamilyServiceImpl extends AbstractService impleme
 
     }
 
+    /**
+     * 新增
+     * @param hrRecruitEntryinfoFamily
+     */
+    @Override
+    public void add(HrRecruitEntryinfoFamily hrRecruitEntryinfoFamily) {
+        try {
+            //新增
+            hrRecruitEntryinfoFamilyDao.insertSelective(hrRecruitEntryinfoFamily);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ServiceException("报名-家庭成员新增报错",e);
 
+        }
+    }
+
+    /**
+     * 修改
+     * @param hrRecruitEntryinfoFamily
+     */
+    @Override
+    public void edit(HrRecruitEntryinfoFamily hrRecruitEntryinfoFamily) {
+        try {
+            hrRecruitEntryinfoFamilyDao.updateByPrimaryKeySelective(hrRecruitEntryinfoFamily);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ServiceException("报名-家庭成员修改报错",e);
+
+        }
+    }
 }

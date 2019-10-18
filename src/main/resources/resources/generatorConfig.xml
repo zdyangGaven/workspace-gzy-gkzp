@@ -27,13 +27,13 @@
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
         <!-- 生成映射文件的包名和位置-->
-        <sqlMapGenerator targetPackage="com.generator.mapping" targetProject="src/main/resources">
+        <!--<sqlMapGenerator targetPackage="com.generator.mapping" targetProject="src/main/resources">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
-        <!-- 生成DAO的包名和位置-->
+        &lt;!&ndash; 生成DAO的包名和位置&ndash;&gt;
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.generator.mapper" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
-        </javaClientGenerator>
+        </javaClientGenerator>-->
         <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->
         <!--<table tableName="HR_Recruit_entryInfo_base"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
         <table tableName="HR_Recruit_entryInfo_education"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
@@ -41,10 +41,7 @@
         <table tableName="HR_Recruit_entryInfo_other"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
         <table tableName="HR_Recruit_entryInfo_work"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
         -->
-        <table tableName="Dept"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
-        <table tableName="HR_Post_Type"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
-        <table tableName="HR_Recurit_Plan_Needs"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
-        <table tableName="HR_Recurit_Plan_Return"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="HR_Recruit_File"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
 
     </context>
 </generatorConfiguration>

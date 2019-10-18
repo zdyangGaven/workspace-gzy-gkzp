@@ -15,7 +15,7 @@ public interface HrRecruitEntryinfoFamilyService {
      * @param order 排序
      * @return
      */
-    public List<HrRecruitEntryinfoFamily> list(Page page, HrRecruitEntryinfoFamily hrRecruitEntryinfoFamily, String order);
+    public List<HrRecruitEntryinfoFamily> list( HrRecruitEntryinfoFamily hrRecruitEntryinfoFamily, String order,Page page);
 
     /**
      * 新增
@@ -25,5 +25,15 @@ public interface HrRecruitEntryinfoFamilyService {
      */
     public void add(List<HrRecruitEntryinfoFamily> hrRecruitEntryinfoFamily, int baseId);
 
+    /**
+     * 新增
+     * @param hrRecruitEntryinfoFamily
+     */
+    public void add(HrRecruitEntryinfoFamily hrRecruitEntryinfoFamily);
 
+    /**
+     * 修改
+     * @param hrRecruitEntryinfoFamily
+     */
+    public void edit(HrRecruitEntryinfoFamily hrRecruitEntryinfoFamily);
 }

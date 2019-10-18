@@ -14,7 +14,7 @@ public class ResultMsg  implements Serializable {
 
     int type        = MsgType.NONE; //返回信息类型
     String msg      = "";           //返回信息
-    Object object   = null;         //返回数据
+    Object data   = null;         //返回数据
 
     /**
      * 业务提示信息类型
@@ -46,18 +46,27 @@ public class ResultMsg  implements Serializable {
         this.setResultMsg(type,msg,null);
     }
 
-    public void setResultMsg(int type,String msg,Object object){
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
+    }
+
+    public void setResultMsg(int type, String msg, Object data){
         this.type = type;
         this.msg = msg;
-        this.object = object;
+        this.data = data;
     }
+
 
     @Override
     public String toString() {
         return "ResultMsg{" +
                 "type=" + type +
                 ", msg='" + msg + '\'' +
-                ", object=" + object +
+                ", object=" + data +
                 '}';
     }
 }

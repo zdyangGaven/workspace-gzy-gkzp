@@ -15,7 +15,7 @@ public class DeptController {
     DeptService deptService;
 
     @RequestMapping("DeptController/list")
-    public List<Dept> list(Page page, Dept Dept, String order){
-        return deptService.list(page,Dept,order);
+    public List<Dept> list( Dept Dept, String order,Page page){
+        return deptService.list(Dept,order,page);
     }
 }

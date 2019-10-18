@@ -25,7 +25,7 @@ public class HrPostTypeServiceImpl implements HrPostTypeService {
      * @return
      */
     @Override
-    public List<HrPostType> list(Page page, HrPostType hrPostType, String order) {
+    public List<HrPostType> list( HrPostType hrPostType, String order,Page page) {
         //判断都有值通过
         if(page != null && page.getPageNum() != 0 && page.getPageSize() != 0){
             //分页处理，显示第一页的10条数据
@@ -34,7 +34,7 @@ public class HrPostTypeServiceImpl implements HrPostTypeService {
 
         Example example = new Example(HrPostType.class);
         //排序
-        example.setOrderByClause(order);
+        if(order != null) example.setOrderByClause(order);
 
         //筛选
         example.createCriteria().andEqualTo(hrPostType);

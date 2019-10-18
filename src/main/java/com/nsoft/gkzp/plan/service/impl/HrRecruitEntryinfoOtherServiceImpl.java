@@ -27,7 +27,7 @@ public class HrRecruitEntryinfoOtherServiceImpl implements HrRecruitEntryinfoOth
      * @return
      */
     @Override
-    public List<HrRecruitEntryinfoOther> list(Page page, HrRecruitEntryinfoOther hrRecruitEntryinfoOther, String order) {
+    public List<HrRecruitEntryinfoOther> list( HrRecruitEntryinfoOther hrRecruitEntryinfoOther, String order,Page page) {
         //判断都有值通过
         if(page != null && page.getPageNum() != 0 && page.getPageSize() != 0){
             //分页处理，显示第一页的10条数据
@@ -36,7 +36,7 @@ public class HrRecruitEntryinfoOtherServiceImpl implements HrRecruitEntryinfoOth
 
         Example example = new Example(HrRecruitEntryinfoOther.class);
         //排序
-        example.setOrderByClause(order);
+        if(order != null) example.setOrderByClause(order);
 
         //筛选
         example.createCriteria().andEqualTo(hrRecruitEntryinfoOther);
@@ -60,6 +60,20 @@ public class HrRecruitEntryinfoOtherServiceImpl implements HrRecruitEntryinfoOth
         } catch (Exception e) {
             e.printStackTrace();
             throw new ServiceException("报名-其他信息新增报错",e);
+        }
+    }
+
+    /**
+     * 修改
+     * @param hrRecruitEntryinfoOther
+     */
+    @Override
+    public void edit(HrRecruitEntryinfoOther hrRecruitEntryinfoOther) {
+        try {
+            hrRecruitEntryinfoOtherDao.updateByPrimaryKeySelective(hrRecruitEntryinfoOther);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ServiceException("报名-其他信息修改报错",e);
         }
     }
 }

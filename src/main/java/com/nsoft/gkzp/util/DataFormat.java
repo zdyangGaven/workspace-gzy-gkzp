@@ -1,5 +1,8 @@
 package com.nsoft.gkzp.util;
 
+import com.nsoft.gkzp.syscore.service.ServiceException;
+import org.springframework.stereotype.Component;
+
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -7,13 +10,13 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import com.nsoft.gkzp.syscore.service.ServiceException ;
 
 /**公共方法
  * 日期、时间相关操作
  * @author zdyang
  *
  */
+@Component
 public class DataFormat {
 
 	/**
@@ -59,6 +62,17 @@ public class DataFormat {
 				break;
 		}
 		return strFormatString;
+	}
+
+	/**
+	 * 获取当前格式化的时间
+	 * @param type 时间的类型
+	 * @return
+	 */
+	public String getCurrentTime(int type){
+		Date d = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat(getDateConvertString(type));
+		return sdf.format(d);
 	}
 	
 	/**
@@ -221,7 +235,7 @@ public class DataFormat {
 	 * @param ts
 	 * @return
 	 */
-	static public String getDateTimeString ( Timestamp ts )
+	public static  String getDateTimeString ( Timestamp ts )
 	{
 		if (null == ts)
 			return "" ;
@@ -515,13 +529,13 @@ public class DataFormat {
 		if ( source !=  null  && beginIndex >= 0 && endIndex >0 && (beginIndex <= endIndex))
 		{ 
 			byte []  bStr = source.getBytes () ; 
-//			System.out.println("bStr.length=" + bStr.length);
+
 			if (beginIndex <  bStr.length ) 
 	        {
 				if(beginIndex > 0)
 				{
 					String beginStr =  new  String ( bStr, beginIndex -  1 ,  2 ) ; 
-//					System.out.println("beginStr=" + beginStr);
+
 			        if ( beginStr.length ()  ==  1  && source.contains ( beginStr )){ 
 			        	beginIndex +=  flag; 
 			        } 

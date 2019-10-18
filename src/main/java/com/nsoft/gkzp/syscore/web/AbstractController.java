@@ -15,6 +15,7 @@ import org.apache.logging.log4j.Logger;
  */
 public abstract class AbstractController {
 
+
     final protected Logger logger = LogManager.getLogger(getClass());
 
     //Web上下文

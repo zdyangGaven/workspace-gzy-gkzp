@@ -25,7 +25,7 @@ public class HrRecuritPlanServiceImpl implements HrRecuritPlanService {
      * @return
      */
     @Override
-    public List<HrRecuritPlan> list(Page page, HrRecuritPlan hrRecuritPlan, String order) {
+    public List<HrRecuritPlan> list( HrRecuritPlan hrRecuritPlan, String order,Page page) {
 
         //判断都有值通过
         if(page != null && page.getPageNum() != 0 && page.getPageSize() != 0){
@@ -35,20 +35,35 @@ public class HrRecuritPlanServiceImpl implements HrRecuritPlanService {
 
         Example example = new Example(HrRecuritPlan.class);
         //排序
-        example.setOrderByClause(order);
+        if(order != null) example.setOrderByClause(order);
 
-        //开始时间和结束时间
-        if(hrRecuritPlan.getStarttime() != null) example.createCriteria().andGreaterThanOrEqualTo("starttime",hrRecuritPlan.getStarttime());
-        if(hrRecuritPlan.getEndtime() != null) example.createCriteria().andLessThanOrEqualTo("endtime",hrRecuritPlan.getEndtime());
+        Example.Criteria criteria = example.createCriteria();
+
+        //开始时间小于参数和结束时间大于参数
+        if(hrRecuritPlan.getEndtime() != null) criteria.andGreaterThanOrEqualTo("endtime",hrRecuritPlan.getEndtime());
+        if(hrRecuritPlan.getStarttime() != null) criteria.andLessThanOrEqualTo("starttime",hrRecuritPlan.getStarttime());
+
+        //清除时间
+        hrRecuritPlan.setEndtime(null);
+        hrRecuritPlan.setStarttime(null);
 
         //筛选
-        example.createCriteria().andEqualTo(hrRecuritPlan);
-
+        criteria.andEqualTo(hrRecuritPlan);
 
         List<HrRecuritPlan> list = hrRecuritPlanDao.selectByExample(example);
 
         // 取分页信息
         PageInfo<HrRecuritPlan> pageInfo = new PageInfo<HrRecuritPlan>(list);
         return list;
+    }
+
+    /**
+     * 通过id查询计划
+     * @param id
+     * @return
+     */
+    @Override
+    public HrRecuritPlan getHrRecuritPlanById(int id) {
+        return hrRecuritPlanDao.selectByPrimaryKey(id);
     }
 }
