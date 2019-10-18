@@ -34,9 +34,9 @@ public class MyInterceptorConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
        //这里添加多个拦截器
         // 登录检测        添加拦截的请求，并排除几个不拦截的请求  ----- 登录检测拦截规则:  /**     排除： 登录、注册相关页
-        /*registry.addInterceptor(loginHandlerInterceptor).addPathPatterns("/**")
-                .excludePathPatterns( "/","/user/login","/user/register","/user/imgCode","/HrRecruitArticleController/list","/HrPostTypeController/list");
-        */        //.excludePathPatterns( "/user/register","/user/getUsers");
+        registry.addInterceptor(loginHandlerInterceptor).addPathPatterns("/**")  ///intercept
+                .excludePathPatterns( "/","/user/login","/user/register","/user/imgCode");
+                //.excludePathPatterns( "/user/register","/user/getUsers");
 
     }
 

@@ -2,6 +2,7 @@ package com.nsoft.gkzp.plan.service;
 
 import com.nsoft.gkzp.plan.entity.HrRecruitEntryinfoBase;
 import com.nsoft.gkzp.plan.entity.HrRecuritPlanNeeds;
+import com.nsoft.gkzp.plan.entity.HrRecuritPlanNeedsDo;
 import com.nsoft.gkzp.plan.entity.HrRecuritPlanNeedsVo;
 import com.nsoft.gkzp.syscore.web.UserContext;
 import com.nsoft.gkzp.util.Page;
@@ -20,6 +21,8 @@ public interface HrRecuritPlanNeedsService {
      */
     public List<HrRecuritPlanNeeds> list( HrRecuritPlanNeeds hrRecuritPlanNeeds, String order,Page page);
     public List<HrRecuritPlanNeeds> list( HrRecuritPlanNeeds hrRecuritPlanNeeds, String order,Page page,List<Object> planIdList);
+
+    public List<HrRecuritPlanNeedsDo> find(HrRecuritPlanNeeds hrRecuritPlanNeeds, String order,Page page, List<Object> planIdList);
 
     /**
      * 根据id获取岗位信息和招聘计划
@@ -46,5 +49,5 @@ public interface HrRecuritPlanNeedsService {
      *根据计划获取人才需求
      * @return
      */
-    public List<HrRecuritPlanNeeds> getListByPlan();
+    public List<HrRecuritPlanNeedsDo> getListByPlan(HrRecuritPlanNeeds hrRecuritPlanNeeds, String order,Page page);
 }

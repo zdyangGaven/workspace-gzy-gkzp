@@ -61,6 +61,8 @@ public class HrRecruitEntryinfoFamilyServiceImpl extends AbstractService impleme
             for (HrRecruitEntryinfoFamily hrRecruitEntryinfoFamily: hrRecruitEntryinfoFamilys) {
                 //添加基础id进行关联
                 hrRecruitEntryinfoFamily.setBaseid(baseId);
+                //id设为空
+                hrRecruitEntryinfoFamily.setId(null);
                 //新增
                 hrRecruitEntryinfoFamilyDao.insertSelective(hrRecruitEntryinfoFamily);
             }

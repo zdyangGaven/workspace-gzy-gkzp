@@ -59,6 +59,8 @@ public class HrRecruitEntryinfoWorkServiceImpl implements HrRecruitEntryinfoWork
             for (HrRecruitEntryinfoWork hrRecruitEntryinfoWork:hrRecruitEntryinfoWorks) {
                 //添加基础id进行关联
                 hrRecruitEntryinfoWork.setBaseid(baseId);
+                //id设为空
+                hrRecruitEntryinfoWork.setId(null);
                 //新增
                 hrRecruitEntryinfoWorkDao.insertSelective(hrRecruitEntryinfoWork);
             }

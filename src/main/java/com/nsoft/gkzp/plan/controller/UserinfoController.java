@@ -46,7 +46,7 @@ public class UserinfoController extends AbstractController {
      * @param request
      * @return
      */
-    @RequestMapping("plan/userInfo/getInfoByUser")
+    @RequestMapping("intercept/plan/userInfo/getInfoByUser")
     public HrRecruitEntryinfo getInfoByUser(HttpServletRequest request){
         UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
         return hrRecruitEntryinfoBaseService.getInfoByUser(userContext);
@@ -58,7 +58,7 @@ public class UserinfoController extends AbstractController {
      * @param data
      * @return
      */
-    @RequestMapping(value="plan/userInfo/add",method= RequestMethod.POST)
+    @RequestMapping(value="intercept/plan/userInfo/add",method= RequestMethod.POST)
     public ResultMsg add(String data, HttpServletRequest request){
         try {
 
@@ -87,7 +87,7 @@ public class UserinfoController extends AbstractController {
      * @param request
      * @return
      */
-    @RequestMapping(value="plan/userInfo/edit",method= RequestMethod.POST)
+    @RequestMapping(value="intercept/plan/userInfo/edit",method= RequestMethod.POST)
     public ResultMsg edit(String data, HttpServletRequest request){
         try {
 
@@ -114,7 +114,7 @@ public class UserinfoController extends AbstractController {
      * @param request
      * @return
      */
-    @RequestMapping("plan/userInfo/getHrRecruitHealthchkByUser")
+    @RequestMapping("intercept/plan/userInfo/getHrRecruitHealthchkByUser")
     public HrRecruitHealthchk getHrRecruitHealthchkByUser(HttpServletRequest request) {
         UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
         return hrRecruitHealthchkService.getHrRecruitHealthchkByUser(userContext);
@@ -125,7 +125,7 @@ public class UserinfoController extends AbstractController {
      * @param request
      * @return
      */
-    @RequestMapping("plan/userInfo/getHrRecuritInterviewByUser")
+    @RequestMapping("intercept/plan/userInfo/getHrRecuritInterviewByUser")
     public HrRecuritInterview getHrRecuritInterviewByUser(HttpServletRequest request) {
         UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
         return hrRecuritInterviewService.getHrRecuritInterviewByUser(userContext);
@@ -136,7 +136,7 @@ public class UserinfoController extends AbstractController {
      * @param request
      * @return
      */
-    @RequestMapping("plan/userInfo/getHrRecuritWriteByUser")
+    @RequestMapping("intercept/plan/userInfo/getHrRecuritWriteByUser")
     public HrRecuritWrite getHrRecuritWriteByUser(HttpServletRequest request) {
         UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
         return hrRecuritWriteService.getHrRecuritWriteByUser(userContext);
@@ -147,7 +147,7 @@ public class UserinfoController extends AbstractController {
      * @param request
      * @return
      */
-    @RequestMapping("plan/userInfo/getHrRecruitReviewRecordVoByUser")
+    @RequestMapping("intercept/plan/userInfo/getHrRecruitReviewRecordVoByUser")
     public HrRecruitReviewRecordVo getHrRecruitReviewRecordVoByUser(HttpServletRequest request) {
         HrRecruitReviewRecordVo result = new HrRecruitReviewRecordVo();
         

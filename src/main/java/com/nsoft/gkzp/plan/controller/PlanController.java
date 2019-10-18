@@ -87,9 +87,9 @@ public class PlanController extends AbstractController {
      * 根据计划获取人才需求
      * @return
      */
-    @RequestMapping("plan/getPlanNeedsListByPlan")
-    public List<HrRecuritPlanNeeds> getPlanNeedsListByPlan(){
-        return hrRecuritPlanNeedsService.getListByPlan();
+    @RequestMapping("/plan/getPlanNeedsListByPlan")
+    public List<HrRecuritPlanNeedsDo> getPlanNeedsListByPlan(HrRecuritPlanNeeds hrRecuritPlanNeeds, String order,Page page){
+        return hrRecuritPlanNeedsService.getListByPlan(hrRecuritPlanNeeds,order,page);
     }
 
     /**

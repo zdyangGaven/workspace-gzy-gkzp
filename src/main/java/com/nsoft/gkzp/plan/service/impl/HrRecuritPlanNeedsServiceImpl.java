@@ -3,10 +3,8 @@ package com.nsoft.gkzp.plan.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.nsoft.gkzp.plan.dao.HrRecuritPlanNeedsDao;
-import com.nsoft.gkzp.plan.entity.HrRecruitEntryinfoBase;
-import com.nsoft.gkzp.plan.entity.HrRecuritPlan;
-import com.nsoft.gkzp.plan.entity.HrRecuritPlanNeeds;
-import com.nsoft.gkzp.plan.entity.HrRecuritPlanNeedsVo;
+import com.nsoft.gkzp.plan.dao.HrRecuritPlanNeedsMapper;
+import com.nsoft.gkzp.plan.entity.*;
 import com.nsoft.gkzp.plan.service.HrRecruitEntryinfoBaseService;
 import com.nsoft.gkzp.plan.service.HrRecuritPlanNeedsService;
 import com.nsoft.gkzp.plan.service.HrRecuritPlanService;
@@ -26,6 +24,9 @@ public class HrRecuritPlanNeedsServiceImpl implements HrRecuritPlanNeedsService 
 
     @Autowired
     HrRecuritPlanNeedsDao hrRecuritPlanNeedsDao;
+
+    @Autowired
+    HrRecuritPlanNeedsMapper hrRecuritPlanNeedsMapper;
 
     //基础信息
     @Autowired
@@ -82,14 +83,50 @@ public class HrRecuritPlanNeedsServiceImpl implements HrRecuritPlanNeedsService 
         }
         //清除
         hrRecuritPlanNeeds.setPostname(null);
-
+        //筛选
         criteria.andEqualTo(hrRecuritPlanNeeds);
+
+
 
         List<HrRecuritPlanNeeds> list = hrRecuritPlanNeedsDao.selectByExample(example);
 
 
         // 取分页信息
         PageInfo<HrRecuritPlanNeeds> pageInfo = new PageInfo<HrRecuritPlanNeeds>(list);
+        return list;
+    }
+
+    @Override
+    public List<HrRecuritPlanNeedsDo> find(HrRecuritPlanNeeds hrRecuritPlanNeeds, String order, Page page, List<Object> planIdList) {
+        //判断都有值通过
+        if(page != null && page.getPageNum() != 0 && page.getPageSize() != 0){
+            //分页处理，显示第一页的10条数据
+            PageHelper.startPage(page.getPageNum(), page.getPageSize());
+        }
+
+        HrRecuritPlanNeedsExample hrRecuritPlanNeedsExample = new HrRecuritPlanNeedsExample();
+        //排序
+        if(order != null) hrRecuritPlanNeedsExample.setOrderByClause(order);
+
+        HrRecuritPlanNeedsExample.Criteria criteria = hrRecuritPlanNeedsExample.createCriteria();
+
+        //模糊筛选
+        if(hrRecuritPlanNeeds.getPostname() != null) criteria.andPostnameLike("%"+hrRecuritPlanNeeds.getPostname()+"%");
+
+
+        //岗位类型筛选
+        if(hrRecuritPlanNeeds.getPosttype() != null) criteria.andPosttypeEqualTo(hrRecuritPlanNeeds.getPosttype());
+        //部门筛选
+        if(hrRecuritPlanNeeds.getDept() != null) criteria.andDeptEqualTo(hrRecuritPlanNeeds.getDept());
+        //计划筛选
+        if(hrRecuritPlanNeeds.getPlanId() != null) criteria.andPlanIdEqualTo(hrRecuritPlanNeeds.getPlanId());
+        //学历
+        if(hrRecuritPlanNeeds.getDegree() != null) criteria.andDegreeEqualTo(hrRecuritPlanNeeds.getDegree());
+
+        List<HrRecuritPlanNeedsDo> list = hrRecuritPlanNeedsMapper.selectByExample(hrRecuritPlanNeedsExample);
+
+        // 取分页信息
+        PageInfo<HrRecuritPlanNeedsDo> pageInfo = new PageInfo<HrRecuritPlanNeedsDo>(list);
         return list;
     }
 
@@ -159,7 +196,7 @@ public class HrRecuritPlanNeedsServiceImpl implements HrRecuritPlanNeedsService 
      * @return
      */
     @Override
-    public List<HrRecuritPlanNeeds> getListByPlan() {
+    public List<HrRecuritPlanNeedsDo> getListByPlan(HrRecuritPlanNeeds hrRecuritPlanNeeds, String order,Page page) {
         //获取当前所招聘的计划
         HrRecuritPlan hrRecuritPlan = new HrRecuritPlan();
         hrRecuritPlan.setStarttime(new Date());
@@ -172,6 +209,8 @@ public class HrRecuritPlanNeedsServiceImpl implements HrRecuritPlanNeedsService 
             planIds.add(plan.getId());
         }
 
-        return list(new HrRecuritPlanNeeds(),null,null,planIds);
+
+
+        return find(hrRecuritPlanNeeds,order,page,planIds);
     }
 }

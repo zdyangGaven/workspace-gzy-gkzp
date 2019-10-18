@@ -147,6 +147,8 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
             //基础信息
             String baseInfo = jsonObject.getJSONObject("baseInfo").toString();
             HrRecruitEntryinfoBase hrRecruitEntryinfoBase = JSON.parseObject(baseInfo, HrRecruitEntryinfoBase.class);
+            //id设为空
+            hrRecruitEntryinfoBase.setId(null);
             //新增
             hrRecruitEntryinfoBaseDao.insertSelective(hrRecruitEntryinfoBase);
             //获取新增的id
@@ -233,9 +235,15 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
     @Override
     public void edit(JSONObject jsonObject) {
         try {
+
             //基础信息
-            String baseInfo = jsonObject.getJSONObject("baseInfo").toString();
-            HrRecruitEntryinfoBase hrRecruitEntryinfoBase = JSON.parseObject(baseInfo, HrRecruitEntryinfoBase.class);
+            JSONObject baseInfo = jsonObject.getJSONObject("baseInfo");
+            //清空提交时间和修改时间
+            baseInfo.put("submittime","");
+            baseInfo.put("modifytime","");
+
+            String baseInfoStr = baseInfo.toString();
+            HrRecruitEntryinfoBase hrRecruitEntryinfoBase = JSON.parseObject(baseInfoStr, HrRecruitEntryinfoBase.class);
             //新增
             hrRecruitEntryinfoBaseDao.updateByPrimaryKeySelective(hrRecruitEntryinfoBase);
             //获取基础信息的id

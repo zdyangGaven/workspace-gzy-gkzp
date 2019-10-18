@@ -56,6 +56,8 @@ public class HrRecruitEntryinfoOtherServiceImpl implements HrRecruitEntryinfoOth
     @Override
     public void add(HrRecruitEntryinfoOther hrRecruitEntryinfoOther) {
         try {
+            //id设为空
+            hrRecruitEntryinfoOther.setId(null);
             hrRecruitEntryinfoOtherDao.insertSelective(hrRecruitEntryinfoOther);
         } catch (Exception e) {
             e.printStackTrace();
