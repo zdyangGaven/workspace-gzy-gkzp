@@ -396,6 +396,24 @@ public class SysUserController {
         }
     }
 
+    @PostMapping("/user/getLoginName")
+    public ResultMsg getLoginName( HttpServletRequest request, HttpServletResponse response) throws Exception{
+        try{
+            Object user =  WebUtils.getSessionAttribute(request,"userContext");
+            if(!StringUtils.isEmpty(user)){
+                resultMsg.setResultMsg(ResultMsg.MsgType.INFO,((UserContext) user).getLoginName());
+            }else{
+                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"用户未登陆!");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"出现异常！");
+        }
+
+        return resultMsg;
+    }
+
+
 
     /**
      * 测试
