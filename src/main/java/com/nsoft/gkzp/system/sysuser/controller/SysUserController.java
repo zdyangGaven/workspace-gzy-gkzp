@@ -396,6 +396,13 @@ public class SysUserController {
         }
     }
 
+    /**
+     * 从session中获得登录用户名
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/user/getLoginName")
     public ResultMsg getLoginName( HttpServletRequest request, HttpServletResponse response) throws Exception{
         try{
@@ -411,6 +418,25 @@ public class SysUserController {
         }
 
         return resultMsg;
+    }
+
+    /**
+     * 注销操作
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @GetMapping("/user/logout")
+    public void logout( HttpServletRequest request, HttpServletResponse response) throws Exception{
+        try {
+            Object user = WebUtils.getSessionAttribute(request, "userContext");
+            WebUtils.setSessionAttribute(request, "userContext", null);
+           // resultMsg.setResultMsg(ResultMsg.MsgType.INFO,"注销成功");
+        }catch (Exception e){
+            e.printStackTrace();
+          //  resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"注销失败");
+        }
+      //  return resultMsg;
     }
 
 
