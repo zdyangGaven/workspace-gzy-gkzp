@@ -1,9 +1,13 @@
 package com.nsoft.gkzp.plan.controller;
 
+import com.nsoft.gkzp.common.FileLoad;
+import com.nsoft.gkzp.common.entity.FileVo;
 import com.nsoft.gkzp.plan.entity.*;
 import com.nsoft.gkzp.plan.service.*;
 import com.nsoft.gkzp.syscore.web.AbstractController;
 import com.nsoft.gkzp.syscore.web.UserContext;
+import com.nsoft.gkzp.util.DataFormat;
+import com.nsoft.gkzp.util.Page;
 import com.nsoft.gkzp.util.ResultMsg;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +19,8 @@ import org.springframework.web.util.WebUtils;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.HashMap;
+import java.util.List;
 
 @RestController
 public class UserinfoController extends AbstractController {
@@ -40,6 +46,22 @@ public class UserinfoController extends AbstractController {
     //资格审核
     @Autowired
     HrRecruitReviewRecordService hrRecruitReviewRecordService;
+
+    //消息
+    @Autowired
+    HrRecruitNoticeService hrRecruitNoticeService;
+
+    //岗位
+    @Autowired
+    HrRecuritPlanNeedsService hrRecuritPlanNeedsService;
+
+    //数据转换
+    @Autowired
+    DataFormat dataFormat;
+
+    //文件下载
+    @Autowired
+    FileLoad fileLoad;
 
     /**
      * 根据登录用户查询信息
@@ -110,6 +132,72 @@ public class UserinfoController extends AbstractController {
     }
 
     /**
+     * 考核管理
+     * @param request
+     * @return
+     */
+    @RequestMapping("intercept/plan/userInfo/review")
+    public HashMap<String, Object> review(HttpServletRequest request) {
+        HashMap<String, Object> result = new HashMap<>();
+        //设置默认值为null
+        result.put("HrRecuritWrite",null);
+        result.put("HrRecuritWriteMsg",null);
+        result.put("HrRecuritInterview",null);
+        result.put("HrRecuritInterviewMsg",null);
+        result.put("HrRecruitHealthchk",null);
+        result.put("HrRecruitHealthchkMsg",null);
+        result.put("HrRecruitReviewRecord",null);
+        result.put("HrRecruitReviewRecordMsg",null);
+
+        UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
+        int baseId = hrRecruitEntryinfoBaseService.getBaseIdByUser(userContext);
+
+        if(baseId == 0)return null;
+
+        //岗位信息
+        HrRecuritPlanNeedsVo hrRecuritPlanNeedsVoByUser = hrRecuritPlanNeedsService.getHrRecuritPlanNeedsVoById(baseId);
+        result.put("HrRecuritPlanNeeds",hrRecuritPlanNeedsVoByUser.getHrRecuritPlanNeedsDo());
+
+        //获取通知消息
+        HrRecruitNotice hrRecruitNoticeSelect = new HrRecruitNotice();
+        hrRecruitNoticeSelect.setBaseid(baseId);
+        hrRecruitNoticeSelect.setStatus(1);
+        List<HrRecruitNotice> hrRecruitNotices = hrRecruitNoticeService.list(hrRecruitNoticeSelect, null, null);
+        //遍历消息读取类型
+        for (HrRecruitNotice hrRecruitNotice:hrRecruitNotices) {
+            int type = hrRecruitNotice.getType();
+            if(type == 1){ //笔试
+                HrRecuritWrite hrRecuritWrite = hrRecuritWriteService.getHrRecuritWriteByBaseId(baseId);
+                result.put("HrRecuritWrite",hrRecuritWrite);
+                result.put("HrRecuritWriteMsg",hrRecruitNotice);
+            } else if(type == 2){ //面试
+                HrRecuritInterview hrRecuritInterview = hrRecuritInterviewService.getHrRecuritInterviewByBaseId(baseId);
+                result.put("HrRecuritInterview",hrRecuritInterview);
+                result.put("HrRecuritInterviewMsg",hrRecruitNotice);
+            } else if(type == 3){ //体检
+                HrRecruitHealthchk hrRecruitHealthchk = hrRecruitHealthchkService.getHrRecruitHealthchkByBaseId(baseId);
+                result.put("HrRecruitHealthchk",hrRecruitHealthchk);
+                result.put("HrRecruitHealthchkMsg",hrRecruitNotice);
+            } else if(type == 4){ //审核结果
+                HrRecruitReviewRecord hrRecruitReviewRecord = hrRecruitReviewRecordService.getHrRecruitReviewRecordByBaseId(baseId);
+                result.put("HrRecruitReviewRecord",hrRecruitReviewRecord);
+
+                String affix = hrRecruitNotice.getAffix();
+                //文件不为空
+                if(affix != null && affix != ""){
+                    //查询文件
+                    Integer[] affixArr = dataFormat.stringArrToIntArr(affix.split(","));
+                    List<FileVo> fileList = fileLoad.getFileListByIds(affixArr);
+                    hrRecruitNotice.setAffixList(fileList);
+                }
+                result.put("HrRecruitReviewRecordMsg",hrRecruitNotice);
+            }
+        }
+
+        return result;
+    }
+
+    /**
      * 通过用户获取体检数据
      * @param request
      * @return
@@ -162,4 +250,44 @@ public class UserinfoController extends AbstractController {
         result.setHrRecruitEntryinfoBase(hrRecruitEntryinfoBase);
         return result;
     }
+
+    /**
+     * 用户消息
+     * @param request
+     * @return
+     */
+    @RequestMapping("intercept/plan/userInfo/userMsg")
+    public List<HrRecruitNotice> userMsg(HttpServletRequest request, int hasRead, Page page) {
+        UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
+        //获取基础信息id
+        int baseId = hrRecruitEntryinfoBaseService.getBaseIdByUser(userContext);
+
+        HrRecruitNotice hrRecruitNotice = new HrRecruitNotice();
+        hrRecruitNotice.setBaseid(baseId);
+        hrRecruitNotice.setStatus(1);
+        hrRecruitNotice.setHasread(hasRead);
+        List<HrRecruitNotice> list = hrRecruitNoticeService.list(hrRecruitNotice, null, page);
+        return list;
+    }
+
+    /**
+     * 设为阅读
+     * @param id
+     */
+    @RequestMapping("intercept/plan/userInfo/read")
+    public void read(int id){
+        hrRecruitNoticeService.read(id);
+    }
+
+    /**
+     * 用户所有设为已读
+     * @param request
+     */
+    @RequestMapping("intercept/plan/userInfo/userReadAll")
+    public void userReadAll(HttpServletRequest request) {
+        UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
+        hrRecruitNoticeService.userReadAll(userContext);
+    }
+
+
 }

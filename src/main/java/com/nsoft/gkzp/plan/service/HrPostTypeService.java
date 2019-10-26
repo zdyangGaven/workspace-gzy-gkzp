@@ -14,4 +14,16 @@ public interface HrPostTypeService {
      * @return
      */
     List<HrPostType> list(HrPostType hrPostType, String order, Page page);
+
+    /**
+     * 新增
+     * @param hrPostType
+     */
+    void add(HrPostType hrPostType);
+
+    /**
+     * 修改
+     * @param hrPostType
+     */
+    void edit(HrPostType hrPostType);
 }

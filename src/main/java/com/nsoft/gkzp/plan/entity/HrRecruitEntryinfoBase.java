@@ -71,6 +71,10 @@ public class HrRecruitEntryinfoBase implements Serializable {
 
     private Integer loginuserid;
 
+    private Date signuptime;
+
+    private Integer syncstatus;
+
     @Override
     public String toString() {
         return "HrRecruitEntryinfoBase{" +
@@ -105,6 +109,22 @@ public class HrRecruitEntryinfoBase implements Serializable {
                 ", modifytime=" + modifytime +
                 ", loginuserid=" + loginuserid +
                 '}';
+    }
+
+    public Integer getSyncstatus() {
+        return syncstatus;
+    }
+
+    public void setSyncstatus(Integer syncstatus) {
+        this.syncstatus = syncstatus;
+    }
+
+    public Date getSignuptime() {
+        return signuptime;
+    }
+
+    public void setSignuptime(Date signuptime) {
+        this.signuptime = signuptime;
     }
 
     public Integer getId() {

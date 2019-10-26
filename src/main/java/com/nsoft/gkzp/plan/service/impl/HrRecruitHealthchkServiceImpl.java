@@ -59,11 +59,39 @@ public class HrRecruitHealthchkServiceImpl implements HrRecruitHealthchkService 
     @Override
     public HrRecruitHealthchk getHrRecruitHealthchkByUser(UserContext userContext) {
         int baseId = hrRecruitEntryinfoBaseService.getBaseIdByUser(userContext);
+        return getHrRecruitHealthchkByBaseId(baseId);
+    }
+
+    /**
+     * 通过基础信息id获取体检数据
+     * @param baseId
+     * @return
+     */
+    @Override
+    public HrRecruitHealthchk getHrRecruitHealthchkByBaseId(int baseId) {
         HrRecruitHealthchk hrRecruitHealthchk = new HrRecruitHealthchk();
         hrRecruitHealthchk.setBaseid(baseId);
         List<HrRecruitHealthchk> hrRecruitHealthchks = list(hrRecruitHealthchk, "id DESC", null);
         //没有数据返回null
         if(hrRecruitHealthchks.size() == 0) return null;
         return hrRecruitHealthchks.get(0);
+    }
+
+    /**
+     * 新增
+     * @param hrRecruitHealthchk
+     */
+    @Override
+    public void add(HrRecruitHealthchk hrRecruitHealthchk) {
+        hrRecruitHealthchkDao.insertSelective(hrRecruitHealthchk);
+    }
+
+    /**
+     * 修改
+     * @param hrRecruitHealthchk
+     */
+    @Override
+    public void edit(HrRecruitHealthchk hrRecruitHealthchk) {
+        hrRecruitHealthchkDao.updateByPrimaryKeySelective(hrRecruitHealthchk);
     }
 }

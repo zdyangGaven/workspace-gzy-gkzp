@@ -1,8 +1,11 @@
 package com.nsoft.gkzp.notice.entity;
 
+import com.nsoft.gkzp.common.entity.FileVo;
+
 import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class HrRecruitArticle implements Serializable {
 
@@ -36,6 +39,27 @@ public class HrRecruitArticle implements Serializable {
     private Date modifytime;
 
     private String content;
+
+    private String affixfile;
+
+    private List<FileVo> affixfileList;
+
+
+    public String getAffixfile() {
+        return affixfile;
+    }
+
+    public void setAffixfile(String affixfile) {
+        this.affixfile = affixfile;
+    }
+
+    public List<FileVo> getAffixfileList() {
+        return affixfileList;
+    }
+
+    public void setAffixfileList(List<FileVo> affixfileList) {
+        this.affixfileList = affixfileList;
+    }
 
     public Integer getId() {
         return id;

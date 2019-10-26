@@ -66,6 +66,8 @@ public class HrRecruitEntryinfoEducationServiceImpl extends AbstractService impl
                 hrRecruitEntryinfoEducation.setBaseid(baseId);
                 //id设为空
                 hrRecruitEntryinfoEducation.setId(null);
+                //待同步
+                hrRecruitEntryinfoEducation.setSyncstatus(1);
                 //新增
                 hrRecruitEntryinfoEducationDao.insertSelective(hrRecruitEntryinfoEducation);
             }

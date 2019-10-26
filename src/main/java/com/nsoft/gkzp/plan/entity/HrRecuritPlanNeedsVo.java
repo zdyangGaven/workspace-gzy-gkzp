@@ -8,17 +8,10 @@ public class HrRecuritPlanNeedsVo implements Serializable {
     //招聘计划
     public HrRecuritPlan hrRecuritPlan;
     //招聘人才需求
-    public HrRecuritPlanNeeds hrRecuritPlanNeeds;
+    public HrRecuritPlanNeedsDo hrRecuritPlanNeedsDo;
 
 
-    @Override
-    public String toString() {
-        return "HrRecuritPlanNeedsVo{" +
-                "hrRecruitEntryinfoBase=" + hrRecruitEntryinfoBase +
-                ", hrRecuritPlan=" + hrRecuritPlan +
-                ", hrRecuritPlanNeeds=" + hrRecuritPlanNeeds +
-                '}';
-    }
+
 
     public HrRecruitEntryinfoBase getHrRecruitEntryinfoBase() {
         return hrRecruitEntryinfoBase;
@@ -36,11 +29,20 @@ public class HrRecuritPlanNeedsVo implements Serializable {
         this.hrRecuritPlan = hrRecuritPlan;
     }
 
-    public HrRecuritPlanNeeds getHrRecuritPlanNeeds() {
-        return hrRecuritPlanNeeds;
+    public HrRecuritPlanNeedsDo getHrRecuritPlanNeedsDo() {
+        return hrRecuritPlanNeedsDo;
     }
 
-    public void setHrRecuritPlanNeeds(HrRecuritPlanNeeds hrRecuritPlanNeeds) {
-        this.hrRecuritPlanNeeds = hrRecuritPlanNeeds;
+    public void setHrRecuritPlanNeedsDo(HrRecuritPlanNeedsDo hrRecuritPlanNeedsDo) {
+        this.hrRecuritPlanNeedsDo = hrRecuritPlanNeedsDo;
+    }
+
+    @Override
+    public String toString() {
+        return "HrRecuritPlanNeedsVo{" +
+                "hrRecruitEntryinfoBase=" + hrRecruitEntryinfoBase +
+                ", hrRecuritPlan=" + hrRecuritPlan +
+                ", hrRecuritPlanNeedsDo=" + hrRecuritPlanNeedsDo +
+                '}';
     }
 }

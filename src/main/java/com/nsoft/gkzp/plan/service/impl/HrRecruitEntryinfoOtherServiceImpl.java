@@ -58,6 +58,8 @@ public class HrRecruitEntryinfoOtherServiceImpl implements HrRecruitEntryinfoOth
         try {
             //id设为空
             hrRecruitEntryinfoOther.setId(null);
+            //待同步
+            hrRecruitEntryinfoOther.setSyncstatus(1);
             hrRecruitEntryinfoOtherDao.insertSelective(hrRecruitEntryinfoOther);
         } catch (Exception e) {
             e.printStackTrace();

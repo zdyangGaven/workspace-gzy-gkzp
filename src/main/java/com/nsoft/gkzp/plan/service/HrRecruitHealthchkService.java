@@ -22,4 +22,23 @@ public interface HrRecruitHealthchkService {
      * @return
      */
     public HrRecruitHealthchk getHrRecruitHealthchkByUser(UserContext userContext);
+
+    /**
+     * 通过基础信息id获取体检数据
+     * @param baseId
+     * @return
+     */
+    public HrRecruitHealthchk getHrRecruitHealthchkByBaseId(int baseId);
+
+    /**
+     * 新增
+     * @param hrRecruitHealthchk
+     */
+    public void add(HrRecruitHealthchk hrRecruitHealthchk);
+
+    /**
+     * 修改
+     * @param hrRecruitHealthchk
+     */
+    public void edit(HrRecruitHealthchk hrRecruitHealthchk);
 }

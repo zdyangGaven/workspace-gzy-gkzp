@@ -44,6 +44,13 @@ public class HrRecuritPlanNeedsServiceImpl implements HrRecuritPlanNeedsService 
     @Autowired
     DataFormat dataFormat;
 
+    //redis
+    /*@Autowired
+    JedisUtil jedisUtil;
+
+    //序列化工具
+    @Autowired
+    SerializeUtil serializeUtil;*/
 
     //招聘技术人才需求
     /**
@@ -57,6 +64,15 @@ public class HrRecuritPlanNeedsServiceImpl implements HrRecuritPlanNeedsService 
     public List<HrRecuritPlanNeeds> list( HrRecuritPlanNeeds hrRecuritPlanNeeds, String order,Page page) {
         return list(hrRecuritPlanNeeds,order,page,null);
     }
+
+    /**
+     * 查询数据
+     * @param hrRecuritPlanNeeds
+     * @param order 排序
+     * @param page 分页
+     * @param planIdList 计划id 包含查询
+     * @return
+     */
     @Override
     public List<HrRecuritPlanNeeds> list( HrRecuritPlanNeeds hrRecuritPlanNeeds, String order,Page page, List<Object> planIdList) {
         //判断都有值通过
@@ -96,6 +112,14 @@ public class HrRecuritPlanNeedsServiceImpl implements HrRecuritPlanNeedsService 
         return list;
     }
 
+    /**
+     * 查询关联岗位类别
+     * @param hrRecuritPlanNeeds
+     * @param order
+     * @param page
+     * @param planIdList
+     * @return
+     */
     @Override
     public List<HrRecuritPlanNeedsDo> find(HrRecuritPlanNeeds hrRecuritPlanNeeds, String order, Page page, List<Object> planIdList) {
         //判断都有值通过
@@ -127,6 +151,7 @@ public class HrRecuritPlanNeedsServiceImpl implements HrRecuritPlanNeedsService 
 
         // 取分页信息
         PageInfo<HrRecuritPlanNeedsDo> pageInfo = new PageInfo<HrRecuritPlanNeedsDo>(list);
+
         return list;
     }
 
@@ -141,8 +166,8 @@ public class HrRecuritPlanNeedsServiceImpl implements HrRecuritPlanNeedsService 
         //人才需求
         HrRecuritPlanNeeds hrRecuritPlanNeeds = new HrRecuritPlanNeeds();
         hrRecuritPlanNeeds.setId(id);
-        List<HrRecuritPlanNeeds> needs = hrRecuritPlanNeedsService.list( hrRecuritPlanNeeds,null, null);
-        hrRecuritPlanNeedsVo.setHrRecuritPlanNeeds(needs.get(0));
+        List<HrRecuritPlanNeedsDo> needs = hrRecuritPlanNeedsService.find( hrRecuritPlanNeeds,null, null,null);
+        hrRecuritPlanNeedsVo.setHrRecuritPlanNeedsDo(needs.get(0));
 
         //招聘计划
         HrRecuritPlan hrRecuritPlan = new HrRecuritPlan();
@@ -178,6 +203,7 @@ public class HrRecuritPlanNeedsServiceImpl implements HrRecuritPlanNeedsService 
 
         List<HrRecruitEntryinfoBase> bases = hrRecruitEntryinfoBaseService.list( hrRecruitEntryinfoBase, "id DESC",null);
 
+
         //判断是否有基础信息
         if(bases.size() > 0 ){
             hrRecuritPlanNeedsVo.setHrRecruitEntryinfoBase(bases.get(0));
@@ -197,6 +223,20 @@ public class HrRecuritPlanNeedsServiceImpl implements HrRecuritPlanNeedsService 
      */
     @Override
     public List<HrRecuritPlanNeedsDo> getListByPlan(HrRecuritPlanNeeds hrRecuritPlanNeeds, String order,Page page) {
+        //redis测试读取
+        /*try {
+            Jedis jedis = jedisUtil.init();
+            if(jedis.get("slk".getBytes()) != null ){
+                List<HrRecuritPlanNeedsDo> hrRecuritPlanNeedsDos = (List<HrRecuritPlanNeedsDo>) serializeUtil.unSerialize(jedis.get("slk".getBytes()));
+                System.out.println(hrRecuritPlanNeedsDos);
+                System.out.println(hrRecuritPlanNeedsDos.get(0));
+                System.out.println("进入redis");
+                return hrRecuritPlanNeedsDos;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
+
         //获取当前所招聘的计划
         HrRecuritPlan hrRecuritPlan = new HrRecuritPlan();
         hrRecuritPlan.setStarttime(new Date());
@@ -209,8 +249,34 @@ public class HrRecuritPlanNeedsServiceImpl implements HrRecuritPlanNeedsService 
             planIds.add(plan.getId());
         }
 
+        List<HrRecuritPlanNeedsDo> list = find(hrRecuritPlanNeeds, order, page, planIds);
 
+        //redis测试新增
+        /*try {
+            Jedis jedis = jedisUtil.init();
+            jedis.set("slk".getBytes(),serializeUtil.serialize(list));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
 
-        return find(hrRecuritPlanNeeds,order,page,planIds);
+        return list;
+    }
+
+    /**
+     *新增
+     * @param hrRecuritPlanNeeds
+     */
+    @Override
+    public void add(HrRecuritPlanNeeds hrRecuritPlanNeeds) {
+        hrRecuritPlanNeedsDao.insertSelective(hrRecuritPlanNeeds);
+    }
+
+    /**
+     * 修改
+     * @param hrRecuritPlanNeeds
+     */
+    @Override
+    public void edit(HrRecuritPlanNeeds hrRecuritPlanNeeds) {
+        hrRecuritPlanNeedsDao.updateByPrimaryKeySelective(hrRecuritPlanNeeds);
     }
 }

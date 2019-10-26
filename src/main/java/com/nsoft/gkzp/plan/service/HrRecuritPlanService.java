@@ -21,4 +21,18 @@ public interface HrRecuritPlanService {
      * @return
      */
     public HrRecuritPlan getHrRecuritPlanById(int id);
+
+    /**
+     * 新增
+     * @param hrRecuritPlan
+     * @return
+     */
+    public void add(HrRecuritPlan hrRecuritPlan);
+
+    /**
+     * 修改
+     * @param hrRecuritPlan
+     * @return
+     */
+    public void edit(HrRecuritPlan hrRecuritPlan);
 }

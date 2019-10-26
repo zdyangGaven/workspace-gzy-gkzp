@@ -66,4 +66,22 @@ public class HrRecuritPlanServiceImpl implements HrRecuritPlanService {
     public HrRecuritPlan getHrRecuritPlanById(int id) {
         return hrRecuritPlanDao.selectByPrimaryKey(id);
     }
+
+    /**
+     * 新增
+     * @param hrRecuritPlan
+     */
+    @Override
+    public void add(HrRecuritPlan hrRecuritPlan) {
+        hrRecuritPlanDao.insertSelective(hrRecuritPlan);
+    }
+
+    /**
+     * 修改
+     * @param hrRecuritPlan
+     */
+    @Override
+    public void edit(HrRecuritPlan hrRecuritPlan) {
+        hrRecuritPlanDao.updateByPrimaryKeySelective(hrRecuritPlan);
+    }
 }

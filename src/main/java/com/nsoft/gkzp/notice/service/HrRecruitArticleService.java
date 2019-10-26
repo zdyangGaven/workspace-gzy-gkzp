@@ -9,11 +9,30 @@ public interface HrRecruitArticleService {
 
     /**
      * 查询公告数据
-     * @param pageNum 显示的页数
-     * @param pageSize  每页显示的数目
+     * @param page  分页
      * @param hrRecruitArticle
      * @param order 排序
      * @return
      */
     List<HrRecruitArticle> list( HrRecruitArticle hrRecruitArticle, String order,Page page);
+
+    /**
+     * 通过id查询
+     * @param id
+     * @return
+     */
+    HrRecruitArticle getHrRecruitArticleById(int id);
+
+    /**
+     * 新增
+     * @param hrRecruitArticle
+     *
+     */
+    void add(HrRecruitArticle hrRecruitArticle);
+
+    /**
+     * 修改
+     * @param hrRecruitArticle
+     */
+    void edit(HrRecruitArticle hrRecruitArticle);
 }
