@@ -1,5 +1,6 @@
 package com.nsoft.gkzp.system.sysuser.controller;
 
+import com.nsoft.gkzp.plan.service.HrRecruitNoticeService;
 import com.nsoft.gkzp.syscore.web.ControllerException;
 import com.nsoft.gkzp.syscore.web.UserContext;
 import com.nsoft.gkzp.system.sysuser.entity.SysUser;
@@ -24,8 +25,8 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @RestController
@@ -41,6 +42,9 @@ public class SysUserController {
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
+
+    @Autowired
+    private HrRecruitNoticeService hrRecruitNoticeService;
 
     @Autowired
     private ResultMsg resultMsg;
@@ -406,9 +410,15 @@ public class SysUserController {
     @PostMapping("/user/getLoginName")
     public ResultMsg getLoginName( HttpServletRequest request, HttpServletResponse response) throws Exception{
         try{
-            Object user =  WebUtils.getSessionAttribute(request,"userContext");
+            UserContext user =  (UserContext)WebUtils.getSessionAttribute(request,"userContext");
             if(!StringUtils.isEmpty(user)){
-                resultMsg.setResultMsg(ResultMsg.MsgType.INFO,((UserContext) user).getLoginName());
+                resultMsg.setResultMsg(ResultMsg.MsgType.INFO,(user).getLoginName());
+
+                //获取未读消息数
+                int noticeInt = hrRecruitNoticeService.noticeInt(user);
+                HashMap<String, Object> hashMap = new HashMap<>();
+                hashMap.put("noticeInt",noticeInt);
+                resultMsg.setData(hashMap);
             }else{
                 resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"用户未登陆!");
             }

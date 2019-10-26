@@ -22,9 +22,13 @@ public class HrRecruitArticleController {
      * @param order 排序
      * @return
      */
-
     @RequestMapping("/HrRecruitArticleController/list")
     public List<HrRecruitArticle> list( HrRecruitArticle hrRecruitArticle, String order,Page page){
         return hrRecruitArticleService.list(hrRecruitArticle,order, page);
+    }
+
+    @RequestMapping("notice/getHrRecruitArticleById")
+    public HrRecruitArticle getHrRecruitArticleById(int id){
+        return hrRecruitArticleService.getHrRecruitArticleById(id);
     }
 }

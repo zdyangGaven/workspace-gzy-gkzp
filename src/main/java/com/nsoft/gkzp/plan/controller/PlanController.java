@@ -18,6 +18,9 @@ import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -73,18 +76,22 @@ public class PlanController extends AbstractController {
     //招聘技术人才需求
     /**
      * 查询数据
-     * @param page 分页
+     * @param page
      * @param hrRecuritPlanNeeds
-     * @param order 排序
+     * @param order
      * @return
      */
-    @RequestMapping("HrRecuritPlanNeedsController/list")
+    @RequestMapping("plan/plan/hrRecuritPlanNeeds/list")
     public List<HrRecuritPlanNeeds> hrRecuritPlanNeedsList( HrRecuritPlanNeeds hrRecuritPlanNeeds, String order,Page page){
         return hrRecuritPlanNeedsService.list(hrRecuritPlanNeeds,order, page);
     }
 
+
     /**
      * 根据计划获取人才需求
+     * @param hrRecuritPlanNeeds
+     * @param order 排序
+     * @param page 分页
      * @return
      */
     @RequestMapping("/plan/getPlanNeedsListByPlan")
@@ -97,7 +104,7 @@ public class PlanController extends AbstractController {
      * @param request
      * @return
      */
-    @RequestMapping("plan/getHrRecuritPlanNeedsVoByUser")
+    @RequestMapping("intercept/plan/getHrRecuritPlanNeedsVoByUser")
     public HrRecuritPlanNeedsVo getHrRecuritPlanNeedsVoByUser(HttpServletRequest request) {
         UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
         HrRecuritPlanNeedsVo hrRecuritPlanNeedsVoByUser = hrRecuritPlanNeedsService.getHrRecuritPlanNeedsVoByUser(userContext);
@@ -105,23 +112,36 @@ public class PlanController extends AbstractController {
         return hrRecuritPlanNeedsVoByUser;
     }
 
+    //根据岗位id获取岗位信息和招聘计划
+    @RequestMapping("plan/plan/getHrRecuritPlanNeedsVoById")
+    public HrRecuritPlanNeedsVo getHrRecuritPlanNeedsVoById(int id) {
+        HrRecuritPlanNeedsVo hrRecuritPlanNeedsVoByUser = hrRecuritPlanNeedsService.getHrRecuritPlanNeedsVoById(id);
+        return hrRecuritPlanNeedsVoByUser;
+    }
+
     /**
-     * 根据姓名查询报名提交时间和资格审核
-     * @param name
+     * 根据身份证号查询报名提交时间和资格审核
+     * @param idCard   身份证号
      * @return
      */
-    @RequestMapping("plan/plan/getHrRecruitReviewRecordVoByName")
-    public HrRecruitReviewRecordVo getHrRecruitReviewRecordVoByName(String name){
+    @RequestMapping("plan/plan/getHrRecruitReviewRecordVoByIdCard")
+    public HrRecruitReviewRecordVo getHrRecruitReviewRecordVoByName(String idCard){
+        //输入为空返回
+        if(idCard.trim().equals("") || idCard == null) return null;
+
         HrRecruitReviewRecordVo result = new HrRecruitReviewRecordVo();
 
         HrRecruitEntryinfoBase infoBase = new HrRecruitEntryinfoBase();
-        infoBase.setName(name);
+        infoBase.setIdcardno(idCard);
         HrRecruitReviewRecordVo hrRecruitReviewRecordVo = hrRecruitReviewRecordService.getHrRecruitReviewRecordVoByInfoBase(infoBase);
+        //资格审核为空返回null
+        if(hrRecruitReviewRecordVo == null) return null;
+
         result.setHrRecruitReviewRecord(hrRecruitReviewRecordVo.getHrRecruitReviewRecord());
         //建一个新的基础信息
         HrRecruitEntryinfoBase hrRecruitEntryinfoBase = new HrRecruitEntryinfoBase();
-        //只获取提交时间
-        hrRecruitEntryinfoBase.setSubmittime(hrRecruitReviewRecordVo.getHrRecruitEntryinfoBase().getSubmittime());
+        //只获取报名时间
+        hrRecruitEntryinfoBase.setSignuptime(hrRecruitReviewRecordVo.getHrRecruitEntryinfoBase().getSignuptime());
         result.setHrRecruitEntryinfoBase(hrRecruitEntryinfoBase);
         return result;
     }
@@ -148,8 +168,14 @@ public class PlanController extends AbstractController {
      */
     @RequestMapping("plan/plan/download/img/{id}")
     public void downloadImg(HttpServletResponse response, @PathVariable int id) throws Exception{
-        //指定本地文件夹存储图片
-        String filePath = myDefinedUtil.SYSTEM_FILE_FOLDER_IMG;
-        fileLoad.downloadFile(response,id,filePath);
+        fileLoad.downloadFile(response,id);
     }
+
+
+    @RequestMapping("/download")
+    public File download() throws Exception{
+        InputStream f = new FileInputStream("F:/1.png");
+        return null;
+    }
+
 }

@@ -17,9 +17,30 @@ public interface HrRecuritWriteService {
     public List<HrRecuritWrite> list(HrRecuritWrite hrRecuritWrite, String order, Page page);
 
     /**
-     * 通过用户获取面试数据
+     * 通过用户获取笔试数据
      * @param userContext 用户
      * @return
      */
     public HrRecuritWrite getHrRecuritWriteByUser(UserContext userContext);
+
+    /**
+     * 通过基础信息id获取笔试数据
+     * @param baseId
+     * @return
+     */
+    public HrRecuritWrite getHrRecuritWriteByBaseId(int baseId);
+
+    /**
+     * 新增
+     * @param hrRecuritWrite
+     * @return
+     */
+    public void add(HrRecuritWrite hrRecuritWrite);
+
+    /**
+     * 修改
+     * @param hrRecuritWrite
+     * @return
+     */
+    public void edit(HrRecuritWrite hrRecuritWrite);
 }

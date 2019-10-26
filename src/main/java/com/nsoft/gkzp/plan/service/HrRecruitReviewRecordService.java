@@ -19,6 +19,13 @@ public interface HrRecruitReviewRecordService {
     public List<HrRecruitReviewRecord> list(HrRecruitReviewRecord hrRecruitReviewRecord, String order, Page page);
 
     /**
+     * 通过基础信息id获取资格审核数据
+     * @param baseId
+     * @return
+     */
+    public HrRecruitReviewRecord getHrRecruitReviewRecordByBaseId(int baseId);
+
+    /**
      * 通过基础信息的字段筛选获取资格审查和基础资料
      * @param hrRecruitEntryinfoBase
      * @return
@@ -31,4 +38,16 @@ public interface HrRecruitReviewRecordService {
      * @return
      */
     public HrRecruitReviewRecordVo getHrRecruitReviewRecordVoByUser(UserContext userContext);
+
+    /**
+     * 新增
+     * @param hrRecruitReviewRecord
+     */
+    public void add(HrRecruitReviewRecord hrRecruitReviewRecord);
+
+    /**
+     * 修改
+     * @param hrRecruitReviewRecord
+     */
+    public void edit(HrRecruitReviewRecord hrRecruitReviewRecord);
 }

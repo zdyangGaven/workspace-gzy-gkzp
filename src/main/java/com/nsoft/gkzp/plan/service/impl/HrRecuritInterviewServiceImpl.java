@@ -21,6 +21,13 @@ public class HrRecuritInterviewServiceImpl implements HrRecuritInterviewService 
     @Autowired
     HrRecruitEntryinfoBaseService hrRecruitEntryinfoBaseService;
 
+    /**
+     * 查询数据
+     * @param hrRecuritInterview
+     * @param order 排序
+     * @param page 分页
+     * @return
+     */
     @Override
     public List<HrRecuritInterview> list(HrRecuritInterview hrRecuritInterview, String order, Page page) {
         //判断都有值通过
@@ -51,11 +58,39 @@ public class HrRecuritInterviewServiceImpl implements HrRecuritInterviewService 
     @Override
     public HrRecuritInterview getHrRecuritInterviewByUser(UserContext userContext) {
         int baseId = hrRecruitEntryinfoBaseService.getBaseIdByUser(userContext);
+        return getHrRecuritInterviewByBaseId(baseId);
+    }
+
+    /**
+     * 通过基础信息id获取面试数据
+     * @param baseId
+     * @return
+     */
+    @Override
+    public HrRecuritInterview getHrRecuritInterviewByBaseId(int baseId) {
         HrRecuritInterview hrRecuritInterview = new HrRecuritInterview();
         hrRecuritInterview.setBaseid(baseId);
         List<HrRecuritInterview> hrRecuritInterviews = list(hrRecuritInterview, "id DESC", null);
         //没有数据返回null
         if(hrRecuritInterviews.size() == 0) return null;
         return hrRecuritInterviews.get(0);
+    }
+
+    /**
+     * 新增
+     * @param hrRecuritInterview
+     */
+    @Override
+    public void add(HrRecuritInterview hrRecuritInterview) {
+        hrRecuritInterviewDao.insertSelective(hrRecuritInterview);
+    }
+
+    /**
+     * 修改
+     * @param hrRecuritInterview
+     */
+    @Override
+    public void edit(HrRecuritInterview hrRecuritInterview) {
+        hrRecuritInterviewDao.updateByPrimaryKeySelective(hrRecuritInterview);
     }
 }

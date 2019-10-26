@@ -65,6 +65,19 @@ public class DataFormat {
 	}
 
 	/**
+	 * String数组转成int数组
+	 * @param arrs
+	 * @return
+	 */
+	public Integer[] stringArrToIntArr(String[] arrs){
+		Integer[] ints = new Integer[arrs.length];
+ 		for(int i=0;i<arrs.length;i++){
+			ints[i] = Integer.parseInt(arrs[i]);
+		}
+		return ints;
+	}
+
+	/**
 	 * 获取当前格式化的时间
 	 * @param type 时间的类型
 	 * @return

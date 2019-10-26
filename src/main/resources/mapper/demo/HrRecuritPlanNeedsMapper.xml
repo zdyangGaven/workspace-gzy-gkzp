@@ -27,7 +27,6 @@
     <result column="DeptName" jdbcType="NVARCHAR" property="deptname" />
     <!--把int转成对应的类别的名称-->
     <result column="PostTypeName" jdbcType="NVARCHAR" property="postTypeName" />
-
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>

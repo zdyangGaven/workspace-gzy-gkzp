@@ -45,4 +45,22 @@ public class HrPostTypeServiceImpl implements HrPostTypeService {
         PageInfo<HrPostType> pageInfo = new PageInfo<HrPostType>(list);
         return list;
     }
+
+    /**
+     * 新增
+     * @param hrPostType
+     */
+    @Override
+    public void add(HrPostType hrPostType) {
+        hrPostTypeDao.insertSelective(hrPostType);
+    }
+
+    /**
+     * 修改
+     * @param hrPostType
+     */
+    @Override
+    public void edit(HrPostType hrPostType) {
+        hrPostTypeDao.updateByPrimaryKeySelective(hrPostType);
+    }
 }

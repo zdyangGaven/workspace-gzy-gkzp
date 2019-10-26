@@ -66,7 +66,7 @@ public class ResultMsg  implements Serializable {
         return "ResultMsg{" +
                 "type=" + type +
                 ", msg='" + msg + '\'' +
-                ", object=" + data +
+                ", data=" + data +
                 '}';
     }
 }

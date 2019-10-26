@@ -24,6 +24,13 @@ public class HrRecruitReviewRecordServiceImpl implements HrRecruitReviewRecordSe
     @Autowired
     HrRecruitEntryinfoBaseService hrRecruitEntryinfoBaseService;
 
+    /**
+     * 查询
+     * @param hrRecruitReviewRecord
+     * @param order 排序
+     * @param page 分页
+     * @return
+     */
     public List<HrRecruitReviewRecord> list( HrRecruitReviewRecord hrRecruitReviewRecord, String order,Page page){
 
         //判断都有值通过
@@ -44,6 +51,21 @@ public class HrRecruitReviewRecordServiceImpl implements HrRecruitReviewRecordSe
         // 取分页信息
         PageInfo<HrRecruitReviewRecord> pageInfo = new PageInfo<HrRecruitReviewRecord>(list);
         return list;
+    }
+
+    /**
+     * 通过基础信息id获取资格审核数据
+     * @param baseId
+     * @return
+     */
+    @Override
+    public HrRecruitReviewRecord getHrRecruitReviewRecordByBaseId(int baseId) {
+        HrRecruitReviewRecord hrRecruitReviewRecord = new HrRecruitReviewRecord();
+        hrRecruitReviewRecord.setBaseid(baseId);
+        List<HrRecruitReviewRecord> hrRecruitReviewRecords = list(hrRecruitReviewRecord, "id DESC", null);
+        //没有数据返回null
+        if(hrRecruitReviewRecords.size() == 0) return null;
+        return hrRecruitReviewRecords.get(0);
     }
 
     @Override
@@ -76,5 +98,15 @@ public class HrRecruitReviewRecordServiceImpl implements HrRecruitReviewRecordSe
         HrRecruitEntryinfoBase hrRecruitEntryinfoBase = new HrRecruitEntryinfoBase();
         hrRecruitEntryinfoBase.setLoginuserid(userContext.getLoginUserId());
         return getHrRecruitReviewRecordVoByInfoBase(hrRecruitEntryinfoBase);
+    }
+
+    @Override
+    public void add(HrRecruitReviewRecord hrRecruitReviewRecord) {
+        hrRecruitReviewRecordDao.insertSelective(hrRecruitReviewRecord);
+    }
+
+    @Override
+    public void edit(HrRecruitReviewRecord hrRecruitReviewRecord) {
+        hrRecruitReviewRecordDao.updateByPrimaryKeySelective(hrRecruitReviewRecord);
     }
 }

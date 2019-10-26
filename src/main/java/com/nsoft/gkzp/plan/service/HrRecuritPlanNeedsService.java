@@ -20,8 +20,25 @@ public interface HrRecuritPlanNeedsService {
      * @return
      */
     public List<HrRecuritPlanNeeds> list( HrRecuritPlanNeeds hrRecuritPlanNeeds, String order,Page page);
+
+    /**
+     * 查询数据
+     * @param hrRecuritPlanNeeds
+     * @param order 排序
+     * @param page 分页
+     * @param planIdList 计划id 包含查询
+     * @return
+     */
     public List<HrRecuritPlanNeeds> list( HrRecuritPlanNeeds hrRecuritPlanNeeds, String order,Page page,List<Object> planIdList);
 
+    /**
+     * 查询关联岗位类别
+     * @param hrRecuritPlanNeeds
+     * @param order
+     * @param page
+     * @param planIdList
+     * @return
+     */
     public List<HrRecuritPlanNeedsDo> find(HrRecuritPlanNeeds hrRecuritPlanNeeds, String order,Page page, List<Object> planIdList);
 
     /**
@@ -50,4 +67,16 @@ public interface HrRecuritPlanNeedsService {
      * @return
      */
     public List<HrRecuritPlanNeedsDo> getListByPlan(HrRecuritPlanNeeds hrRecuritPlanNeeds, String order,Page page);
+
+    /**
+     * 新增
+     * @param hrRecuritPlanNeeds
+     */
+    public void add(HrRecuritPlanNeeds hrRecuritPlanNeeds);
+
+    /**
+     * 修改
+     * @param hrRecuritPlanNeeds
+     */
+    public void edit(HrRecuritPlanNeeds hrRecuritPlanNeeds);
 }

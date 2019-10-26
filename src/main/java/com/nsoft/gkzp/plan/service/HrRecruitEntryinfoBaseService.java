@@ -35,7 +35,7 @@ public interface HrRecruitEntryinfoBaseService {
     public int getBaseIdByUser(UserContext userContext);
 
     /**
-     * 基础信息新增
+     * 用户信息新增
      * @param jsonObject
      * @return
      */

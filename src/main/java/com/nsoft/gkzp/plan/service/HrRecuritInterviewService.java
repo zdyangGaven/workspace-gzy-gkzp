@@ -22,4 +22,23 @@ public interface HrRecuritInterviewService {
      * @return
      */
     public HrRecuritInterview getHrRecuritInterviewByUser(UserContext userContext);
+
+    /**
+     * 通过基础信息id获取面试数据
+     * @param baseId
+     * @return
+     */
+    public HrRecuritInterview getHrRecuritInterviewByBaseId(int baseId);
+
+    /**
+     * 新增
+     * @param hrRecuritInterview
+     */
+    public void add(HrRecuritInterview hrRecuritInterview);
+
+    /**
+     * 修改
+     * @param hrRecuritInterview
+     */
+    public void edit(HrRecuritInterview hrRecuritInterview);
 }

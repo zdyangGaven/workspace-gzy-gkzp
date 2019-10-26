@@ -29,6 +29,16 @@ public class HrRecruitEntryinfoOther implements Serializable {
 
     private String contactsinfo2;
 
+    private Integer syncstatus;
+
+    public Integer getSyncstatus() {
+        return syncstatus;
+    }
+
+    public void setSyncstatus(Integer syncstatus) {
+        this.syncstatus = syncstatus;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -21,6 +21,13 @@ public class HrRecuritWriteServiceImpl implements HrRecuritWriteService {
     @Autowired
     HrRecruitEntryinfoBaseService hrRecruitEntryinfoBaseService;
 
+    /**
+     * 查询
+     * @param hrRecuritWrite
+     * @param order 排序
+     * @param page 分页
+     * @return
+     */
     @Override
     public List<HrRecuritWrite> list(HrRecuritWrite hrRecuritWrite, String order, Page page) {
         //判断都有值通过
@@ -43,14 +50,49 @@ public class HrRecuritWriteServiceImpl implements HrRecuritWriteService {
         return list;
     }
 
+    /**
+     * 通过用户获取笔试数据
+     * @param userContext 用户
+     * @return
+     */
     @Override
     public HrRecuritWrite getHrRecuritWriteByUser(UserContext userContext) {
         int baseId = hrRecruitEntryinfoBaseService.getBaseIdByUser(userContext);
+        return getHrRecuritWriteByBaseId(baseId);
+    }
+
+    /**
+     * 通过基础信息id获取笔试数据
+     * @param baseId
+     * @return
+     */
+    @Override
+    public HrRecuritWrite getHrRecuritWriteByBaseId(int baseId) {
         HrRecuritWrite hrRecuritWrite = new HrRecuritWrite();
         hrRecuritWrite.setBaseid(baseId);
         List<HrRecuritWrite> hrRecuritWrites = list(hrRecuritWrite, "id DESC", null);
         //没有数据返回null
         if(hrRecuritWrites.size() == 0) return null;
         return hrRecuritWrites.get(0);
+    }
+
+    /**
+     * 新增
+     * @param hrRecuritWrite
+     * @return
+     */
+    @Override
+    public void add(HrRecuritWrite hrRecuritWrite) {
+        hrRecuritWriteDao.insertSelective(hrRecuritWrite);
+    }
+
+    /**
+     * 修改
+     * @param hrRecuritWrite
+     * @return
+     */
+    @Override
+    public void edit(HrRecuritWrite hrRecuritWrite) {
+        hrRecuritWriteDao.updateByPrimaryKeySelective(hrRecuritWrite);
     }
 }
