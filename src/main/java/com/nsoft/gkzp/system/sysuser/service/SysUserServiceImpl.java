@@ -74,39 +74,21 @@ public class SysUserServiceImpl extends AbstractService implements SysUserServic
         }
     }
 
-
-
-
-
     /**
-     * 查找所有用户信息
-     * @return
+     * 修改用户密码
+     * @param id 用户ID
+     * @param password  用户密码
+     * @throws ServiceException
      */
-    public List<SysUser> selectUsers() throws ServiceException{
-        List<SysUser>  userList = null;
+    public void changePWD(int id,String  password)  throws ServiceException{
         try {
-            userList = sysUserDao.selectUsers();
+            sysUserDao.changePWD(id,password);
+
         } catch (Exception e) {
             e.printStackTrace();
-            throw new ServiceException("查找所有用户信息出错", e);
+            throw new ServiceException("向数据库修改密码时出错 id="+id+",password="+password, e);
         }
-        return userList;
     }
-
-    /**
-     * 保存 用户信息
-     * @param user
-     */
-    public void saveSysUserInformation(SysUser user)throws ServiceException{
-        try {
-            sysUserDao.saveSysUserInformation(user);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new ServiceException("保存用户信息出错", e);
-        }
-
-    }
-
 
     /**
      * 验证码相关

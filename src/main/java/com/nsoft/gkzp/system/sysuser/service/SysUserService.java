@@ -34,6 +34,14 @@ public interface SysUserService {
     public void saveRegister(String loginName,String  password) throws ServiceException;
 
     /**
+     * 修改用户密码
+     * @param id 用户ID
+     * @param password  用户密码
+     * @throws ServiceException
+     */
+    public void changePWD(int id,String  password) throws ServiceException;
+
+    /**
      * 验证码相关
      * @param fc
      * @param bc
@@ -55,31 +63,6 @@ public interface SysUserService {
      * @param color
      */
     public  void shear(Graphics g, int w1, int h1, Color color) ;
-
-
-
-
-
-
-
-
-
-
-    /**
-     * 查找所以用户信息
-     * @return
-     */
-    public List<SysUser> selectUsers() throws ServiceException;
-
-    /**
-     * 保存 用户信息
-     * @param user
-     */
-    public void saveSysUserInformation(SysUser user) throws ServiceException;
-
-
-
-
 
 
 }

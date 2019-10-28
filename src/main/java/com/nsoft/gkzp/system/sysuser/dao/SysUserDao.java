@@ -30,6 +30,8 @@ public interface SysUserDao {
     public SysUser login(@Param("loginName") String loginName,
                       @Param("password") String password);
 
+
+
     /**
      * 通过传入的列和值获得用户id
      * @param column
@@ -46,15 +48,11 @@ public interface SysUserDao {
     public void saveRegister(@Param("loginName") String loginName, @Param("password") String password);
 
 
-
-
-
-
-    public List<SysUser> selectUsers();
     /**
-     * 用于保存用户注册信息
-     * @param user
+     * 修改用户密码
+     * @param id 用户ID
+     * @param password  用户密码
      */
-    public void saveSysUserInformation(SysUser user);
+    public void changePWD(@Param("id") int id,@Param("password") String  password) ;
 
 }

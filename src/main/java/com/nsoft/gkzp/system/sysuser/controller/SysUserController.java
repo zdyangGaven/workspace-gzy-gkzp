@@ -112,7 +112,7 @@ public class SysUserController {
 //                    //model.addAttribute("sysUser", sysUser);
 //                    logger.info(sysUser);
 //                    return SUCCESSRPAGE;
-                logger.error( "aaaaaaa="+WebUtils.getSessionAttribute(arg0,"userContext"));
+                logger.info( "aaaaaaa="+WebUtils.getSessionAttribute(arg0,"userContext"));
                 resultMsg.setResultMsg(ResultMsg.MsgType.NONE,"登录成功");
                 return resultMsg;
             } else {
@@ -243,6 +243,77 @@ public class SysUserController {
         return resultMsg;
 
     }
+
+
+    @RequestMapping("/intercept/user/changePWD")
+    public ResultMsg changePWD(String oldPassword,String password,String rePassword, HttpServletRequest request, HttpServletResponse response) throws Exception{
+        int id = -1;
+
+        try {
+
+            UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request, "userContext");//生成session信息userContext
+
+            logger.info("开始用户修改密码信息校验");
+
+            if (StringUtils.isEmpty(oldPassword) || StringUtils.isEmpty(password) || StringUtils.isEmpty(rePassword) ) {
+                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"修改密码失败，旧密码、新密码不能为空,请检查!");
+                return resultMsg;
+            }
+
+            if(!password.equals(rePassword)){
+                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"修改密码失败，新密码和确认密码不一致,请检查!");
+                return resultMsg;
+            }
+
+            if(password.equals(oldPassword)){
+                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"修改密码失败，旧密码和新密码相同,请检查!");
+                return resultMsg;
+            }
+
+            if (password.length() < 8 || password.length() > 16) {
+                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"修改密码失败，密码必须是8-16位且至少包含字母、数字、特殊字符中的两种,请检查!");
+                return resultMsg;
+            }
+            if (CheckDataType.isChinese(password)) {
+                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"修改密码失败，密码不能包含汉子,请检查!");
+                return resultMsg;
+            }
+
+            int i = CheckDataType.matcheData(password, 1) ? 1 : 0;
+            int j = CheckDataType.matcheData(password, 2) ? 1 : 0;
+            int k = CheckDataType.matcheData(password, 3) ? 1 : 0;
+            if (i + j + k < 2) {
+                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"修改密码失败，密码必须是8-16位且至少包含字母、数字、特殊字符中的两种,请检查!");
+                return resultMsg;
+            }
+
+            if (password.contains(userContext.getLoginName())) {
+                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"修改密码失败，新密码不能包含账户信息,请检查!");
+                return resultMsg;
+            }
+
+            SysUser sysUser = sysUserService.login(userContext.getLoginName(), commonCrypto.encryptSHAEncoder(oldPassword));
+            if(sysUser == null || sysUser.getId() != userContext.getLoginUserId()){
+                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"修改密码失败，旧密码填写错误,请检查!");
+                return resultMsg;
+            }
+
+            logger.info("修改密码信息校验成功");
+
+            String  SHApassword =  commonCrypto.encryptSHAEncoder(password);//密码加密
+            sysUserService.changePWD(userContext.getLoginUserId(),SHApassword);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"修改密码产生异常! 请联系管理员");
+            return resultMsg;
+        }
+        resultMsg.setResultMsg(ResultMsg.MsgType.INFO,"修改密码成功");
+        return resultMsg;
+
+    }
+
+
 
 
     /**
@@ -448,30 +519,6 @@ public class SysUserController {
         }
       //  return resultMsg;
     }
-
-
-
-    /**
-     * 测试
-     * @return
-     */
-    @ResponseBody   //返回json数据
-    @RequestMapping("/user/getUsers")
-    public List<SysUser> getUsers(){
-        List<SysUser> userList =  null;
-        userList = sysUserService.selectUsers();
-        SysUser aa = null;
-        if(userList !=null && !userList.isEmpty()){
-            Iterator it = userList.iterator();
-            while(it.hasNext()) {
-                aa = (SysUser)it.next();
-                logger.info(aa);
-            }
-        }
-        logger.info("userList="+userList);
-        return userList;
-    }
-
 
 
 

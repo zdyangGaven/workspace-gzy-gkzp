@@ -9,16 +9,15 @@
         select * from sys_user
         <where>
             <if test="loginName != null">
-                ( loginname =#{loginName} or phone = #{loginName} or email = #{loginName} )
+                 loginname =#{loginName}
             </if>
             <if test="password != null">
                 and Password=#{password}
             </if>
         </where>
-
     </select>
 
-    <select id="findIdByColumn" resultType="int">
+    <select id="findIdByColumn" resultType="int" >
         select id from sys_user
         where ${column} = #{value}
     </select>
@@ -26,6 +25,19 @@
     <insert id="saveRegister"  >
        insert into sys_user(loginname,password) values(#{loginName},#{password})
     </insert>
+
+    <update id="changePWD" >
+        update sys_user set password = #{password} where id = #{id}
+    </update>
+
+
+
+
+
+
+
+
+
 
 
 
@@ -37,16 +49,6 @@
     <select id="selectUsers" resultMap="userMap">
         SELECT * FROM sys_User
     </select>
-
-
-    <select id="getIdByEmail" resultType="int">
-        select id from sys_user
-        where email = #{email}
-    </select>
-
-    <insert id="saveSysUserInformation"  parameterType="com.nsoft.gkzp.system.sysuser.entity.SysUser">
-       insert into sys_user(loginname,password) values(#{loginName},#{password})
-    </insert>
 
 
 
