@@ -22,5 +22,9 @@ public class MyDefinedUtil {
     //用户信息头像同步的内网路径
     @Value("${userInfo.syncFile.url}")
     public String USERINFO_SYNCFILE_URL;
+
+    //允许跨域白名单
+    @Value("${system.accessControlAllowOrigin}")
+    public  String SYSTEM_ACCESSCONTROLALLOWORIGIN;
 }
 
