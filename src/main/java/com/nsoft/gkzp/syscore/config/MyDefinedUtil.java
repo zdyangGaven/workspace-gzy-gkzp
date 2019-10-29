@@ -18,5 +18,9 @@ public class MyDefinedUtil {
     //文件管理
     @Value("${system.file.folder.img}")
     public  String SYSTEM_FILE_FOLDER_IMG;
+
+    //用户信息头像同步的内网路径
+    @Value("${userInfo.syncFile.url}")
+    public String USERINFO_SYNCFILE_URL;
 }
 
