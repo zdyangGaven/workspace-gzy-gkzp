@@ -18,5 +18,9 @@ public class MyDefinedUtil {
     //文件管理
     @Value("${system.file.folder.img}")
     public  String SYSTEM_FILE_FOLDER_IMG;
+
+    //允许跨域白名单
+    @Value("${system.accessControlAllowOrigin}")
+    public  String SYSTEM_ACCESSCONTROLALLOWORIGIN;
 }
 
