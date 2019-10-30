@@ -246,7 +246,16 @@ public class SysUserController {
 
     }
 
-
+    /**
+     * 修改密码功能
+     * @param oldPassword 旧密码
+     * @param password    新密码
+     * @param rePassword  确认密码
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/intercept/user/changePWD")
     public ResultMsg changePWD(String oldPassword,String password,String rePassword, HttpServletRequest request, HttpServletResponse response) throws Exception{
         int id = -1;
