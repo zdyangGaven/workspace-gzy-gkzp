@@ -1,8 +1,12 @@
 package com.nsoft.gkzp.plan.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.io.Serializable;
+import java.util.Date;
 
 public class HrRecruitEntryinfoWork implements Serializable {
     @Id
@@ -11,7 +15,9 @@ public class HrRecruitEntryinfoWork implements Serializable {
 
     private Integer baseid;
 
-    private String duration;
+    //不映射数据库字段
+    @Transient
+    private String[] duration;
 
     private String unit;
 
@@ -22,6 +28,26 @@ public class HrRecruitEntryinfoWork implements Serializable {
     private String remarks;
 
     private Integer syncstatus;
+    @JsonIgnore
+    private Date starttime;
+    @JsonIgnore
+    private Date endtime;
+
+    @Override
+    public String toString() {
+        return "HrRecruitEntryinfoWork{" +
+                "id=" + id +
+                ", baseid=" + baseid +
+                ", duration='" + duration + '\'' +
+                ", unit='" + unit + '\'' +
+                ", post='" + post + '\'' +
+                ", leavereason='" + leavereason + '\'' +
+                ", remarks='" + remarks + '\'' +
+                ", syncstatus=" + syncstatus +
+                ", starttime=" + starttime +
+                ", endtime=" + endtime +
+                '}';
+    }
 
     public Integer getSyncstatus() {
         return syncstatus;
@@ -47,12 +73,28 @@ public class HrRecruitEntryinfoWork implements Serializable {
         this.baseid = baseid;
     }
 
-    public String getDuration() {
+    public String[] getDuration() {
         return duration;
     }
 
-    public void setDuration(String duration) {
-        this.duration = duration == null ? null : duration.trim();
+    public void setDuration(String[] duration) {
+        this.duration = duration;
+    }
+
+    public Date getStarttime() {
+        return starttime;
+    }
+
+    public void setStarttime(Date starttime) {
+        this.starttime = starttime;
+    }
+
+    public Date getEndtime() {
+        return endtime;
+    }
+
+    public void setEndtime(Date endtime) {
+        this.endtime = endtime;
     }
 
     public String getUnit() {

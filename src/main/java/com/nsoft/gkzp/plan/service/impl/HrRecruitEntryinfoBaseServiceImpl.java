@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -42,6 +44,9 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
     //招聘计划
     @Autowired
     HrRecuritPlanService hrRecuritPlanService;
+
+    //前端的时间格式进行格式化
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
     /**
      * 查询
@@ -81,19 +86,44 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
     public HrRecruitEntryinfo getInfoByUser(UserContext userContext) {
         HrRecruitEntryinfo hrRecruitEntryinfo = new HrRecruitEntryinfo();
 
+        //时间格式化
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
         //基础信息
-        Example example = new Example(HrRecruitEntryinfoBase.class);
-        //筛选
-        example.createCriteria().andEqualTo("loginuserid",userContext.getLoginUserId());
-        List<HrRecruitEntryinfoBase> hrRecruitEntryinfoBases = hrRecruitEntryinfoBaseDao.selectByExample(example);
+        HrRecruitEntryinfoBase hrRecruitEntryinfoBaseSel = new HrRecruitEntryinfoBase();
+        hrRecruitEntryinfoBaseSel.setLoginuserid(userContext.getLoginUserId());
+        List<HrRecruitEntryinfoBase> hrRecruitEntryinfoBases = list(hrRecruitEntryinfoBaseSel, "id DESC", null);
+        //没有基础信息返回null
+        if(hrRecruitEntryinfoBases.size() == 0) return null;
         HrRecruitEntryinfoBase hrRecruitEntryinfoBase = hrRecruitEntryinfoBases.get(0);
+        if(hrRecruitEntryinfoBase.getBirthdate() != null){
+            //转换生日时间
+            hrRecruitEntryinfoBase.setBirthdateStr(sdf.format(hrRecruitEntryinfoBase.getBirthdate()));
+        }
         hrRecruitEntryinfo.setBaseInfo(hrRecruitEntryinfoBase);
+
 
         //教育经历
         HrRecruitEntryinfoEducation hrRecruitEntryinfoEducation = new HrRecruitEntryinfoEducation();
         //根据基础信息id筛选
         hrRecruitEntryinfoEducation.setBaseid(hrRecruitEntryinfoBase.getId());
         List<HrRecruitEntryinfoEducation> hrRecruitEntryinfoEducations = hrRecruitEntryinfoEducationService.list( hrRecruitEntryinfoEducation, null,null);
+        List<HrRecruitEntryinfoEducation> hrRecruitEntryinfoEducationResult = new ArrayList<>();
+
+        for (HrRecruitEntryinfoEducation hrRecruitEntryinfoEducationEach:hrRecruitEntryinfoEducations) {
+
+            if(hrRecruitEntryinfoEducationEach.getStarttime() != null){
+
+                //起止时间
+                String[] duration = new String[2];
+                duration[0] = sdf.format(hrRecruitEntryinfoEducationEach.getStarttime());
+                duration[1] = sdf.format(hrRecruitEntryinfoEducationEach.getEndtime());
+                hrRecruitEntryinfoEducationEach.setDuration(duration);
+            }
+            hrRecruitEntryinfoEducationResult.add(hrRecruitEntryinfoEducationEach);
+        }
+
+        //hrRecruitEntryinfo.setEducationInfo(hrRecruitEntryinfoEducationResult);
         hrRecruitEntryinfo.setEducationInfo(hrRecruitEntryinfoEducations);
 
         //家庭成员
@@ -108,16 +138,50 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
         //根据基础信息id筛选
         hrRecruitEntryinfoOther.setBaseid(hrRecruitEntryinfoBase.getId());
         List<HrRecruitEntryinfoOther> hrRecruitEntryinfoOthers = hrRecruitEntryinfoOtherService.list( hrRecruitEntryinfoOther, null,null);
-        hrRecruitEntryinfo.setOtherInfo(hrRecruitEntryinfoOthers.get(0));
+        System.out.println(hrRecruitEntryinfoOther);
+        System.out.println(hrRecruitEntryinfoOthers);
+        if(hrRecruitEntryinfoOthers.size() > 0){
+            hrRecruitEntryinfo.setOtherInfo(hrRecruitEntryinfoOthers.get(0));
+        }
+
 
         //工作经历
         HrRecruitEntryinfoWork hrRecruitEntryinfoWork = new HrRecruitEntryinfoWork();
         //根据基础信息id筛选
         hrRecruitEntryinfoWork.setBaseid(hrRecruitEntryinfoBase.getId());
         List<HrRecruitEntryinfoWork> hrRecruitEntryinfoWorks = hrRecruitEntryinfoWorkService.list( hrRecruitEntryinfoWork,null, null);
-        hrRecruitEntryinfo.setWorkInfo(hrRecruitEntryinfoWorks);
+        List<HrRecruitEntryinfoWork> hrRecruitEntryinfoWorkResult = new ArrayList<>();
+        for (HrRecruitEntryinfoWork hrRecruitEntryinfoWorkEach:hrRecruitEntryinfoWorks) {
+            if(hrRecruitEntryinfoWorkEach.getStarttime() != null) {
+                //起止时间
+                String[] duration = new String[2];
+                duration[0] = sdf.format(hrRecruitEntryinfoWorkEach.getStarttime());
+                duration[1] = sdf.format(hrRecruitEntryinfoWorkEach.getEndtime());
+                hrRecruitEntryinfoWorkEach.setDuration(duration);
+            }
+
+            hrRecruitEntryinfoWorkResult.add(hrRecruitEntryinfoWorkEach);
+        }
+        hrRecruitEntryinfo.setWorkInfo(hrRecruitEntryinfoWorkResult);
 
         return hrRecruitEntryinfo;
+    }
+
+
+    /**
+     * 根据用户获取基础信息
+     * @param userContext
+     * @return
+     */
+    @Override
+    public HrRecruitEntryinfoBase getBaseByUser(UserContext userContext) {
+        HrRecruitEntryinfoBase hrRecruitEntryinfoBase = new HrRecruitEntryinfoBase();
+        hrRecruitEntryinfoBase.setLoginuserid(userContext.getLoginUserId());
+        List<HrRecruitEntryinfoBase> hrRecruitEntryinfoBases = list(hrRecruitEntryinfoBase, "id DESC", null);
+        //用户没有填基础信息退出返回null
+        if(hrRecruitEntryinfoBases.size() == 0) return null;
+        //返回基础信息
+        return hrRecruitEntryinfoBases.get(0);
     }
 
     /**
@@ -127,13 +191,25 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
      */
     @Override
     public int getBaseIdByUser(UserContext userContext) {
-        HrRecruitEntryinfoBase hrRecruitEntryinfoBase = new HrRecruitEntryinfoBase();
-        hrRecruitEntryinfoBase.setLoginuserid(userContext.getLoginUserId());
-        List<HrRecruitEntryinfoBase> hrRecruitEntryinfoBases = list(hrRecruitEntryinfoBase, "id DESC", null);
+        HrRecruitEntryinfoBase baseByUser = getBaseByUser(userContext);
         //用户没有填基础信息退出返回-1
-        if(hrRecruitEntryinfoBases.size() == 0) return -1;
+        if(baseByUser == null) return -1;
         //返回基础信息id
-        return hrRecruitEntryinfoBases.get(0).getId();
+        return baseByUser.getId();
+    }
+
+    /**
+     * 身份证验证是否存在     true存在
+     * @param idCard
+     * @return
+     */
+    @Override
+    public boolean verifyIdCard(String idCard) {
+        HrRecruitEntryinfoBase hrRecruitEntryinfoBase = new HrRecruitEntryinfoBase();
+        hrRecruitEntryinfoBase.setIdcardno(idCard);
+        List<HrRecruitEntryinfoBase> list = list(hrRecruitEntryinfoBase, null, null);
+        if(list.size() > 0) return true;
+        return false;
     }
 
     /**
@@ -142,10 +218,15 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
      * @return
      */
     @Override
-    public void add(JSONObject jsonObject) {
+    public void add(JSONObject jsonObject,UserContext userContext) {
         try {
             //基础信息
-            String baseInfo = jsonObject.getJSONObject("baseInfo").toString();
+            JSONObject baseInfoJson = jsonObject.getJSONObject("baseInfo");
+            //处理时间格式
+            baseInfoJson.put("submittime","");
+
+            String baseInfo = baseInfoJson.toString();
+
             HrRecruitEntryinfoBase hrRecruitEntryinfoBase = JSON.parseObject(baseInfo, HrRecruitEntryinfoBase.class);
             //id设为空
             hrRecruitEntryinfoBase.setId(null);
@@ -153,6 +234,8 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
             hrRecruitEntryinfoBase.setSyncstatus(1);
             //提交时间
             hrRecruitEntryinfoBase.setSubmittime(new Date());
+            //登录id
+            hrRecruitEntryinfoBase.setLoginuserid(userContext.getLoginUserId());
             //新增
             hrRecruitEntryinfoBaseDao.insertSelective(hrRecruitEntryinfoBase);
             //获取新增的id
@@ -161,7 +244,19 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
             //教育经历
             String educationInfo = jsonObject.getJSONArray("educationInfo").toString();
             List<HrRecruitEntryinfoEducation> hrRecruitEntryinfoEducations = JSON.parseArray(educationInfo, HrRecruitEntryinfoEducation.class);
-            hrRecruitEntryinfoEducationService.add(hrRecruitEntryinfoEducations,baseId);
+            for (HrRecruitEntryinfoEducation hrRecruitEntryinfoEducation:hrRecruitEntryinfoEducations) {
+                String[] duration = hrRecruitEntryinfoEducation.getDuration();
+                //转换data格式并保存
+                hrRecruitEntryinfoEducation.setStarttime(sdf.parse(duration[0]));
+                hrRecruitEntryinfoEducation.setEndtime(sdf.parse(duration[1]));
+                hrRecruitEntryinfoEducation.setDuration(null);
+
+                //关联基础信息
+                hrRecruitEntryinfoEducation.setBaseid(baseId);
+                hrRecruitEntryinfoEducationService.add(hrRecruitEntryinfoEducation);
+
+            }
+
 
             //家庭成员
             String familyInfo = jsonObject.getJSONArray("familyInfo").toString();
@@ -179,7 +274,16 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
             //工作经历
             String workInfo = jsonObject.getJSONArray("workInfo").toString();
             List<HrRecruitEntryinfoWork> hrRecruitEntryinfoWorks = JSON.parseArray(workInfo, HrRecruitEntryinfoWork.class);
-            hrRecruitEntryinfoWorkService.add(hrRecruitEntryinfoWorks,baseId);
+            for (HrRecruitEntryinfoWork hrRecruitEntryinfoWork:hrRecruitEntryinfoWorks) {
+                String[] duration = hrRecruitEntryinfoWork.getDuration();
+                //转换data格式并保存
+                hrRecruitEntryinfoWork.setStarttime(sdf.parse(duration[0]));
+                hrRecruitEntryinfoWork.setEndtime(sdf.parse(duration[1]));
+                hrRecruitEntryinfoWork.setDuration(null);
+                //关联基础信息
+                hrRecruitEntryinfoWork.setBaseid(baseId);
+                hrRecruitEntryinfoWorkService.add(hrRecruitEntryinfoWork);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -202,7 +306,7 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
             List<HrRecruitEntryinfoBase> bases = list( hrRecruitEntryinfoBase, null,null);
             //没有关联基础信息
             if(bases.size() == 0){
-                add(jsonObject);
+                add(jsonObject,userContext);
                 return;
             }else if(bases.get(0).getPlanid() == null){ //计划为空
                 edit(jsonObject);
@@ -222,7 +326,7 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
 
             if(endTime != null && endTime.before(new Date())){//判断该计划是否结束
                 //结束进行新增
-                add(jsonObject);
+                add(jsonObject,userContext);
             } else {
                 edit(jsonObject);
             }
@@ -246,7 +350,7 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
             baseInfo.put("submittime","");
             baseInfo.put("modifytime","");
             baseInfo.put("signuptime","");
-
+            System.out.println(baseInfo.get("birthdate"));
             String baseInfoStr = baseInfo.toString();
             HrRecruitEntryinfoBase hrRecruitEntryinfoBase = JSON.parseObject(baseInfoStr, HrRecruitEntryinfoBase.class);
 
@@ -259,6 +363,12 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
             String educationInfo = jsonObject.getJSONArray("educationInfo").toString();
             List<HrRecruitEntryinfoEducation> hrRecruitEntryinfoEducations = JSON.parseArray(educationInfo, HrRecruitEntryinfoEducation.class);
             for (HrRecruitEntryinfoEducation hrRecruitEntryinfoEducation:hrRecruitEntryinfoEducations) {
+                String[] duration = hrRecruitEntryinfoEducation.getDuration();
+                //转换data格式并保存
+                hrRecruitEntryinfoEducation.setStarttime(sdf.parse(duration[0]));
+                hrRecruitEntryinfoEducation.setEndtime(sdf.parse(duration[1]));
+                hrRecruitEntryinfoEducation.setDuration(null);
+
                 //判断id是否为空 为空进行新增
                 if(hrRecruitEntryinfoEducation.getId() == null){
                     //关联基础信息
@@ -293,10 +403,17 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
             String workInfo = jsonObject.getJSONArray("workInfo").toString();
             List<HrRecruitEntryinfoWork> hrRecruitEntryinfoWorks = JSON.parseArray(workInfo, HrRecruitEntryinfoWork.class);
             for (HrRecruitEntryinfoWork hrRecruitEntryinfoWork:hrRecruitEntryinfoWorks) {
+                String[] duration = hrRecruitEntryinfoWork.getDuration();
+                //转换data格式并保存
+                hrRecruitEntryinfoWork.setStarttime(sdf.parse(duration[0]));
+                hrRecruitEntryinfoWork.setEndtime(sdf.parse(duration[1]));
+                hrRecruitEntryinfoWork.setDuration(null);
+                System.out.println("进入");
                 //判断id是否为空 为空进行新增
                 if(hrRecruitEntryinfoWork.getId() == null){
                     //关联基础信息
                     hrRecruitEntryinfoWork.setBaseid(baseId);
+                    System.out.println("工作经历"+hrRecruitEntryinfoWork);
                     hrRecruitEntryinfoWorkService.add(hrRecruitEntryinfoWork);
                 } else {
                     hrRecruitEntryinfoWorkService.edit(hrRecruitEntryinfoWork);
@@ -307,5 +424,14 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
             e.printStackTrace();
             throw new ServiceException("报名-基础信息修改报错",e);
         }
+    }
+
+    /**
+     * 修改
+     * @param hrRecruitEntryinfoBase
+     */
+    @Override
+    public void edit(HrRecruitEntryinfoBase hrRecruitEntryinfoBase) {
+        hrRecruitEntryinfoBaseDao.updateByPrimaryKeySelective(hrRecruitEntryinfoBase);
     }
 }

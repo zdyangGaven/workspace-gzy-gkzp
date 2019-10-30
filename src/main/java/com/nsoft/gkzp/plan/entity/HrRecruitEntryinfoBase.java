@@ -1,9 +1,11 @@
 package com.nsoft.gkzp.plan.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import tk.mybatis.mapper.annotation.KeySql;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -31,7 +33,11 @@ public class HrRecruitEntryinfoBase implements Serializable {
 
     private Integer politics;
 
-    private String birthdate;
+    private Date birthdate;
+
+    //不映射数据库字段
+    @Transient
+    private String birthdateStr;
 
     private Integer maritalstatus;
 
@@ -65,8 +71,10 @@ public class HrRecruitEntryinfoBase implements Serializable {
 
     private String submitman;
 
+    @JsonIgnore
     private Date submittime;
 
+    @JsonIgnore
     private Date modifytime;
 
     private Integer loginuserid;
@@ -109,6 +117,14 @@ public class HrRecruitEntryinfoBase implements Serializable {
                 ", modifytime=" + modifytime +
                 ", loginuserid=" + loginuserid +
                 '}';
+    }
+
+    public String getBirthdateStr() {
+        return birthdateStr;
+    }
+
+    public void setBirthdateStr(String birthdateStr) {
+        this.birthdateStr = birthdateStr;
     }
 
     public Integer getSyncstatus() {
@@ -207,12 +223,12 @@ public class HrRecruitEntryinfoBase implements Serializable {
         this.politics = politics;
     }
 
-    public String getBirthdate() {
+    public Date getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(String birthdate) {
-        this.birthdate = birthdate == null ? null : birthdate.trim();
+    public void setBirthdate(Date birthdate) {
+        this.birthdate = birthdate;
     }
 
     public Integer getMaritalstatus() {

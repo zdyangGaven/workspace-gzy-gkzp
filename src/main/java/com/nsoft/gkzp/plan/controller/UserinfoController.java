@@ -2,8 +2,10 @@ package com.nsoft.gkzp.plan.controller;
 
 import com.nsoft.gkzp.common.FileLoad;
 import com.nsoft.gkzp.common.entity.FileVo;
+import com.nsoft.gkzp.common.entity.HrRecruitFile;
 import com.nsoft.gkzp.plan.entity.*;
 import com.nsoft.gkzp.plan.service.*;
+import com.nsoft.gkzp.syscore.config.MyDefinedUtil;
 import com.nsoft.gkzp.syscore.web.AbstractController;
 import com.nsoft.gkzp.syscore.web.UserContext;
 import com.nsoft.gkzp.util.DataFormat;
@@ -15,12 +17,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.WebUtils;
+import tk.mybatis.mapper.entity.Example;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class UserinfoController extends AbstractController {
@@ -59,9 +66,13 @@ public class UserinfoController extends AbstractController {
     @Autowired
     DataFormat dataFormat;
 
-    //文件下载
+    //文件管理
     @Autowired
     FileLoad fileLoad;
+
+    //配置参数
+    @Autowired
+    private MyDefinedUtil myDefinedUtil;
 
     /**
      * 根据登录用户查询信息
@@ -71,6 +82,7 @@ public class UserinfoController extends AbstractController {
     @RequestMapping("intercept/plan/userInfo/getInfoByUser")
     public HrRecruitEntryinfo getInfoByUser(HttpServletRequest request){
         UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
+        logger.info(userContext);
         return hrRecruitEntryinfoBaseService.getInfoByUser(userContext);
     }
 
@@ -90,10 +102,10 @@ public class UserinfoController extends AbstractController {
             data = URLDecoder.decode(data, "UTF-8");
             JSONObject jsonObject = new JSONObject(data);
 
-            hrRecruitEntryinfoBaseService.add(jsonObject);
+            hrRecruitEntryinfoBaseService.add(jsonObject,userContext);
 
             //成功信息
-            resultMsg.setResultMsg(ResultMsg.MsgType.NONE,"");
+            resultMsg.setResultMsg(ResultMsg.MsgType.INFO,"");
             return resultMsg;
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -117,14 +129,23 @@ public class UserinfoController extends AbstractController {
             //转义转JSON
             data = URLDecoder.decode(data, "UTF-8");
             JSONObject jsonObject = new JSONObject(data);
-            //JSONObject jsonObject = new JSONObject();
+            System.out.println(jsonObject);
+
+            //检验身份证
+            /*boolean verifyIdCard = hrRecruitEntryinfoBaseService.verifyIdCard(jsonObject.getJSONObject("baseInfo").getString(""));
+            if(verifyIdCard){
+                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"身份证已存在");
+                return resultMsg;
+            }*/
+
             hrRecruitEntryinfoBaseService.edit(jsonObject,userContext);
 
             //成功信息
-            resultMsg.setResultMsg(ResultMsg.MsgType.NONE,"");
+            resultMsg.setResultMsg(ResultMsg.MsgType.INFO,"");
             return resultMsg;
         } catch (Exception e) {
             e.printStackTrace();
+
         }
         //错误信息
         resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"");
@@ -156,6 +177,7 @@ public class UserinfoController extends AbstractController {
 
         //岗位信息
         HrRecuritPlanNeedsVo hrRecuritPlanNeedsVoByUser = hrRecuritPlanNeedsService.getHrRecuritPlanNeedsVoById(baseId);
+        if(hrRecuritPlanNeedsVoByUser == null) return null;
         result.put("HrRecuritPlanNeeds",hrRecuritPlanNeedsVoByUser.getHrRecuritPlanNeedsDo());
 
         //获取通知消息
@@ -289,5 +311,46 @@ public class UserinfoController extends AbstractController {
         hrRecruitNoticeService.userReadAll(userContext);
     }
 
+    /**
+     * 用户信息同步文件
+     */
+    @RequestMapping("plan/userInfo/syncFile")
+    public ResultMsg syncFile() throws IOException {
+        try {
+            //查询未同步的文件
+            HrRecruitFile hrRecruitFile = new HrRecruitFile();
+            hrRecruitFile.setSyncfile(1);
+            List<HrRecruitFile> hrRecruitFiles = fileLoad.fileList(hrRecruitFile, null, null);
+            //保存文件进容器
+            Map<String, File> files = new HashMap<String, File>();
+            //本次的id集合
+            List<Integer> ids = new ArrayList<>();
+            for (HrRecruitFile hrRecruitFileEach:hrRecruitFiles) {
+                //保存文件
+                File file = new File(hrRecruitFileEach.getFileurl());
+                files.put(file.getName(), file);
 
+                //保存id
+                ids.add(hrRecruitFileEach.getId());
+            }
+            //同步
+            String result = fileLoad.upLoadFilePost(myDefinedUtil.USERINFO_SYNCFILE_URL, files);
+            //判断是否同步成功  成功进行修改本次同步文件的值
+            if(result.equals("ok")){
+                Example example = new Example(HrRecruitEntryinfoWork.class);
+                example.createCriteria().andIn("id",ids);
+
+                HrRecruitFile hrRecruitFileEdit = new HrRecruitFile();
+                hrRecruitFileEdit.setSyncfile(2);
+                fileLoad.fileEditExample(hrRecruitFileEdit,example);
+            }
+            resultMsg.setResultMsg(ResultMsg.MsgType.INFO,"同步成功");
+            return resultMsg;
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+        resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"同步失败");
+        return resultMsg;
+    }
 }

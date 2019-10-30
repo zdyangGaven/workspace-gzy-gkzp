@@ -28,6 +28,13 @@ public interface HrRecruitEntryinfoBaseService {
     public HrRecruitEntryinfo getInfoByUser(UserContext userContext);
 
     /**
+     * 根据用户获取基础信息
+     * @param userContext
+     * @return
+     */
+    public HrRecruitEntryinfoBase getBaseByUser(UserContext userContext);
+
+    /**
      * 根据登录用户获取基础信息id
      * @param userContext 用户信息
      * @return
@@ -35,11 +42,19 @@ public interface HrRecruitEntryinfoBaseService {
     public int getBaseIdByUser(UserContext userContext);
 
     /**
+     * 身份证验证
+     * @param idCard
+     * @return
+     */
+    public boolean verifyIdCard(String idCard);
+
+    /**
      * 用户信息新增
      * @param jsonObject
      * @return
      */
-    public void add(JSONObject jsonObject);
+    public void add(JSONObject jsonObject,UserContext userContext);
+
 
     /**
      * 根据用户来进行判断是否修改还是新增
@@ -48,8 +63,14 @@ public interface HrRecruitEntryinfoBaseService {
     public void edit(JSONObject jsonObject,UserContext userContext);
 
     /**
-     * 修改编辑
+     * 修改全部编辑
      * @param jsonObject
      */
     public void edit(JSONObject jsonObject);
+
+    /**
+     * 修改编辑
+     * @param hrRecruitEntryinfoBase
+     */
+    public void edit(HrRecruitEntryinfoBase hrRecruitEntryinfoBase);
 }

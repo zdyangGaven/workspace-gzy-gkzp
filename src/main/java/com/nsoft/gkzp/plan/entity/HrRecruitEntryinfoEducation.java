@@ -1,8 +1,12 @@
 package com.nsoft.gkzp.plan.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.io.Serializable;
+import java.util.Date;
 
 public class HrRecruitEntryinfoEducation implements Serializable {
     @Id
@@ -11,7 +15,9 @@ public class HrRecruitEntryinfoEducation implements Serializable {
 
     private Integer baseid;
 
-    private String duration;
+    //不映射数据库字段
+    @Transient
+    private String[] duration;
 
     private String trainingagency;
 
@@ -20,6 +26,38 @@ public class HrRecruitEntryinfoEducation implements Serializable {
     private String inform;
 
     private Integer syncstatus;
+
+    @JsonIgnore
+    private Date starttime;
+
+    @JsonIgnore
+    private Date endtime;
+
+    private String degrees;
+
+    public Date getStarttime() {
+        return starttime;
+    }
+
+    public void setStarttime(Date starttime) {
+        this.starttime = starttime;
+    }
+
+    public Date getEndtime() {
+        return endtime;
+    }
+
+    public void setEndtime(Date endtime) {
+        this.endtime = endtime;
+    }
+
+    public String getDegrees() {
+        return degrees;
+    }
+
+    public void setDegrees(String degrees) {
+        this.degrees = degrees;
+    }
 
     public Integer getSyncstatus() {
         return syncstatus;
@@ -45,12 +83,12 @@ public class HrRecruitEntryinfoEducation implements Serializable {
         this.baseid = baseid;
     }
 
-    public String getDuration() {
+    public String[] getDuration() {
         return duration;
     }
 
-    public void setDuration(String duration) {
-        this.duration = duration == null ? null : duration.trim();
+    public void setDuration(String[] duration) {
+        this.duration = duration;
     }
 
     public String getTrainingagency() {

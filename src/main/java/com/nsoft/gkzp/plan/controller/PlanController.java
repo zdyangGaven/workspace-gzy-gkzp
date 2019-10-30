@@ -1,11 +1,9 @@
 package com.nsoft.gkzp.plan.controller;
 
+import com.nsoft.gkzp.plan.entity.Uenumdata;
 import com.nsoft.gkzp.common.FileLoad;
 import com.nsoft.gkzp.plan.entity.*;
-import com.nsoft.gkzp.plan.service.HrPostTypeService;
-import com.nsoft.gkzp.plan.service.HrRecruitReviewRecordService;
-import com.nsoft.gkzp.plan.service.HrRecuritPlanNeedsService;
-import com.nsoft.gkzp.plan.service.HrRecuritPlanService;
+import com.nsoft.gkzp.plan.service.*;
 import com.nsoft.gkzp.syscore.config.MyDefinedUtil;
 import com.nsoft.gkzp.syscore.web.AbstractController;
 import com.nsoft.gkzp.syscore.web.UserContext;
@@ -18,9 +16,6 @@ import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -42,8 +37,17 @@ public class PlanController extends AbstractController {
     @Autowired
     HrRecruitReviewRecordService hrRecruitReviewRecordService;
 
+    //配置参数
     @Autowired
     private MyDefinedUtil myDefinedUtil;
+
+    //民族
+    @Autowired
+    private UenumdataService uenumdataService;
+
+    //基础信息
+    @Autowired
+    private HrRecruitEntryinfoBaseService hrRecruitEntryinfoBaseService;
 
     @Autowired
     FileLoad fileLoad;
@@ -85,6 +89,8 @@ public class PlanController extends AbstractController {
     public List<HrRecuritPlanNeeds> hrRecuritPlanNeedsList( HrRecuritPlanNeeds hrRecuritPlanNeeds, String order,Page page){
         return hrRecuritPlanNeedsService.list(hrRecuritPlanNeeds,order, page);
     }
+
+
 
 
     /**
@@ -152,11 +158,11 @@ public class PlanController extends AbstractController {
      * @return
      */
     @PostMapping("plan/plan/upload/img")
-    public ResultMsg uploadImg(@RequestParam("file") MultipartFile file){
-
+    public ResultMsg uploadImg(@RequestParam("file") MultipartFile file,HttpServletRequest request){
+        UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
         //指定本地文件夹存储图片
         String filePath = myDefinedUtil.SYSTEM_FILE_FOLDER_IMG;
-        ResultMsg resultMsg = fileLoad.uploadFile(file, filePath);
+        ResultMsg resultMsg = fileLoad.uploadFile(userContext,file, filePath);
         return resultMsg;
     }
 
@@ -172,10 +178,72 @@ public class PlanController extends AbstractController {
     }
 
 
-    @RequestMapping("/download")
-    public File download() throws Exception{
-        InputStream f = new FileInputStream("F:/1.png");
-        return null;
+    /**
+     * 申请职位
+     * @param id
+     * @param request
+     */
+    @RequestMapping("intercept/plan/plan/planNeedsApply")
+    public void planNeedsApply(int id,HttpServletRequest request){
+        UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
+
+        //获取用户基础信息id
+        int baseId = hrRecruitEntryinfoBaseService.getBaseIdByUser(userContext);
+
+        //查询岗位
+        HrRecuritPlanNeeds hrRecuritPlanNeeds = hrRecuritPlanNeedsService.getHrRecuritPlanNeedsById(id);
+        //申请岗位
+        HrRecruitEntryinfoBase hrRecruitEntryinfoBase = new HrRecruitEntryinfoBase();
+        hrRecruitEntryinfoBase.setId(baseId);
+        hrRecruitEntryinfoBase.setPlanid(hrRecuritPlanNeeds.getPlanId());
+        hrRecruitEntryinfoBase.setPostid(hrRecuritPlanNeeds.getId());
+        hrRecruitEntryinfoBaseService.edit(hrRecruitEntryinfoBase);
+    }
+
+    /**
+     * 申请职位使用旧的信息
+     * @param id
+     * @param request
+     */
+    @RequestMapping("intercept/plan/plan/planNeedsApplyOldInfo")
+    public void planNeedsApplyOldInfo(int id,HttpServletRequest request){
+        UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
+
+        //获取用户基础信息id
+        int baseId = hrRecruitEntryinfoBaseService.getBaseIdByUser(userContext);
+
+        //查询岗位
+        HrRecuritPlanNeeds hrRecuritPlanNeeds = hrRecuritPlanNeedsService.getHrRecuritPlanNeedsById(id);
+        //申请岗位
+        HrRecruitEntryinfoBase hrRecruitEntryinfoBase = new HrRecruitEntryinfoBase();
+        hrRecruitEntryinfoBase.setId(baseId);
+        hrRecruitEntryinfoBase.setPlanid(hrRecuritPlanNeeds.getPlanId());
+        hrRecruitEntryinfoBase.setPostid(hrRecuritPlanNeeds.getId());
+        hrRecruitEntryinfoBaseService.edit(hrRecruitEntryinfoBase);
+    }
+
+    /**
+     * 申请职位  获取用户的当前状态  是否申请职位，申请职位时间
+     * @param request
+     * @return
+     */
+    @RequestMapping("intercept/plan/plan/getApplyByUser")
+    public ResultMsg getApplyByUser(HttpServletRequest request){
+        UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
+        return hrRecuritPlanNeedsService.getApplyByUser(userContext);
+    }
+
+
+
+    /**
+     * 查询民族
+     * @return
+     */
+    @RequestMapping("plan/plan/uenumdataList")
+    public List<Uenumdata> uenumdataList(){
+        Uenumdata uenumdata = new Uenumdata();
+        uenumdata.setEnumtypecode("SS_race");
+        return uenumdataService.list(uenumdata,null,null);
     }
 
 }

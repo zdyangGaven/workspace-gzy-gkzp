@@ -6,6 +6,7 @@ import com.nsoft.gkzp.plan.entity.HrRecuritPlanNeedsDo;
 import com.nsoft.gkzp.plan.entity.HrRecuritPlanNeedsVo;
 import com.nsoft.gkzp.syscore.web.UserContext;
 import com.nsoft.gkzp.util.Page;
+import com.nsoft.gkzp.util.ResultMsg;
 
 import java.util.List;
 
@@ -32,6 +33,13 @@ public interface HrRecuritPlanNeedsService {
     public List<HrRecuritPlanNeeds> list( HrRecuritPlanNeeds hrRecuritPlanNeeds, String order,Page page,List<Object> planIdList);
 
     /**
+     * 通过id查询岗位
+     * @param id
+     * @return
+     */
+    public HrRecuritPlanNeeds getHrRecuritPlanNeedsById(int id);
+
+    /**
      * 查询关联岗位类别
      * @param hrRecuritPlanNeeds
      * @param order
@@ -40,6 +48,14 @@ public interface HrRecuritPlanNeedsService {
      * @return
      */
     public List<HrRecuritPlanNeedsDo> find(HrRecuritPlanNeeds hrRecuritPlanNeeds, String order,Page page, List<Object> planIdList);
+
+
+    /**
+     * 申请职位  获取用户的当前状态  是否申请职位，申请职位时间
+     * @param userContext 用户信息
+     * @return
+     */
+    public ResultMsg getApplyByUser(UserContext userContext);
 
     /**
      * 根据id获取岗位信息和招聘计划
@@ -79,4 +95,11 @@ public interface HrRecuritPlanNeedsService {
      * @param hrRecuritPlanNeeds
      */
     public void edit(HrRecuritPlanNeeds hrRecuritPlanNeeds);
+
+    /**
+     * 申请岗位
+     * @param id 岗位id
+     * @param userContext 登录用户
+     */
+    public void planNeedsApply(int id,UserContext userContext);
 }

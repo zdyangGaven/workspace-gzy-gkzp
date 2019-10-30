@@ -5,6 +5,7 @@ import tk.mybatis.mapper.annotation.KeySql;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import java.io.Serializable;
+import java.util.Date;
 
 public class HrRecruitFile implements Serializable {
     @Id
@@ -12,9 +13,46 @@ public class HrRecruitFile implements Serializable {
     @Column(insertable=false)
     private Integer id;
 
-    private String name;
+    private String filecname;
 
-    private String uuidname;
+    private String fileurl;
+
+    private Date submittime;
+
+    private Integer loginuserid;
+
+    private Integer syncstatus;
+
+    private Integer syncfile;
+
+    @Override
+    public String toString() {
+        return "HrRecruitFile{" +
+                "id=" + id +
+                ", filecname='" + filecname + '\'' +
+                ", fileurl='" + fileurl + '\'' +
+                ", submittime=" + submittime +
+                ", loginuserid=" + loginuserid +
+                ", syncstatus=" + syncstatus +
+                ", syncfile=" + syncfile +
+                '}';
+    }
+
+    public Integer getSyncstatus() {
+        return syncstatus;
+    }
+
+    public void setSyncstatus(Integer syncstatus) {
+        this.syncstatus = syncstatus;
+    }
+
+    public Integer getSyncfile() {
+        return syncfile;
+    }
+
+    public void setSyncfile(Integer syncfile) {
+        this.syncfile = syncfile;
+    }
 
     public Integer getId() {
         return id;
@@ -24,19 +62,35 @@ public class HrRecruitFile implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFilecname() {
+        return filecname;
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public void setFilecname(String filecname) {
+        this.filecname = filecname == null ? null : filecname.trim();
     }
 
-    public String getUuidname() {
-        return uuidname;
+    public String getFileurl() {
+        return fileurl;
     }
 
-    public void setUuidname(String uuidname) {
-        this.uuidname = uuidname == null ? null : uuidname.trim();
+    public void setFileurl(String fileurl) {
+        this.fileurl = fileurl == null ? null : fileurl.trim();
+    }
+
+    public Date getSubmittime() {
+        return submittime;
+    }
+
+    public void setSubmittime(Date submittime) {
+        this.submittime = submittime;
+    }
+
+    public Integer getLoginuserid() {
+        return loginuserid;
+    }
+
+    public void setLoginuserid(Integer loginuserid) {
+        this.loginuserid = loginuserid;
     }
 }

@@ -50,8 +50,16 @@ public class HrRecruitArticleServiceImpl implements HrRecruitArticleService {
         //排序
         if(order != null) example.setOrderByClause(order);
 
+        Example.Criteria criteria = example.createCriteria();
+
+        //模糊筛选
+        if(hrRecruitArticle.getTitle() != null) criteria.andLike("title","%"+hrRecruitArticle.getTitle()+"%");
+
+        //清除
+        hrRecruitArticle.setTitle(null);
+
         //筛选
-        example.createCriteria().andEqualTo(hrRecruitArticle);
+        criteria.andEqualTo(hrRecruitArticle);
 
         List<HrRecruitArticle> list = hrRecruitArticleDao.selectByExample(example);
 

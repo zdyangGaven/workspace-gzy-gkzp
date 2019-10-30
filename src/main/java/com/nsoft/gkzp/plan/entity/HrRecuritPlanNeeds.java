@@ -1,8 +1,10 @@
 package com.nsoft.gkzp.plan.entity;
 
+import javax.persistence.Id;
 import java.io.Serializable;
 
 public class HrRecuritPlanNeeds implements Serializable {
+    @Id
     private Integer id;
 
     private Integer planId;

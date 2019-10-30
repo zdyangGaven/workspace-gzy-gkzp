@@ -27,8 +27,26 @@ public class HrRecruitArticleController {
         return hrRecruitArticleService.list(hrRecruitArticle,order, page);
     }
 
+    /**
+     * 通过id查询
+     * @param id
+     * @return
+     */
     @RequestMapping("notice/getHrRecruitArticleById")
     public HrRecruitArticle getHrRecruitArticleById(int id){
         return hrRecruitArticleService.getHrRecruitArticleById(id);
+    }
+
+    /**
+     * 模糊搜索公告
+     * @param title
+     * @return
+     */
+    @RequestMapping("notice/getHrRecruitArticleByTitle")
+    public List<HrRecruitArticle> getHrRecruitArticleByTitle(String title){
+        if(title.equals("") || title == null) return null;
+        HrRecruitArticle hrRecruitArticle = new HrRecruitArticle();
+        hrRecruitArticle.setTitle(title);
+        return hrRecruitArticleService.list(hrRecruitArticle,null,null);
     }
 }
