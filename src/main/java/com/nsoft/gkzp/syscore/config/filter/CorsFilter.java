@@ -41,13 +41,14 @@ public class CorsFilter implements Filter {
         //允许跨域白名单
         String[] whiteList = (myDefinedUtil.SYSTEM_ACCESSCONTROLALLOWORIGIN).split(",") ;
         boolean isValid = false;
-        for(String ip : whiteList){//这里我设置本地访问（localhost，127.0.0.1）自动为白名单里的
-            if(origin != null && (origin.contains("localhost") || origin.contains("127.0.0.1") || origin.equals(ip))){
+        for(String ip : whiteList){
+            if(origin != null && origin.equals(ip)){
                 isValid = true;
                 break;
             }
         }
-        logger.info("跨域验证:origin="+origin+";;;;;;isValid="+isValid);
+        logger.info("跨域验证:origin="+origin+";;;;;;isValid="+isValid);//
+        // 如为跨域请求，下面的"Access-Control-Allow-Origin"值置为null，就无法访问了。。。如果为非跨域请求，这个为null不会受影响，依然允许访问
         response.setHeader("Access-Control-Allow-Origin", isValid ? origin : "null");// 允许指定域访问跨域资源(这里不能写*，*代表接受所有域名访问，如写*则下面一行代码无效。谨记)
         response.setHeader("Access-Control-Allow-Credentials", "true");//true代表允许客户端携带cookie(此时origin值不能为“*”，只能为指定单一域名)
         response.setHeader("Access-Control-Allow-Methods", "GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS, PATCH"); /// 允许浏览器在预检请求成功之后发送的实际请求方法名
