@@ -1,5 +1,6 @@
 package com.nsoft.gkzp.system.sysuser.service;
 
+import com.github.pagehelper.Page;
 import com.nsoft.gkzp.syscore.service.AbstractService;
 import com.nsoft.gkzp.syscore.service.ServiceException;
 import com.nsoft.gkzp.system.sysuser.dao.SysUserDao;
@@ -8,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.awt.*;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Random;
 
 @Service("sysuserService")
@@ -89,6 +90,25 @@ public class SysUserServiceImpl extends AbstractService implements SysUserServic
             throw new ServiceException("向数据库修改密码时出错 id="+id+",password="+password, e);
         }
     }
+
+
+    /**
+     * 获取用户数据
+     * @return
+     * @throws ServiceException
+     */
+    public Page getUserInfos() throws ServiceException{
+        Page<HashMap> list = null;
+        try {
+            list = sysUserDao.getUserInfos();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ServiceException("查询获取用户信息时出错", e);
+        }
+        return list;
+    }
+
 
     /**
      * 验证码相关

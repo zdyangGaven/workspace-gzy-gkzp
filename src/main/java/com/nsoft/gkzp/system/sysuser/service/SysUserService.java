@@ -1,10 +1,10 @@
 package com.nsoft.gkzp.system.sysuser.service;
 
+import com.github.pagehelper.Page;
 import com.nsoft.gkzp.syscore.service.ServiceException;
 import com.nsoft.gkzp.system.sysuser.entity.SysUser;
 
 import java.awt.*;
-import java.util.List;
 
 public interface SysUserService {
 
@@ -40,6 +40,15 @@ public interface SysUserService {
      * @throws ServiceException
      */
     public void changePWD(int id,String  password) throws ServiceException;
+
+
+    /**
+     * 获取用户数据
+     * @return
+     * @throws ServiceException
+     */
+    public Page getUserInfos() throws ServiceException;
+
 
     /**
      * 验证码相关

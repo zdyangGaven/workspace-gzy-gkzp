@@ -1,11 +1,10 @@
 package com.nsoft.gkzp.system.sysuser.dao;
 
+import com.github.pagehelper.Page;
 import com.nsoft.gkzp.system.sysuser.entity.SysUser;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 
 /**
  * User 实体映射器接口
@@ -54,5 +53,11 @@ public interface SysUserDao {
      * @param password  用户密码
      */
     public void changePWD(@Param("id") int id,@Param("password") String  password) ;
+
+    /**
+     * 获取用户数据
+     * @return
+     */
+    public Page getUserInfos();
 
 }

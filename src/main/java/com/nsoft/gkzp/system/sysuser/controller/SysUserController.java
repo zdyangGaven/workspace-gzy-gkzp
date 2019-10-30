@@ -1,5 +1,7 @@
 package com.nsoft.gkzp.system.sysuser.controller;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.nsoft.gkzp.plan.service.HrRecruitNoticeService;
 import com.nsoft.gkzp.syscore.web.ControllerException;
 import com.nsoft.gkzp.syscore.web.UserContext;
@@ -10,6 +12,7 @@ import com.nsoft.gkzp.util.CommonCrypto;
 import com.nsoft.gkzp.util.ResultMsg;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.ui.Model;
@@ -25,7 +28,6 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.util.List;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -313,6 +315,116 @@ public class SysUserController {
 
     }
 
+    /**
+     * 从session中获得登录用户名
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/user/getLoginName")
+    public ResultMsg getLoginName( HttpServletRequest request, HttpServletResponse response) throws Exception{
+        try{
+            UserContext user =  (UserContext)WebUtils.getSessionAttribute(request,"userContext");
+            if(!StringUtils.isEmpty(user)){
+                resultMsg.setResultMsg(ResultMsg.MsgType.INFO,(user).getLoginName());
+
+                //获取未读消息数
+                int noticeInt = hrRecruitNoticeService.noticeInt(user);
+                HashMap<String, Object> hashMap = new HashMap<>();
+                hashMap.put("noticeInt",noticeInt);
+                resultMsg.setData(hashMap);
+            }else{
+                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"用户未登陆!");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"出现异常！");
+        }
+
+        return resultMsg;
+    }
+
+    /**
+     * 注销操作
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @GetMapping("/user/logout")
+    public void logout( HttpServletRequest request, HttpServletResponse response) throws Exception{
+        try {
+            Object user = WebUtils.getSessionAttribute(request, "userContext");
+            WebUtils.setSessionAttribute(request, "userContext", null);
+            // resultMsg.setResultMsg(ResultMsg.MsgType.INFO,"注销成功");
+        }catch (Exception e){
+            e.printStackTrace();
+            //  resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"注销失败");
+        }
+        //  return resultMsg;
+    }
+
+
+    /**
+     * 获取用户信息
+     * @param pageNum  当前页数
+     * @param pageSize 当前页最多显示多少行
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/user/getUserInfos")
+    public String getUserInfos( Integer pageNum, Integer pageSize) throws Exception{
+
+        JSONObject result = new JSONObject();
+        try{
+            PageHelper.startPage(pageNum,pageSize);
+            Page<HashMap> data = sysUserService.getUserInfos( );
+
+            result.put("data",data);//
+            //获取页面总数
+            result.put("limit",data.getPages());
+            //获取数据总数
+            result.put("total",data.getTotal());
+        }catch (Exception e){
+            e.printStackTrace();
+            //   throw new ControllerException("分页查询失败",e,userContext);
+        }
+
+        return result !=null?result.toString():null;
+    }
+
+    /**
+     *密码初始化
+     * @param id 用户登录ID
+     * @param loginName 用户登录账户
+     * @throws Exception
+     */
+    @RequestMapping("/user/initializePWD")
+    public ResultMsg initializePWD( int id,String loginName) throws Exception{
+        boolean oee = false;
+        try{
+            if(loginName !=null){
+                int temp =  sysUserService.findIdByColumn("loginName",loginName);
+                if(id  == temp){
+                    String  SHApassword =  commonCrypto.encryptSHAEncoder("zz123456");//密码加密
+                    sysUserService.changePWD(id,SHApassword);
+                   oee = true;
+                }
+            }
+
+            if(oee){
+                resultMsg.setResultMsg(ResultMsg.MsgType.INFO,"密码重置完成");
+            }else{
+                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"用户信息校验不通过，请检查！");
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            logger.error("密码初始化错误id="+id+"loginName="+loginName+";\n "+e.getMessage());
+            resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"系统出现错误，请联系管理员");
+        }
+        return resultMsg;
+    }
 
 
 
@@ -470,56 +582,6 @@ public class SysUserController {
 
         }
     }
-
-    /**
-     * 从session中获得登录用户名
-     * @param request
-     * @param response
-     * @return
-     * @throws Exception
-     */
-    @PostMapping("/user/getLoginName")
-    public ResultMsg getLoginName( HttpServletRequest request, HttpServletResponse response) throws Exception{
-        try{
-            UserContext user =  (UserContext)WebUtils.getSessionAttribute(request,"userContext");
-            if(!StringUtils.isEmpty(user)){
-                resultMsg.setResultMsg(ResultMsg.MsgType.INFO,(user).getLoginName());
-
-                //获取未读消息数
-                int noticeInt = hrRecruitNoticeService.noticeInt(user);
-                HashMap<String, Object> hashMap = new HashMap<>();
-                hashMap.put("noticeInt",noticeInt);
-                resultMsg.setData(hashMap);
-            }else{
-                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"用户未登陆!");
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-            resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"出现异常！");
-        }
-
-        return resultMsg;
-    }
-
-    /**
-     * 注销操作
-     * @param request
-     * @param response
-     * @throws Exception
-     */
-    @GetMapping("/user/logout")
-    public void logout( HttpServletRequest request, HttpServletResponse response) throws Exception{
-        try {
-            Object user = WebUtils.getSessionAttribute(request, "userContext");
-            WebUtils.setSessionAttribute(request, "userContext", null);
-           // resultMsg.setResultMsg(ResultMsg.MsgType.INFO,"注销成功");
-        }catch (Exception e){
-            e.printStackTrace();
-          //  resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"注销失败");
-        }
-      //  return resultMsg;
-    }
-
 
 
 }
