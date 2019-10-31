@@ -1,5 +1,6 @@
 package com.nsoft.gkzp.plan.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import tk.mybatis.mapper.annotation.KeySql;
 
@@ -33,6 +34,7 @@ public class HrRecruitEntryinfoBase implements Serializable {
 
     private Integer politics;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date birthdate;
 
     //不映射数据库字段
@@ -79,6 +81,7 @@ public class HrRecruitEntryinfoBase implements Serializable {
 
     private Integer loginuserid;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date signuptime;
 
     private Integer syncstatus;

@@ -1,6 +1,5 @@
 package com.nsoft.gkzp.plan.controller;
 
-import com.nsoft.gkzp.plan.entity.Uenumdata;
 import com.nsoft.gkzp.common.FileLoad;
 import com.nsoft.gkzp.plan.entity.*;
 import com.nsoft.gkzp.plan.service.*;
@@ -9,6 +8,7 @@ import com.nsoft.gkzp.syscore.web.AbstractController;
 import com.nsoft.gkzp.syscore.web.UserContext;
 import com.nsoft.gkzp.util.Page;
 import com.nsoft.gkzp.util.ResultMsg;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -184,20 +184,18 @@ public class PlanController extends AbstractController {
      * @param request
      */
     @RequestMapping("intercept/plan/plan/planNeedsApply")
-    public void planNeedsApply(int id,HttpServletRequest request){
+    public ResultMsg planNeedsApply(int id,HttpServletRequest request){
         UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
-
-        //获取用户基础信息id
-        int baseId = hrRecruitEntryinfoBaseService.getBaseIdByUser(userContext);
-
-        //查询岗位
-        HrRecuritPlanNeeds hrRecuritPlanNeeds = hrRecuritPlanNeedsService.getHrRecuritPlanNeedsById(id);
-        //申请岗位
-        HrRecruitEntryinfoBase hrRecruitEntryinfoBase = new HrRecruitEntryinfoBase();
-        hrRecruitEntryinfoBase.setId(baseId);
-        hrRecruitEntryinfoBase.setPlanid(hrRecuritPlanNeeds.getPlanId());
-        hrRecruitEntryinfoBase.setPostid(hrRecuritPlanNeeds.getId());
-        hrRecruitEntryinfoBaseService.edit(hrRecruitEntryinfoBase);
+        ResultMsg resultMsg = new ResultMsg();
+        try {
+            hrRecuritPlanNeedsService.planNeedsApply(id,userContext);
+            resultMsg.setResultMsg(ResultMsg.MsgType.INFO,"申请岗位成功");
+            return resultMsg;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"申请岗位失败");
+        return resultMsg;
     }
 
     /**
@@ -206,20 +204,25 @@ public class PlanController extends AbstractController {
      * @param request
      */
     @RequestMapping("intercept/plan/plan/planNeedsApplyOldInfo")
-    public void planNeedsApplyOldInfo(int id,HttpServletRequest request){
+    public ResultMsg planNeedsApplyOldInfo(int id,HttpServletRequest request){
         UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
-
-        //获取用户基础信息id
-        int baseId = hrRecruitEntryinfoBaseService.getBaseIdByUser(userContext);
-
-        //查询岗位
-        HrRecuritPlanNeeds hrRecuritPlanNeeds = hrRecuritPlanNeedsService.getHrRecuritPlanNeedsById(id);
-        //申请岗位
-        HrRecruitEntryinfoBase hrRecruitEntryinfoBase = new HrRecruitEntryinfoBase();
-        hrRecruitEntryinfoBase.setId(baseId);
-        hrRecruitEntryinfoBase.setPlanid(hrRecuritPlanNeeds.getPlanId());
-        hrRecruitEntryinfoBase.setPostid(hrRecuritPlanNeeds.getId());
-        hrRecruitEntryinfoBaseService.edit(hrRecruitEntryinfoBase);
+        ResultMsg resultMsg = new ResultMsg();
+        try {
+            //获取基础信息
+            HrRecruitEntryinfo infoByUser = hrRecruitEntryinfoBaseService.getInfoByUser(userContext);
+            JSONObject jsonObject = new JSONObject(infoByUser);
+            System.out.println("进入"+jsonObject);
+            //新增基础信息
+            hrRecruitEntryinfoBaseService.add(jsonObject,userContext);
+            //添加岗位
+            hrRecuritPlanNeedsService.planNeedsApply(id,userContext);
+            resultMsg.setResultMsg(ResultMsg.MsgType.INFO,"申请岗位成功");
+            return resultMsg;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"申请岗位失败");
+        return resultMsg;
     }
 
     /**

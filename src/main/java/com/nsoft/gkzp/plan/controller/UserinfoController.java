@@ -2,7 +2,6 @@ package com.nsoft.gkzp.plan.controller;
 
 import com.nsoft.gkzp.common.FileLoad;
 import com.nsoft.gkzp.common.entity.FileVo;
-import com.nsoft.gkzp.common.entity.HrRecruitFile;
 import com.nsoft.gkzp.plan.entity.*;
 import com.nsoft.gkzp.plan.service.*;
 import com.nsoft.gkzp.syscore.config.MyDefinedUtil;
@@ -17,17 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.WebUtils;
-import tk.mybatis.mapper.entity.Example;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class UserinfoController extends AbstractController {
@@ -82,7 +76,6 @@ public class UserinfoController extends AbstractController {
     @RequestMapping("intercept/plan/userInfo/getInfoByUser")
     public HrRecruitEntryinfo getInfoByUser(HttpServletRequest request){
         UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
-        logger.info(userContext);
         return hrRecruitEntryinfoBaseService.getInfoByUser(userContext);
     }
 
@@ -314,7 +307,7 @@ public class UserinfoController extends AbstractController {
     /**
      * 用户信息同步文件
      */
-    @RequestMapping("plan/userInfo/syncFile")
+    /*@RequestMapping("plan/userInfo/syncFile")
     public ResultMsg syncFile() throws IOException {
         try {
             //查询未同步的文件
@@ -336,21 +329,21 @@ public class UserinfoController extends AbstractController {
             //同步
             String result = fileLoad.upLoadFilePost(myDefinedUtil.USERINFO_SYNCFILE_URL, files);
             //判断是否同步成功  成功进行修改本次同步文件的值
-            if(result.equals("ok")){
+            if(result != null && result.equals("ok")){
                 Example example = new Example(HrRecruitEntryinfoWork.class);
                 example.createCriteria().andIn("id",ids);
 
                 HrRecruitFile hrRecruitFileEdit = new HrRecruitFile();
                 hrRecruitFileEdit.setSyncfile(2);
                 fileLoad.fileEditExample(hrRecruitFileEdit,example);
+                resultMsg.setResultMsg(ResultMsg.MsgType.INFO,"同步成功");
+                return resultMsg;
             }
-            resultMsg.setResultMsg(ResultMsg.MsgType.INFO,"同步成功");
-            return resultMsg;
         } catch (IOException e) {
             e.printStackTrace();
 
         }
         resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"同步失败");
         return resultMsg;
-    }
+    }*/
 }
