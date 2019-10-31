@@ -13,6 +13,7 @@ import com.nsoft.gkzp.util.Page;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import java.text.SimpleDateFormat;
@@ -21,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implements HrRecruitEntryinfoBaseService {
     //基础信息
     @Autowired
@@ -96,10 +98,12 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
         //没有基础信息返回null
         if(hrRecruitEntryinfoBases.size() == 0) return null;
         HrRecruitEntryinfoBase hrRecruitEntryinfoBase = hrRecruitEntryinfoBases.get(0);
-        if(hrRecruitEntryinfoBase.getBirthdate() != null){
+        if(hrRecruitEntryinfoBase.getBirthdate() != null && !hrRecruitEntryinfoBase.getBirthdate().equals("")){
             //转换生日时间
             hrRecruitEntryinfoBase.setBirthdateStr(sdf.format(hrRecruitEntryinfoBase.getBirthdate()));
         }
+        System.out.println("hrRecruitEntryinfoBase"+hrRecruitEntryinfoBase);
+
         hrRecruitEntryinfo.setBaseInfo(hrRecruitEntryinfoBase);
 
 
@@ -118,7 +122,13 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
                 String[] duration = new String[2];
                 duration[0] = sdf.format(hrRecruitEntryinfoEducationEach.getStarttime());
                 duration[1] = sdf.format(hrRecruitEntryinfoEducationEach.getEndtime());
+
+                //清除开始结束时间
+                hrRecruitEntryinfoEducationEach.setStarttime(null);
+                hrRecruitEntryinfoEducationEach.setEndtime(null);
+
                 hrRecruitEntryinfoEducationEach.setDuration(duration);
+
             }
             hrRecruitEntryinfoEducationResult.add(hrRecruitEntryinfoEducationEach);
         }
@@ -138,8 +148,7 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
         //根据基础信息id筛选
         hrRecruitEntryinfoOther.setBaseid(hrRecruitEntryinfoBase.getId());
         List<HrRecruitEntryinfoOther> hrRecruitEntryinfoOthers = hrRecruitEntryinfoOtherService.list( hrRecruitEntryinfoOther, null,null);
-        System.out.println(hrRecruitEntryinfoOther);
-        System.out.println(hrRecruitEntryinfoOthers);
+
         if(hrRecruitEntryinfoOthers.size() > 0){
             hrRecruitEntryinfo.setOtherInfo(hrRecruitEntryinfoOthers.get(0));
         }
@@ -157,6 +166,11 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
                 String[] duration = new String[2];
                 duration[0] = sdf.format(hrRecruitEntryinfoWorkEach.getStarttime());
                 duration[1] = sdf.format(hrRecruitEntryinfoWorkEach.getEndtime());
+
+                //清除开始结束时间
+                hrRecruitEntryinfoWorkEach.setStarttime(null);
+                hrRecruitEntryinfoWorkEach.setEndtime(null);
+
                 hrRecruitEntryinfoWorkEach.setDuration(duration);
             }
 
@@ -220,10 +234,22 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
     @Override
     public void add(JSONObject jsonObject,UserContext userContext) {
         try {
+            //把其他的基础信息 设为旧信息
+            Example example = new Example(HrRecruitEntryinfoBase.class);
+            example.createCriteria().andEqualTo("loginuserid",userContext.getLoginUserId());
+
+            HrRecruitEntryinfoBase infoBaseOld = new HrRecruitEntryinfoBase();
+            infoBaseOld.setIsnewest(2);
+            hrRecruitEntryinfoBaseDao.updateByExampleSelective(infoBaseOld,example);
+
             //基础信息
             JSONObject baseInfoJson = jsonObject.getJSONObject("baseInfo");
-            //处理时间格式
+            System.out.println(jsonObject);
+            //时间的处理
+            if(baseInfoJson.has("birthdateStr") && !baseInfoJson.getString("birthdateStr").equals("")) baseInfoJson.put("birthdate",baseInfoJson.get("birthdateStr"));
             baseInfoJson.put("submittime","");
+            baseInfoJson.put("modifytime","");
+            baseInfoJson.put("signuptime","");
 
             String baseInfo = baseInfoJson.toString();
 
@@ -236,6 +262,10 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
             hrRecruitEntryinfoBase.setSubmittime(new Date());
             //登录id
             hrRecruitEntryinfoBase.setLoginuserid(userContext.getLoginUserId());
+            //岗位和计划为空
+            hrRecruitEntryinfoBase.setPlanid(null);
+            hrRecruitEntryinfoBase.setPostid(null);
+
             //新增
             hrRecruitEntryinfoBaseDao.insertSelective(hrRecruitEntryinfoBase);
             //获取新增的id
@@ -299,16 +329,13 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
     @Override
     public void edit(JSONObject jsonObject,UserContext userContext) {
         try{
-
             //根据登录用户获取基础信息
-            HrRecruitEntryinfoBase hrRecruitEntryinfoBase = new HrRecruitEntryinfoBase();
-            hrRecruitEntryinfoBase.setLoginuserid(userContext.getLoginUserId());//userContext.getLoginUserId()
-            List<HrRecruitEntryinfoBase> bases = list( hrRecruitEntryinfoBase, null,null);
+            HrRecruitEntryinfoBase base = getBaseByUser(userContext);
             //没有关联基础信息
-            if(bases.size() == 0){
+            if(base == null){
                 add(jsonObject,userContext);
                 return;
-            }else if(bases.get(0).getPlanid() == null){ //计划为空
+            }else if(base.getPlanid() == null){ //计划为空
                 edit(jsonObject);
                 return;
             }
@@ -319,11 +346,10 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
             hrRecruitEntryinfoBaseDao.updateByPrimaryKeySelective(recruitEntryinfoBase);*/
 
             //获取计划
-            HrRecuritPlan hrRecuritPlan = hrRecuritPlanService.getHrRecuritPlanById(bases.get(0).getPlanid());
+            HrRecuritPlan hrRecuritPlan = hrRecuritPlanService.getHrRecuritPlanById(base.getPlanid());
             //计划结束时间
             Date endTime = null;
             if(hrRecuritPlan != null) endTime = hrRecuritPlan.getEndtime();
-
             if(endTime != null && endTime.before(new Date())){//判断该计划是否结束
                 //结束进行新增
                 add(jsonObject,userContext);
@@ -347,10 +373,10 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
             //基础信息
             JSONObject baseInfo = jsonObject.getJSONObject("baseInfo");
             //清空提交时间和修改时间和报名时间
-            baseInfo.put("submittime","");
+            /*baseInfo.put("submittime","");
             baseInfo.put("modifytime","");
-            baseInfo.put("signuptime","");
-            System.out.println(baseInfo.get("birthdate"));
+            baseInfo.put("signuptime","");*/
+
             String baseInfoStr = baseInfo.toString();
             HrRecruitEntryinfoBase hrRecruitEntryinfoBase = JSON.parseObject(baseInfoStr, HrRecruitEntryinfoBase.class);
 
@@ -408,12 +434,12 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
                 hrRecruitEntryinfoWork.setStarttime(sdf.parse(duration[0]));
                 hrRecruitEntryinfoWork.setEndtime(sdf.parse(duration[1]));
                 hrRecruitEntryinfoWork.setDuration(null);
-                System.out.println("进入");
+
                 //判断id是否为空 为空进行新增
                 if(hrRecruitEntryinfoWork.getId() == null){
                     //关联基础信息
                     hrRecruitEntryinfoWork.setBaseid(baseId);
-                    System.out.println("工作经历"+hrRecruitEntryinfoWork);
+
                     hrRecruitEntryinfoWorkService.add(hrRecruitEntryinfoWork);
                 } else {
                     hrRecruitEntryinfoWorkService.edit(hrRecruitEntryinfoWork);

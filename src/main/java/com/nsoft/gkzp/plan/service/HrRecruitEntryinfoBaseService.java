@@ -73,4 +73,5 @@ public interface HrRecruitEntryinfoBaseService {
      * @param hrRecruitEntryinfoBase
      */
     public void edit(HrRecruitEntryinfoBase hrRecruitEntryinfoBase);
+
 }
