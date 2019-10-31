@@ -94,13 +94,14 @@ public class SysUserServiceImpl extends AbstractService implements SysUserServic
 
     /**
      * 获取用户数据
+     * @param fuzzyChars 模糊查询字符串
      * @return
      * @throws ServiceException
      */
-    public Page getUserInfos() throws ServiceException{
+    public Page getUserInfos(String fuzzyChars) throws ServiceException{
         Page<HashMap> list = null;
         try {
-            list = sysUserDao.getUserInfos();
+            list = sysUserDao.getUserInfos(fuzzyChars);
 
         } catch (Exception e) {
             e.printStackTrace();

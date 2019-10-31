@@ -56,8 +56,9 @@ public interface SysUserDao {
 
     /**
      * 获取用户数据
+     * @param fuzzyChars 模糊查询字符串
      * @return
      */
-    public Page getUserInfos();
+    public Page getUserInfos(@Param("fuzzyChars")String fuzzyChars);
 
 }

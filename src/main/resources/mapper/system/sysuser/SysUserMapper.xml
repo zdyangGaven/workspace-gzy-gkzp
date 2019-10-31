@@ -32,14 +32,20 @@
 
 
     <select id="getUserInfos" resultType="java.util.HashMap">
-        select k.id,k.loginName,t.name,t.Gender,RIGHT(IDCardNo,4) IDCardNo
-        from   sys_user k
-        left join HR_Recruit_entryInfo_base t  on t.IsNewest=1 and k.id = t.loginUserId
-        where k.nstatusid =1
+        select * from (
+        select k.id,k.loginName,isNULL(t.name,'') name,isNULL(t.Gender,'') Gender,isNULL(RIGHT(IDCardNo,4),'') IDCardNo
+            from   sys_user k
+            left join HR_Recruit_entryInfo_base t  on t.IsNewest=1 and k.id = t.loginUserId
+            where k.nstatusid =1
+        ) q
+        <where>
+            <if test="fuzzyChars != null and fuzzyChars !=''">
+                q.loginName like '%${fuzzyChars}%' or q.name like  '%${fuzzyChars}%' or q.IDCardNo like '%${fuzzyChars}%'
+            </if>
+
+        </where>
+
     </select>
-
-
-
 
 
 

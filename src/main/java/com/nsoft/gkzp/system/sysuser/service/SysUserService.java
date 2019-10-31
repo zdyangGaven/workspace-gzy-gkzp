@@ -44,10 +44,11 @@ public interface SysUserService {
 
     /**
      * 获取用户数据
+     * @param fuzzyChars 模糊查询字符串
      * @return
      * @throws ServiceException
      */
-    public Page getUserInfos() throws ServiceException;
+    public Page getUserInfos(String fuzzyChars) throws ServiceException;
 
 
     /**

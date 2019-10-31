@@ -378,22 +378,24 @@ public class SysUserController {
      * 获取用户信息
      * @param pageNum  当前页数
      * @param pageSize 当前页最多显示多少行
+     * @param fuzzyChars 模糊查询字符串
      * @return
      * @throws Exception
      */
     @RequestMapping("/user/getUserInfos")
-    public String getUserInfos( Integer pageNum, Integer pageSize) throws Exception{
+    public String getUserInfos( Integer pageNum, Integer pageSize,String fuzzyChars) throws Exception{
 
         JSONObject result = new JSONObject();
         try{
             PageHelper.startPage(pageNum,pageSize);
-            Page<HashMap> data = sysUserService.getUserInfos( );
+            Page<HashMap> data = sysUserService.getUserInfos(fuzzyChars);
 
-            result.put("data",data);//
+            result.put("data",data);
             //获取页面总数
-            result.put("limit",data.getPages());
+            result.put("pages",data.getPages());
             //获取数据总数
             result.put("total",data.getTotal());
+
         }catch (Exception e){
             e.printStackTrace();
             //   throw new ControllerException("分页查询失败",e,userContext);
