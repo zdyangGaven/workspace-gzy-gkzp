@@ -32,7 +32,11 @@ public class GeneratorSqlmap {
 
     }
 
-
+    /**
+     * 运行这个main方法就可以进行逆向工程
+     * @param args
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception {
 
         try {

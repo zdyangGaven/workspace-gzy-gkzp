@@ -1,7 +1,7 @@
 <%@ page  language="java" contentType="text/html;charset=UTF-8" %>
 <%-- 引入页面头 --%>
 <%@ include file="/jsp/pageHead.jsp" %>
-
+<!--
 <form action="${systemctx}/user/register" method="post">
     <div class=" row">
         <div class=" col-md-2 col-md-offset-4" ><span id="qwq" style="color:red;font-weight:bold; " >${systemctx}</span></div>
