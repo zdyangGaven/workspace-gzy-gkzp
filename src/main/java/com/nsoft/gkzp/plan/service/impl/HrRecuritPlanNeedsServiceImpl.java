@@ -130,7 +130,7 @@ public class HrRecuritPlanNeedsServiceImpl implements HrRecuritPlanNeedsService 
      * @return
      */
     @Override
-    public List<HrRecuritPlanNeedsDo> find(HrRecuritPlanNeeds hrRecuritPlanNeeds, String order, Page page, List<Object> planIdList) {
+    public List<HrRecuritPlanNeedsDo> find(HrRecuritPlanNeeds hrRecuritPlanNeeds, String order, Page page, List<Integer> planIdList) {
         //判断都有值通过
         if(page != null && page.getPageNum() != 0 && page.getPageSize() != 0){
             //分页处理，显示第一页的10条数据
@@ -146,6 +146,11 @@ public class HrRecuritPlanNeedsServiceImpl implements HrRecuritPlanNeedsService 
         //模糊筛选
         if(hrRecuritPlanNeeds.getPostname() != null) criteria.andPostnameLike("%"+hrRecuritPlanNeeds.getPostname()+"%");
 
+        //招聘计划
+        if(planIdList != null){
+            criteria.andPlanIdIn(planIdList);
+        }
+        
         // id
         if(hrRecuritPlanNeeds.getId() != null) criteria.andIdEqualTo(hrRecuritPlanNeeds.getId());
         //岗位类型筛选
@@ -256,14 +261,13 @@ public class HrRecuritPlanNeedsServiceImpl implements HrRecuritPlanNeedsService 
 
 
         //判断是否有基础信息
-        if(bases.size() > 0 ){
-            hrRecuritPlanNeedsVo.setHrRecruitEntryinfoBase(bases.get(0));
-            //判断是否关联计划id
-            if(bases.get(0).getPostid() != null){
-                int postId = bases.get(0).getPostid();
-                hrRecuritPlanNeedsVo = getHrRecuritPlanNeedsVoById(postId);
-            }
+        hrRecuritPlanNeedsVo.setHrRecruitEntryinfoBase(bases.get(0));
+        //判断是否关联计划id
+        if(bases.get(0).getPostid() != null && bases.get(0).getPostid() != 0){
+            int postId = bases.get(0).getPostid();
+            hrRecuritPlanNeedsVo = getHrRecuritPlanNeedsVoById(postId);
         }
+
 
         return hrRecuritPlanNeedsVo;
     }
@@ -279,9 +283,8 @@ public class HrRecuritPlanNeedsServiceImpl implements HrRecuritPlanNeedsService 
             Jedis jedis = jedisUtil.init();
             if(jedis.get("slk".getBytes()) != null ){
                 List<HrRecuritPlanNeedsDo> hrRecuritPlanNeedsDos = (List<HrRecuritPlanNeedsDo>) serializeUtil.unSerialize(jedis.get("slk".getBytes()));
-                System.out.println(hrRecuritPlanNeedsDos);
-                System.out.println(hrRecuritPlanNeedsDos.get(0));
-                System.out.println("进入redis");
+
+
                 return hrRecuritPlanNeedsDos;
             }
         } catch (Exception e) {
@@ -294,8 +297,10 @@ public class HrRecuritPlanNeedsServiceImpl implements HrRecuritPlanNeedsService 
         hrRecuritPlan.setEndtime(new Date());
         List<HrRecuritPlan> plans = hrRecuritPlanService.list( hrRecuritPlan,null, null);
 
+        if(plans.size() == 0) return null;
+
         //获取招聘计划id的集合
-        List<Object> planIds = new ArrayList<>();
+        List<Integer> planIds = new ArrayList<>();
         for ( HrRecuritPlan plan: plans) {
             planIds.add(plan.getId());
         }
@@ -349,6 +354,7 @@ public class HrRecuritPlanNeedsServiceImpl implements HrRecuritPlanNeedsService 
         hrRecruitEntryinfoBase.setPlanid(hrRecuritPlanNeeds.getPlanId());
         hrRecruitEntryinfoBase.setPostid(hrRecuritPlanNeeds.getId());
         hrRecruitEntryinfoBase.setSignuptime(new Date());
+        hrRecruitEntryinfoBase.setPosttypeid(hrRecuritPlanNeeds.getPosttype());
         hrRecruitEntryinfoBaseService.edit(hrRecruitEntryinfoBase);
     }
 }

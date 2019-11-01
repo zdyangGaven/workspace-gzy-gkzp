@@ -2,6 +2,7 @@ package com.nsoft.gkzp.plan.controller;
 
 import com.nsoft.gkzp.common.FileLoad;
 import com.nsoft.gkzp.common.entity.FileVo;
+import com.nsoft.gkzp.common.entity.HrRecruitFile;
 import com.nsoft.gkzp.plan.entity.*;
 import com.nsoft.gkzp.plan.service.*;
 import com.nsoft.gkzp.syscore.config.MyDefinedUtil;
@@ -12,12 +13,12 @@ import com.nsoft.gkzp.util.Page;
 import com.nsoft.gkzp.util.ResultMsg;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.HashMap;
@@ -28,9 +29,6 @@ public class UserinfoController extends AbstractController {
     //基础信息
     @Autowired
     HrRecruitEntryinfoBaseService hrRecruitEntryinfoBaseService;
-
-    @Autowired
-    ResultMsg resultMsg;
 
     //体检
     @Autowired
@@ -87,6 +85,7 @@ public class UserinfoController extends AbstractController {
      */
     @RequestMapping(value="intercept/plan/userInfo/add",method= RequestMethod.POST)
     public ResultMsg add(String data, HttpServletRequest request){
+        ResultMsg resultMsg = new ResultMsg();
         try {
 
             UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
@@ -116,13 +115,14 @@ public class UserinfoController extends AbstractController {
      */
     @RequestMapping(value="intercept/plan/userInfo/edit",method= RequestMethod.POST)
     public ResultMsg edit(String data, HttpServletRequest request){
+        ResultMsg resultMsg = new ResultMsg();
         try {
 
             UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
             //转义转JSON
             data = URLDecoder.decode(data, "UTF-8");
             JSONObject jsonObject = new JSONObject(data);
-            System.out.println(jsonObject);
+
 
             //检验身份证
             /*boolean verifyIdCard = hrRecruitEntryinfoBaseService.verifyIdCard(jsonObject.getJSONObject("baseInfo").getString(""));
@@ -260,8 +260,8 @@ public class UserinfoController extends AbstractController {
         result.setHrRecruitReviewRecord(hrRecruitReviewRecordVo.getHrRecruitReviewRecord());
         //建一个新的基础信息
         HrRecruitEntryinfoBase hrRecruitEntryinfoBase = new HrRecruitEntryinfoBase();
-        //只获取提交时间
-        hrRecruitEntryinfoBase.setSubmittime(hrRecruitReviewRecordVo.getHrRecruitEntryinfoBase().getSubmittime());
+        //只获取报名时间
+        hrRecruitEntryinfoBase.setSignuptime(hrRecruitReviewRecordVo.getHrRecruitEntryinfoBase().getSignuptime());
         result.setHrRecruitEntryinfoBase(hrRecruitEntryinfoBase);
         return result;
     }
@@ -302,6 +302,67 @@ public class UserinfoController extends AbstractController {
     public void userReadAll(HttpServletRequest request) {
         UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
         hrRecruitNoticeService.userReadAll(userContext);
+    }
+
+
+    /**
+     * 上传头像
+     * @param file
+     * @return
+     */
+    @PostMapping("plan/plan/upload/img")
+    public ResultMsg uploadImg(@RequestParam("file") MultipartFile file, HttpServletRequest request){
+        UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
+        //指定本地文件夹存储图片
+        String filePath = myDefinedUtil.SYSTEM_FILE_FOLDER_IMG;
+        ResultMsg resultMsg = fileLoad.uploadFile(userContext,file, filePath);
+        return resultMsg;
+    }
+
+    /**
+     * 下载头像
+     * @param response
+     * @param id
+     * @throws Exception
+     */
+    @RequestMapping("plan/plan/download/img/{id}")
+    public ResultMsg downloadImg(HttpServletResponse response, @PathVariable int id){
+        ResultMsg resultMsg = new ResultMsg();
+        try {
+            hrRecruitEntryinfoBaseService.downloadImg(response,id);
+
+            resultMsg.setResultMsg(ResultMsg.MsgType.INFO,"下载成功");
+            return resultMsg;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"下载失败");
+        return resultMsg;
+    }
+
+    @RequestMapping("plan/userInfo/syncFile")
+    public ResultMsg syncFile(HttpServletResponse response) {
+        ResultMsg resultMsg = new ResultMsg();
+
+        //查询未同步的文件
+        HrRecruitFile hrRecruitFile = new HrRecruitFile();
+        hrRecruitFile.setSyncfile(1);
+        List<HrRecruitFile> hrRecruitFiles = fileLoad.fileList(hrRecruitFile, null, null);
+
+        for (HrRecruitFile hrRecruitFileEach:hrRecruitFiles) {
+            String filecname = hrRecruitFileEach.getFilecname();
+            String fileurl = hrRecruitFileEach.getFileurl();
+            try {
+                fileLoad.downloadFile(response,filecname,fileurl);
+            } catch (Exception e) {
+                e.printStackTrace();
+                logger.info("同步文件时报错。id="+hrRecruitFileEach.getId());
+            }
+        }
+
+        resultMsg.setResultMsg(ResultMsg.MsgType.INFO,"同步成功");
+        return resultMsg;
     }
 
     /**
