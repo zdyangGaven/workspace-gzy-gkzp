@@ -3,6 +3,9 @@ package com.nsoft.gkzp.plan.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.nsoft.gkzp.common.FileLoad;
+import com.nsoft.gkzp.common.dao.HrRecruitFileDao;
+import com.nsoft.gkzp.common.entity.HrRecruitFile;
 import com.nsoft.gkzp.plan.dao.HrRecruitEntryinfoBaseDao;
 import com.nsoft.gkzp.plan.entity.*;
 import com.nsoft.gkzp.plan.service.*;
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
+import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,6 +50,15 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
     //招聘计划
     @Autowired
     HrRecuritPlanService hrRecuritPlanService;
+
+    //外网文件
+    @Autowired
+    HrRecruitFileDao hrRecruitFileDao;
+
+    //文件管理公共
+    @Autowired
+    FileLoad fileLoad;
+
 
     //前端的时间格式进行格式化
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
@@ -102,7 +115,7 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
             //转换生日时间
             hrRecruitEntryinfoBase.setBirthdateStr(sdf.format(hrRecruitEntryinfoBase.getBirthdate()));
         }
-        System.out.println("hrRecruitEntryinfoBase"+hrRecruitEntryinfoBase);
+
 
         hrRecruitEntryinfo.setBaseInfo(hrRecruitEntryinfoBase);
 
@@ -244,7 +257,7 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
 
             //基础信息
             JSONObject baseInfoJson = jsonObject.getJSONObject("baseInfo");
-            System.out.println(jsonObject);
+
             //时间的处理
             if(baseInfoJson.has("birthdateStr") && !baseInfoJson.getString("birthdateStr").equals("")) baseInfoJson.put("birthdate",baseInfoJson.get("birthdateStr"));
             baseInfoJson.put("submittime","");
@@ -369,7 +382,6 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
     @Override
     public void edit(JSONObject jsonObject) {
         try {
-
             //基础信息
             JSONObject baseInfo = jsonObject.getJSONObject("baseInfo");
             //清空提交时间和修改时间和报名时间
@@ -396,7 +408,7 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
                 hrRecruitEntryinfoEducation.setDuration(null);
 
                 //判断id是否为空 为空进行新增
-                if(hrRecruitEntryinfoEducation.getId() == null){
+                if(hrRecruitEntryinfoEducation.getId() == null || hrRecruitEntryinfoEducation.getId() == 0){
                     //关联基础信息
                     hrRecruitEntryinfoEducation.setBaseid(baseId);
                     hrRecruitEntryinfoEducationService.add(hrRecruitEntryinfoEducation);
@@ -410,7 +422,7 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
             List<HrRecruitEntryinfoFamily> hrRecruitEntryinfoFamilys = JSON.parseArray(familyInfo, HrRecruitEntryinfoFamily.class);
             for (HrRecruitEntryinfoFamily hrRecruitEntryinfoFamily:hrRecruitEntryinfoFamilys) {
                 //判断id是否为空 为空进行新增
-                if(hrRecruitEntryinfoFamily.getId() == null){
+                if(hrRecruitEntryinfoFamily.getId() == null || hrRecruitEntryinfoFamily.getId() == 0){
                     //关联基础信息
                     hrRecruitEntryinfoFamily.setBaseid(baseId);
                     hrRecruitEntryinfoFamilyService.add(hrRecruitEntryinfoFamily);
@@ -436,7 +448,7 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
                 hrRecruitEntryinfoWork.setDuration(null);
 
                 //判断id是否为空 为空进行新增
-                if(hrRecruitEntryinfoWork.getId() == null){
+                if(hrRecruitEntryinfoWork.getId() == null || hrRecruitEntryinfoWork.getId() == 0){
                     //关联基础信息
                     hrRecruitEntryinfoWork.setBaseid(baseId);
 
@@ -459,5 +471,20 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
     @Override
     public void edit(HrRecruitEntryinfoBase hrRecruitEntryinfoBase) {
         hrRecruitEntryinfoBaseDao.updateByPrimaryKeySelective(hrRecruitEntryinfoBase);
+    }
+
+    /**
+     * 下载头像
+     * @param response
+     * @param id
+     */
+    @Override
+    public void downloadImg(HttpServletResponse response, int id) throws Exception {
+        //查询文件
+        HrRecruitFile hrRecruitFileById = hrRecruitFileDao.selectByPrimaryKey(id);
+        //设置文件名称
+        String fileName = hrRecruitFileById.getFilecname();
+        String filePath = hrRecruitFileById.getFileurl();
+        fileLoad.downloadFile(response,fileName,filePath);
     }
 }

@@ -47,7 +47,7 @@ public interface HrRecuritPlanNeedsService {
      * @param planIdList
      * @return
      */
-    public List<HrRecuritPlanNeedsDo> find(HrRecuritPlanNeeds hrRecuritPlanNeeds, String order,Page page, List<Object> planIdList);
+    public List<HrRecuritPlanNeedsDo> find(HrRecuritPlanNeeds hrRecuritPlanNeeds, String order,Page page, List<Integer> planIdList);
 
 
     /**

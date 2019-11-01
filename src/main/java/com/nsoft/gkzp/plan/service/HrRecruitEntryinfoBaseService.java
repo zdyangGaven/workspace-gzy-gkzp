@@ -6,6 +6,7 @@ import com.nsoft.gkzp.syscore.web.UserContext;
 import com.nsoft.gkzp.util.Page;
 import org.json.JSONObject;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public interface HrRecruitEntryinfoBaseService {
@@ -74,4 +75,5 @@ public interface HrRecruitEntryinfoBaseService {
      */
     public void edit(HrRecruitEntryinfoBase hrRecruitEntryinfoBase);
 
+    public void downloadImg(HttpServletResponse response,int id) throws Exception;
 }

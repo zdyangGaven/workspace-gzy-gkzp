@@ -75,15 +75,11 @@ public class FileLoad {
     /**
      * 下载文件
      * @param response
-     * @param id    文件id
+     * @param fileName
+     * @param filePath
      * @throws Exception
      */
-    public void downloadFile(HttpServletResponse response,int id) throws Exception{
-        //查询文件
-        HrRecruitFile hrRecruitFileById = hrRecruitFileDao.selectByPrimaryKey(id);
-        //设置文件名称
-        String fileName = hrRecruitFileById.getFilecname();
-        String filePath = hrRecruitFileById.getFileurl();
+    public void downloadFile(HttpServletResponse response,String fileName,String filePath) throws Exception{
 
         /*Affixfile affixfile = affixfileDao.selectByPrimaryKey(id);
         //设置文件名称

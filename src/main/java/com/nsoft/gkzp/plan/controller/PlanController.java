@@ -10,12 +10,11 @@ import com.nsoft.gkzp.util.Page;
 import com.nsoft.gkzp.util.ResultMsg;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.List;
 
@@ -114,7 +113,7 @@ public class PlanController extends AbstractController {
     public HrRecuritPlanNeedsVo getHrRecuritPlanNeedsVoByUser(HttpServletRequest request) {
         UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
         HrRecuritPlanNeedsVo hrRecuritPlanNeedsVoByUser = hrRecuritPlanNeedsService.getHrRecuritPlanNeedsVoByUser(userContext);
-        hrRecuritPlanNeedsVoByUser.setHrRecruitEntryinfoBase(null);
+        if(hrRecuritPlanNeedsVoByUser != null)hrRecuritPlanNeedsVoByUser.setHrRecruitEntryinfoBase(null);
         return hrRecuritPlanNeedsVoByUser;
     }
 
@@ -146,36 +145,14 @@ public class PlanController extends AbstractController {
         result.setHrRecruitReviewRecord(hrRecruitReviewRecordVo.getHrRecruitReviewRecord());
         //建一个新的基础信息
         HrRecruitEntryinfoBase hrRecruitEntryinfoBase = new HrRecruitEntryinfoBase();
+        System.out.println(hrRecruitReviewRecordVo.getHrRecruitEntryinfoBase());
         //只获取报名时间
         hrRecruitEntryinfoBase.setSignuptime(hrRecruitReviewRecordVo.getHrRecruitEntryinfoBase().getSignuptime());
         result.setHrRecruitEntryinfoBase(hrRecruitEntryinfoBase);
         return result;
     }
 
-    /**
-     * 上传头像
-     * @param file
-     * @return
-     */
-    @PostMapping("plan/plan/upload/img")
-    public ResultMsg uploadImg(@RequestParam("file") MultipartFile file,HttpServletRequest request){
-        UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
-        //指定本地文件夹存储图片
-        String filePath = myDefinedUtil.SYSTEM_FILE_FOLDER_IMG;
-        ResultMsg resultMsg = fileLoad.uploadFile(userContext,file, filePath);
-        return resultMsg;
-    }
 
-    /**
-     * 下载头像
-     * @param response
-     * @param id
-     * @throws Exception
-     */
-    @RequestMapping("plan/plan/download/img/{id}")
-    public void downloadImg(HttpServletResponse response, @PathVariable int id) throws Exception{
-        fileLoad.downloadFile(response,id);
-    }
 
 
     /**
@@ -211,7 +188,7 @@ public class PlanController extends AbstractController {
             //获取基础信息
             HrRecruitEntryinfo infoByUser = hrRecruitEntryinfoBaseService.getInfoByUser(userContext);
             JSONObject jsonObject = new JSONObject(infoByUser);
-            System.out.println("进入"+jsonObject);
+
             //新增基础信息
             hrRecruitEntryinfoBaseService.add(jsonObject,userContext);
             //添加岗位
