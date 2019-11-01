@@ -278,6 +278,8 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
             //岗位和计划为空
             hrRecruitEntryinfoBase.setPlanid(null);
             hrRecruitEntryinfoBase.setPostid(null);
+            //最新数据
+            hrRecruitEntryinfoBase.setIsnewest(1);
 
             //新增
             hrRecruitEntryinfoBaseDao.insertSelective(hrRecruitEntryinfoBase);

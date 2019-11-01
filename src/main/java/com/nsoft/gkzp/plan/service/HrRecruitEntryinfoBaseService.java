@@ -75,5 +75,10 @@ public interface HrRecruitEntryinfoBaseService {
      */
     public void edit(HrRecruitEntryinfoBase hrRecruitEntryinfoBase);
 
+    /**
+     * 下载头像
+     * @param response
+     * @param id
+     */
     public void downloadImg(HttpServletResponse response,int id) throws Exception;
 }

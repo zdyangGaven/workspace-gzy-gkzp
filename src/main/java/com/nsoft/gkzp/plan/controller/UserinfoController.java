@@ -152,6 +152,7 @@ public class UserinfoController extends AbstractController {
      */
     @RequestMapping("intercept/plan/userInfo/review")
     public HashMap<String, Object> review(HttpServletRequest request) {
+
         HashMap<String, Object> result = new HashMap<>();
         //设置默认值为null
         result.put("HrRecuritWrite",null);
@@ -169,7 +170,8 @@ public class UserinfoController extends AbstractController {
         if(baseId == 0)return null;
 
         //岗位信息
-        HrRecuritPlanNeedsVo hrRecuritPlanNeedsVoByUser = hrRecuritPlanNeedsService.getHrRecuritPlanNeedsVoById(baseId);
+        HrRecuritPlanNeedsVo hrRecuritPlanNeedsVoByUser = hrRecuritPlanNeedsService.getHrRecuritPlanNeedsVoByUser(userContext);
+
         if(hrRecuritPlanNeedsVoByUser == null) return null;
         result.put("HrRecuritPlanNeeds",hrRecuritPlanNeedsVoByUser.getHrRecuritPlanNeedsDo());
 
@@ -178,6 +180,7 @@ public class UserinfoController extends AbstractController {
         hrRecruitNoticeSelect.setBaseid(baseId);
         hrRecruitNoticeSelect.setStatus(1);
         List<HrRecruitNotice> hrRecruitNotices = hrRecruitNoticeService.list(hrRecruitNoticeSelect, null, null);
+
         //遍历消息读取类型
         for (HrRecruitNotice hrRecruitNotice:hrRecruitNotices) {
             int type = hrRecruitNotice.getType();
@@ -326,19 +329,10 @@ public class UserinfoController extends AbstractController {
      * @throws Exception
      */
     @RequestMapping("plan/plan/download/img/{id}")
-    public ResultMsg downloadImg(HttpServletResponse response, @PathVariable int id){
-        ResultMsg resultMsg = new ResultMsg();
-        try {
-            hrRecruitEntryinfoBaseService.downloadImg(response,id);
+    public void downloadImg(HttpServletResponse response, @PathVariable int id) throws Exception {
 
-            resultMsg.setResultMsg(ResultMsg.MsgType.INFO,"下载成功");
-            return resultMsg;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        hrRecruitEntryinfoBaseService.downloadImg(response,id);
 
-        resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"下载失败");
-        return resultMsg;
     }
 
     @RequestMapping("plan/userInfo/syncFile")
