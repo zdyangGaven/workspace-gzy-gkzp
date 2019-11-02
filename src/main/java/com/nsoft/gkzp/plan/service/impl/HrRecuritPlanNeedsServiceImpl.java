@@ -217,7 +217,8 @@ public class HrRecuritPlanNeedsServiceImpl implements HrRecuritPlanNeedsService 
         //人才需求
         HrRecuritPlanNeeds hrRecuritPlanNeeds = new HrRecuritPlanNeeds();
         hrRecuritPlanNeeds.setId(id);
-        List<HrRecuritPlanNeedsDo> needs = hrRecuritPlanNeedsService.find( hrRecuritPlanNeeds,null, null,null);
+        List<HrRecuritPlanNeedsDo> needs = hrRecuritPlanNeedsService.find( hrRecuritPlanNeeds,"id DESC", null,null);
+
         if(needs.size() == 0) return null;
         hrRecuritPlanNeedsVo.setHrRecuritPlanNeedsDo(needs.get(0));
 
