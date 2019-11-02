@@ -42,8 +42,8 @@ public class CorsFilter implements Filter {
         String[] whiteList = (myDefinedUtil.SYSTEM_ACCESSCONTROLALLOWORIGIN).split(",") ;
         boolean isValid = false;
         for(String ip : whiteList){//这里我设置本地访问（localhost，127.0.0.1）自动为白名单里的
-            if(origin != null && (origin.contains("localhost") || origin.contains("127.0.0.1") || origin.equals(ip))){
-            // if(origin != null && origin.equals(ip)){
+           // if(origin != null && (origin.contains("localhost") || origin.contains("127.0.0.1") || origin.equals(ip))){
+             if(origin != null && origin.equals(ip)){
                 isValid = true;
                 break;
             }
