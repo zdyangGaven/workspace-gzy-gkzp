@@ -5,7 +5,7 @@ import com.nsoft.gkzp.plan.entity.HrRecuritPlanNeeds;
 import com.nsoft.gkzp.plan.entity.HrRecuritPlanNeedsDo;
 import com.nsoft.gkzp.plan.entity.HrRecuritPlanNeedsVo;
 import com.nsoft.gkzp.syscore.web.UserContext;
-import com.nsoft.gkzp.util.Page;
+import com.nsoft.gkzp.util.PageVo;
 import com.nsoft.gkzp.util.ResultMsg;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public interface HrRecuritPlanNeedsService {
      * @param order 排序
      * @return
      */
-    public List<HrRecuritPlanNeeds> list( HrRecuritPlanNeeds hrRecuritPlanNeeds, String order,Page page);
+    public List<HrRecuritPlanNeeds> list(HrRecuritPlanNeeds hrRecuritPlanNeeds, String order, PageVo page);
 
     /**
      * 查询数据
@@ -30,7 +30,7 @@ public interface HrRecuritPlanNeedsService {
      * @param planIdList 计划id 包含查询
      * @return
      */
-    public List<HrRecuritPlanNeeds> list( HrRecuritPlanNeeds hrRecuritPlanNeeds, String order,Page page,List<Object> planIdList);
+    public List<HrRecuritPlanNeeds> list(HrRecuritPlanNeeds hrRecuritPlanNeeds, String order, PageVo page, List<Object> planIdList);
 
     /**
      * 通过id查询岗位
@@ -47,7 +47,7 @@ public interface HrRecuritPlanNeedsService {
      * @param planIdList
      * @return
      */
-    public List<HrRecuritPlanNeedsDo> find(HrRecuritPlanNeeds hrRecuritPlanNeeds, String order,Page page, List<Integer> planIdList);
+    public List<HrRecuritPlanNeedsDo> find(HrRecuritPlanNeeds hrRecuritPlanNeeds, String order, PageVo page, List<Integer> planIdList);
 
 
     /**
@@ -82,7 +82,7 @@ public interface HrRecuritPlanNeedsService {
      *根据计划获取人才需求
      * @return
      */
-    public List<HrRecuritPlanNeedsDo> getListByPlan(HrRecuritPlanNeeds hrRecuritPlanNeeds, String order,Page page);
+    public List<HrRecuritPlanNeedsDo> getListByPlan(HrRecuritPlanNeeds hrRecuritPlanNeeds, String order, PageVo page);
 
     /**
      * 新增

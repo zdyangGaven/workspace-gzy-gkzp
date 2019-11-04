@@ -1,8 +1,11 @@
 package com.nsoft.gkzp.plan.entity;
 
+import javax.persistence.Id;
+import java.io.Serializable;
 import java.util.Date;
 
-public class HrRecruitHealthchk {
+public class HrRecruitHealthchk implements Serializable {
+    @Id
     private Integer id;
 
     private Integer planid;
@@ -26,6 +29,16 @@ public class HrRecruitHealthchk {
     private Date actiontime3;
 
     private String actionman3;
+
+    private Integer syncisjoin;
+
+    public Integer getSyncisjoin() {
+        return syncisjoin;
+    }
+
+    public void setSyncisjoin(Integer syncisjoin) {
+        this.syncisjoin = syncisjoin;
+    }
 
     public Integer getId() {
         return id;

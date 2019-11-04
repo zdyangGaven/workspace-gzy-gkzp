@@ -6,7 +6,7 @@ import com.nsoft.gkzp.plan.service.*;
 import com.nsoft.gkzp.syscore.config.MyDefinedUtil;
 import com.nsoft.gkzp.syscore.web.AbstractController;
 import com.nsoft.gkzp.syscore.web.UserContext;
-import com.nsoft.gkzp.util.Page;
+import com.nsoft.gkzp.util.PageVo;
 import com.nsoft.gkzp.util.ResultMsg;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +59,7 @@ public class PlanController extends AbstractController {
      * @return
      */
     @RequestMapping("HrPostTypeController/list")
-    public List<HrPostType> hrPostTypeControllerList( HrPostType hrPostType, String order,Page page){
+    public List<HrPostType> hrPostTypeControllerList(HrPostType hrPostType, String order, PageVo page){
         return hrPostTypeService.list(hrPostType,order, page);
     }
 
@@ -69,7 +69,7 @@ public class PlanController extends AbstractController {
      * @return
      */
     @RequestMapping("plan/getPlanByCurrentTime")
-    public List<HrRecuritPlan> getPlanByCurrentTime( HrRecuritPlan hrRecuritPlan, String order,Page page){
+    public List<HrRecuritPlan> getPlanByCurrentTime(HrRecuritPlan hrRecuritPlan, String order, PageVo page){
         //传入当前时间
         hrRecuritPlan.setStarttime(new Date());
         hrRecuritPlan.setEndtime(new Date());
@@ -85,7 +85,7 @@ public class PlanController extends AbstractController {
      * @return
      */
     @RequestMapping("plan/plan/hrRecuritPlanNeeds/list")
-    public List<HrRecuritPlanNeeds> hrRecuritPlanNeedsList( HrRecuritPlanNeeds hrRecuritPlanNeeds, String order,Page page){
+    public List<HrRecuritPlanNeeds> hrRecuritPlanNeedsList(HrRecuritPlanNeeds hrRecuritPlanNeeds, String order, PageVo page){
         return hrRecuritPlanNeedsService.list(hrRecuritPlanNeeds,order, page);
     }
 
@@ -100,7 +100,7 @@ public class PlanController extends AbstractController {
      * @return
      */
     @RequestMapping("/plan/getPlanNeedsListByPlan")
-    public List<HrRecuritPlanNeedsDo> getPlanNeedsListByPlan(HrRecuritPlanNeeds hrRecuritPlanNeeds, String order,Page page){
+    public List<HrRecuritPlanNeedsDo> getPlanNeedsListByPlan(HrRecuritPlanNeeds hrRecuritPlanNeeds, String order, PageVo page){
         return hrRecuritPlanNeedsService.getListByPlan(hrRecuritPlanNeeds,order,page);
     }
 

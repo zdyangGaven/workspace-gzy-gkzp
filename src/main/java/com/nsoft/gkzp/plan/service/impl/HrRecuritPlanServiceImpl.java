@@ -5,7 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.nsoft.gkzp.plan.dao.HrRecuritPlanDao;
 import com.nsoft.gkzp.plan.entity.HrRecuritPlan;
 import com.nsoft.gkzp.plan.service.HrRecuritPlanService;
-import com.nsoft.gkzp.util.Page;
+import com.nsoft.gkzp.util.PageVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -25,7 +25,7 @@ public class HrRecuritPlanServiceImpl implements HrRecuritPlanService {
      * @return
      */
     @Override
-    public List<HrRecuritPlan> list( HrRecuritPlan hrRecuritPlan, String order,Page page) {
+    public List<HrRecuritPlan> list(HrRecuritPlan hrRecuritPlan, String order, PageVo page) {
 
         //判断都有值通过
         if(page != null && page.getPageNum() != 0 && page.getPageSize() != 0){

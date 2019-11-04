@@ -8,7 +8,7 @@ import com.nsoft.gkzp.plan.entity.HrRecruitNotice;
 import com.nsoft.gkzp.plan.service.HrRecruitEntryinfoBaseService;
 import com.nsoft.gkzp.plan.service.HrRecruitNoticeService;
 import com.nsoft.gkzp.syscore.web.UserContext;
-import com.nsoft.gkzp.util.Page;
+import com.nsoft.gkzp.util.PageVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -33,7 +33,7 @@ public class HrRecruitNoticeServiceImpl implements HrRecruitNoticeService {
      * @return
      */
     @Override
-    public List<HrRecruitNotice> list(HrRecruitNotice hrRecruitNotice, String order, Page page) {
+    public List<HrRecruitNotice> list(HrRecruitNotice hrRecruitNotice, String order, PageVo page) {
         //判断都有值通过
         if(page != null && page.getPageNum() != 0 && page.getPageSize() != 0){
             //分页处理，显示第一页的10条数据

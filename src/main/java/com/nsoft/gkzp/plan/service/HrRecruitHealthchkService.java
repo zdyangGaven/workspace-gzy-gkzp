@@ -2,7 +2,7 @@ package com.nsoft.gkzp.plan.service;
 
 import com.nsoft.gkzp.plan.entity.HrRecruitHealthchk;
 import com.nsoft.gkzp.syscore.web.UserContext;
-import com.nsoft.gkzp.util.Page;
+import com.nsoft.gkzp.util.PageVo;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public interface HrRecruitHealthchkService {
      * @param order 排序
      * @return
      */
-    public List<HrRecruitHealthchk> list(HrRecruitHealthchk hrRecruitHealthchk, String order, Page page);
+    public List<HrRecruitHealthchk> list(HrRecruitHealthchk hrRecruitHealthchk, String order, PageVo page);
 
     /**
      * 通过用户获取体检数据

@@ -1,7 +1,7 @@
 package com.nsoft.gkzp.plan.service;
 
 import com.nsoft.gkzp.plan.entity.Uenumdata;
-import com.nsoft.gkzp.util.Page;
+import com.nsoft.gkzp.util.PageVo;
 
 import java.util.List;
 
@@ -13,5 +13,5 @@ public interface UenumdataService {
      * @param order 排序
      * @return
      */
-    public List<Uenumdata> list(Uenumdata uenumdata, String order, Page page);
+    public List<Uenumdata> list(Uenumdata uenumdata, String order, PageVo page);
 }

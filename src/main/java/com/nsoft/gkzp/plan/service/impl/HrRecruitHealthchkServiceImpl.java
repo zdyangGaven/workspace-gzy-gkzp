@@ -7,7 +7,7 @@ import com.nsoft.gkzp.plan.entity.HrRecruitHealthchk;
 import com.nsoft.gkzp.plan.service.HrRecruitEntryinfoBaseService;
 import com.nsoft.gkzp.plan.service.HrRecruitHealthchkService;
 import com.nsoft.gkzp.syscore.web.UserContext;
-import com.nsoft.gkzp.util.Page;
+import com.nsoft.gkzp.util.PageVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -30,7 +30,7 @@ public class HrRecruitHealthchkServiceImpl implements HrRecruitHealthchkService 
      * @return
      */
     @Override
-    public List<HrRecruitHealthchk> list(HrRecruitHealthchk hrRecruitHealthchk, String order, Page page) {
+    public List<HrRecruitHealthchk> list(HrRecruitHealthchk hrRecruitHealthchk, String order, PageVo page) {
         //判断都有值通过
         if(page != null && page.getPageNum() != 0 && page.getPageSize() != 0){
             //分页处理，显示第一页的10条数据

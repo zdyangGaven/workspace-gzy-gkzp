@@ -9,7 +9,7 @@ import com.nsoft.gkzp.plan.entity.HrRecruitReviewRecordVo;
 import com.nsoft.gkzp.plan.service.HrRecruitEntryinfoBaseService;
 import com.nsoft.gkzp.plan.service.HrRecruitReviewRecordService;
 import com.nsoft.gkzp.syscore.web.UserContext;
-import com.nsoft.gkzp.util.Page;
+import com.nsoft.gkzp.util.PageVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -31,7 +31,7 @@ public class HrRecruitReviewRecordServiceImpl implements HrRecruitReviewRecordSe
      * @param page 分页
      * @return
      */
-    public List<HrRecruitReviewRecord> list( HrRecruitReviewRecord hrRecruitReviewRecord, String order,Page page){
+    public List<HrRecruitReviewRecord> list(HrRecruitReviewRecord hrRecruitReviewRecord, String order, PageVo page){
 
         //判断都有值通过
         if(page != null && page.getPageNum() != 0 && page.getPageSize() != 0){
@@ -98,6 +98,20 @@ public class HrRecruitReviewRecordServiceImpl implements HrRecruitReviewRecordSe
         HrRecruitEntryinfoBase hrRecruitEntryinfoBase = new HrRecruitEntryinfoBase();
         hrRecruitEntryinfoBase.setLoginuserid(userContext.getLoginUserId());
         return getHrRecruitReviewRecordVoByInfoBase(hrRecruitEntryinfoBase);
+    }
+
+    /**
+     * 是否审核
+     * @param baseId 基础信息id
+     * @return  true 已开始审核
+     */
+    @Override
+    public boolean isReview(int baseId) {
+        HrRecruitReviewRecord hrRecruitReviewRecord = new HrRecruitReviewRecord();
+        hrRecruitReviewRecord.setBaseid(baseId);
+        List<HrRecruitReviewRecord> hrRecruitReviewRecords = hrRecruitReviewRecordDao.select(hrRecruitReviewRecord);
+        if(hrRecruitReviewRecords.size() > 0) return  true;
+        return false;
     }
 
     @Override

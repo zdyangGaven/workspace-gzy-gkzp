@@ -1,7 +1,7 @@
 package com.nsoft.gkzp.plan.service;
 
 import com.nsoft.gkzp.plan.entity.HrRecruitEntryinfoFamily;
-import com.nsoft.gkzp.util.Page;
+import com.nsoft.gkzp.util.PageVo;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public interface HrRecruitEntryinfoFamilyService {
      * @param order 排序
      * @return
      */
-    public List<HrRecruitEntryinfoFamily> list( HrRecruitEntryinfoFamily hrRecruitEntryinfoFamily, String order,Page page);
+    public List<HrRecruitEntryinfoFamily> list(HrRecruitEntryinfoFamily hrRecruitEntryinfoFamily, String order, PageVo page);
 
     /**
      * 新增

@@ -12,7 +12,8 @@ import com.nsoft.gkzp.plan.service.*;
 import com.nsoft.gkzp.syscore.service.AbstractService;
 import com.nsoft.gkzp.syscore.service.ServiceException;
 import com.nsoft.gkzp.syscore.web.UserContext;
-import com.nsoft.gkzp.util.Page;
+import com.nsoft.gkzp.util.PageVo;
+import com.nsoft.gkzp.util.ResultMsg;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,6 +48,10 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
     @Autowired
     HrRecruitEntryinfoWorkService hrRecruitEntryinfoWorkService;
 
+    //资格审核
+    @Autowired
+    HrRecruitReviewRecordService hrRecruitReviewRecordService;
+
     //招聘计划
     @Autowired
     HrRecuritPlanService hrRecuritPlanService;
@@ -71,7 +76,7 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
      * @return
      */
     @Override
-    public List<HrRecruitEntryinfoBase> list( HrRecruitEntryinfoBase hrRecruitEntryinfoBase, String order,Page page) {
+    public List<HrRecruitEntryinfoBase> list(HrRecruitEntryinfoBase hrRecruitEntryinfoBase, String order, PageVo page) {
         //判断都有值通过
         if(page != null && page.getPageNum() != 0 && page.getPageSize() != 0){
             //分页处理，显示第一页的10条数据
@@ -342,23 +347,43 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
      * @param userContext
      */
     @Override
-    public void edit(JSONObject jsonObject,UserContext userContext) {
+    public ResultMsg edit(JSONObject jsonObject, UserContext userContext) {
+        ResultMsg resultMsg = new ResultMsg();
         try{
+            //有基础信息    转成bean进行修改
+            String baseInfo = jsonObject.getJSONObject("baseInfo").toString();
+            HrRecruitEntryinfoBase recruitEntryinfoBase = JSON.parseObject(baseInfo, HrRecruitEntryinfoBase.class);
+
+            //判断是否身份证重复
+            HrRecruitEntryinfoBase hrRecruitEntryinfoBaseSel = new HrRecruitEntryinfoBase();
+            hrRecruitEntryinfoBaseSel.setIdcardno(recruitEntryinfoBase.getIdcardno()); //身份证
+            hrRecruitEntryinfoBaseSel.setIsnewest(1);
+            List<HrRecruitEntryinfoBase> idcard = list(hrRecruitEntryinfoBaseSel, "id DESC", null);
+            //判断身份证是否存在
+            if(idcard.size() > 0){
+                Integer loginuserid = idcard.get(0).getLoginuserid();
+                //判断登录用户是否与使用身份证的用户相等。
+                System.out.println(loginuserid+":"+userContext.getLoginUserId());
+                if(!loginuserid.equals(userContext.getLoginUserId())){
+                    resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"身份证已被注册");
+                    return resultMsg;
+                }
+            }
+
             //根据登录用户获取基础信息
             HrRecruitEntryinfoBase base = getBaseByUser(userContext);
             //没有关联基础信息
             if(base == null){
                 add(jsonObject,userContext);
-                return;
+                resultMsg.setResultMsg(ResultMsg.MsgType.INFO,"新增成功");
+                return resultMsg;
             }else if(base.getPlanid() == null){ //计划为空
                 edit(jsonObject);
-                return;
+                resultMsg.setResultMsg(ResultMsg.MsgType.INFO,"修改成功");
+                return resultMsg;
             }
 
-                //有基础信息    转成bean进行修改
-            /*String baseInfo = jsonObject.getJSONObject("baseInfo").toString();
-            HrRecruitEntryinfoBase recruitEntryinfoBase = JSON.parseObject(baseInfo, HrRecruitEntryinfoBase.class);
-            hrRecruitEntryinfoBaseDao.updateByPrimaryKeySelective(recruitEntryinfoBase);*/
+
 
             //获取计划
             HrRecuritPlan hrRecuritPlan = hrRecuritPlanService.getHrRecuritPlanById(base.getPlanid());
@@ -368,13 +393,24 @@ public class HrRecruitEntryinfoBaseServiceImpl extends AbstractService implement
             if(endTime != null && endTime.before(new Date())){//判断该计划是否结束
                 //结束进行新增
                 add(jsonObject,userContext);
+                resultMsg.setResultMsg(ResultMsg.MsgType.INFO,"新增成功");
+                return resultMsg;
             } else {
+                boolean review = hrRecruitReviewRecordService.isReview(base.getId());
+                if(review){
+                    resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"已审核不能修改");
+                    return resultMsg;
+                }
                 edit(jsonObject);
+                resultMsg.setResultMsg(ResultMsg.MsgType.INFO,"修改成功");
+                return resultMsg;
             }
         } catch (Exception e) {
             e.printStackTrace();
             throw new ServiceException("报名-基础信息报错",e);
         }
+
+
     }
 
     /**

@@ -8,7 +8,7 @@ import com.nsoft.gkzp.common.entity.Affixfile;
 import com.nsoft.gkzp.common.entity.FileVo;
 import com.nsoft.gkzp.common.entity.HrRecruitFile;
 import com.nsoft.gkzp.syscore.web.UserContext;
-import com.nsoft.gkzp.util.Page;
+import com.nsoft.gkzp.util.PageVo;
 import com.nsoft.gkzp.util.ResultMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,8 +23,6 @@ import java.util.*;
 
 @Component
 public class FileLoad {
-    @Autowired
-    ResultMsg resultMsg;
 
     @Autowired
     HrRecruitFileDao hrRecruitFileDao;
@@ -36,9 +34,19 @@ public class FileLoad {
      * 上传文件
      * @param file 文件
      * @param filePath 路径
+     * @param maxSize 最大文件大小  单位k；
      * @return
      */
-    public ResultMsg uploadFile(UserContext userContext, MultipartFile file, String filePath){
+    public ResultMsg uploadFile(UserContext userContext, MultipartFile file, String filePath,int maxSize){
+        ResultMsg resultMsg = new ResultMsg();
+
+        System.out.println(file.getSize()/1024);
+        System.out.println(file.getSize()/1024>maxSize);
+        if(file.getSize()/1024>maxSize){
+            resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"上传文件过大");
+            return resultMsg;
+        }
+
         //获取文件名
         String fileName = file.getOriginalFilename();
         //获取文件后缀名
@@ -132,7 +140,7 @@ public class FileLoad {
      * @param page
      * @return
      */
-    public List<HrRecruitFile> fileList(HrRecruitFile hrRecruitFile, String order, Page page){
+    public List<HrRecruitFile> fileList(HrRecruitFile hrRecruitFile, String order, PageVo page){
         //判断都有值通过
         if(page != null && page.getPageNum() != 0 && page.getPageSize() != 0){
             //分页处理，显示第一页的10条数据

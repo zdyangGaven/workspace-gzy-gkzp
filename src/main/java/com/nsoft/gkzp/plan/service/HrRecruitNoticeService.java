@@ -2,7 +2,7 @@ package com.nsoft.gkzp.plan.service;
 
 import com.nsoft.gkzp.plan.entity.HrRecruitNotice;
 import com.nsoft.gkzp.syscore.web.UserContext;
-import com.nsoft.gkzp.util.Page;
+import com.nsoft.gkzp.util.PageVo;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public interface HrRecruitNoticeService {
      * @param order 排序
      * @return
      */
-    public List<HrRecruitNotice> list(HrRecruitNotice hrRecruitNotice, String order, Page page);
+    public List<HrRecruitNotice> list(HrRecruitNotice hrRecruitNotice, String order, PageVo page);
 
     /**
      * 未读数

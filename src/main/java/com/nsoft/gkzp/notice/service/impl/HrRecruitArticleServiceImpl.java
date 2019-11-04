@@ -8,7 +8,7 @@ import com.nsoft.gkzp.notice.dao.HrRecruitArticleDao;
 import com.nsoft.gkzp.notice.entity.HrRecruitArticle;
 import com.nsoft.gkzp.notice.service.HrRecruitArticleService;
 import com.nsoft.gkzp.util.DataFormat;
-import com.nsoft.gkzp.util.Page;
+import com.nsoft.gkzp.util.PageVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -37,7 +37,7 @@ public class HrRecruitArticleServiceImpl implements HrRecruitArticleService {
      * @return
      */
     @Override
-    public List<HrRecruitArticle> list( HrRecruitArticle hrRecruitArticle, String order,Page page) {
+    public List<HrRecruitArticle> list(HrRecruitArticle hrRecruitArticle, String order, PageVo page) {
 
         //判断都有值通过
         if(page != null && page.getPageNum() != 0 && page.getPageSize() != 0){

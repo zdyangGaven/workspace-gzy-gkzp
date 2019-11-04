@@ -10,7 +10,7 @@ import com.nsoft.gkzp.plan.service.HrRecuritPlanNeedsService;
 import com.nsoft.gkzp.plan.service.HrRecuritPlanService;
 import com.nsoft.gkzp.syscore.web.UserContext;
 import com.nsoft.gkzp.util.DataFormat;
-import com.nsoft.gkzp.util.Page;
+import com.nsoft.gkzp.util.PageVo;
 import com.nsoft.gkzp.util.ResultMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -65,7 +65,7 @@ public class HrRecuritPlanNeedsServiceImpl implements HrRecuritPlanNeedsService 
      * @return
      */
     @Override
-    public List<HrRecuritPlanNeeds> list( HrRecuritPlanNeeds hrRecuritPlanNeeds, String order,Page page) {
+    public List<HrRecuritPlanNeeds> list(HrRecuritPlanNeeds hrRecuritPlanNeeds, String order, PageVo page) {
         return list(hrRecuritPlanNeeds,order,page,null);
     }
 
@@ -78,7 +78,7 @@ public class HrRecuritPlanNeedsServiceImpl implements HrRecuritPlanNeedsService 
      * @return
      */
     @Override
-    public List<HrRecuritPlanNeeds> list( HrRecuritPlanNeeds hrRecuritPlanNeeds, String order,Page page, List<Object> planIdList) {
+    public List<HrRecuritPlanNeeds> list(HrRecuritPlanNeeds hrRecuritPlanNeeds, String order, PageVo page, List<Object> planIdList) {
         //判断都有值通过
         if(page != null && page.getPageNum() != 0 && page.getPageSize() != 0){
             //分页处理，显示第一页的10条数据
@@ -130,7 +130,7 @@ public class HrRecuritPlanNeedsServiceImpl implements HrRecuritPlanNeedsService 
      * @return
      */
     @Override
-    public List<HrRecuritPlanNeedsDo> find(HrRecuritPlanNeeds hrRecuritPlanNeeds, String order, Page page, List<Integer> planIdList) {
+    public List<HrRecuritPlanNeedsDo> find(HrRecuritPlanNeeds hrRecuritPlanNeeds, String order, PageVo page, List<Integer> planIdList) {
         //判断都有值通过
         if(page != null && page.getPageNum() != 0 && page.getPageSize() != 0){
             //分页处理，显示第一页的10条数据
@@ -278,7 +278,7 @@ public class HrRecuritPlanNeedsServiceImpl implements HrRecuritPlanNeedsService 
      * @return
      */
     @Override
-    public List<HrRecuritPlanNeedsDo> getListByPlan(HrRecuritPlanNeeds hrRecuritPlanNeeds, String order,Page page) {
+    public List<HrRecuritPlanNeedsDo> getListByPlan(HrRecuritPlanNeeds hrRecuritPlanNeeds, String order, PageVo page) {
         //redis测试读取
         /*try {
             Jedis jedis = jedisUtil.init();

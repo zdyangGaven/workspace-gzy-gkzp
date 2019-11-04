@@ -1,7 +1,7 @@
 package com.nsoft.gkzp.plan.service;
 
 import com.nsoft.gkzp.plan.entity.HrRecuritPlan;
-import com.nsoft.gkzp.util.Page;
+import com.nsoft.gkzp.util.PageVo;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public interface HrRecuritPlanService {
      * @param order 排序
      * @return
      */
-    List<HrRecuritPlan> list( HrRecuritPlan hrRecuritPlan, String order,Page page);
+    List<HrRecuritPlan> list(HrRecuritPlan hrRecuritPlan, String order, PageVo page);
 
     /**
      * 通过id查询计划
