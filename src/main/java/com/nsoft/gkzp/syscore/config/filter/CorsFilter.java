@@ -4,6 +4,8 @@ import com.nsoft.gkzp.syscore.config.MyDefinedUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebFilter(urlPatterns = "/*", filterName = "corsFilter")
+@PropertySource(value="classpath:application.properties")
 public class CorsFilter implements Filter {
 
     final private static Logger logger = LogManager.getLogger(CorsFilter.class);
@@ -22,6 +25,10 @@ public class CorsFilter implements Filter {
     @Override
     public void destroy() {
     }
+
+    //读取application.properties配置文件配置的https访问端口号
+    @Value("${server.port}")
+    public  int SYSTEM_HTTPS_PORT;
     /**
      * 此过滤器只是处理跨域问题
      * @param servletRequest
@@ -38,15 +45,21 @@ public class CorsFilter implements Filter {
         if(origin == null) {
             origin = request.getHeader("Referer");
         }
+//        //允许跨域白名单
+//        String[] whiteList = (myDefinedUtil.SYSTEM_ACCESSCONTROLALLOWORIGIN).split(",") ;
+//        boolean isValid = false;
+//        for(String ip : whiteList){//这里我设置本地访问（localhost，127.0.0.1）自动为白名单里的
+//             if(origin != null && origin.equals(ip)){
+//                isValid = true;
+//                break;
+//            }
+//        }
+
         //允许跨域白名单
-        String[] whiteList = (myDefinedUtil.SYSTEM_ACCESSCONTROLALLOWORIGIN).split(",") ;
+        String whiteList=myDefinedUtil.SYSTEM_ACCESSCONTROLALLOWORIGIN;
         boolean isValid = false;
-        for(String ip : whiteList){//这里我设置本地访问（localhost，127.0.0.1）自动为白名单里的
-           // if(origin != null && (origin.contains("localhost") || origin.contains("127.0.0.1") || origin.equals(ip))){
-             if(origin != null && origin.equals(ip)){
-                isValid = true;
-                break;
-            }
+        if(origin != null){
+            isValid = whiteList.contains(origin.substring(origin.indexOf("://")+3,origin.indexOf(":"+SYSTEM_HTTPS_PORT)));
         }
         logger.info("跨域验证:origin="+origin+";;;;;;isValid="+isValid);// 如为跨域请求，下面的"Access-Control-Allow-Origin"值置为null，就无法访问了。。。如果为非跨域请求，这个为null不会受影响，依然允许访问
         response.setHeader("Access-Control-Allow-Origin", isValid ? origin : "null");// 允许指定域访问跨域资源(这里不能写*，*代表接受所有域名访问，如写*则下面一行代码无效。谨记)
