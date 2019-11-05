@@ -26,7 +26,7 @@ public class CorsFilter implements Filter {
     public void destroy() {
     }
 
-    //读取application.properties配置文件配置的https访问端口号
+    //读取application.properties配置文件配置的http访问端口号
     @Value("${server.port}")
     public  int SYSTEM_HTTPS_PORT;
     /**
@@ -59,7 +59,12 @@ public class CorsFilter implements Filter {
         String whiteList=myDefinedUtil.SYSTEM_ACCESSCONTROLALLOWORIGIN;
         boolean isValid = false;
         if(origin != null){
-            isValid = whiteList.contains(origin.substring(origin.indexOf("://")+3,origin.indexOf(":"+SYSTEM_HTTPS_PORT)));
+                int  a = origin.indexOf("://")+3;
+                int  b = origin.indexOf(":"+SYSTEM_HTTPS_PORT);
+                if(b<0){  //如果需要跨域的是80端口,则origin不会带上端口号（eg：前端地址栏为http://127.0.0.1,即前端用的是80端口号。访问后端，这里的origin=http://127.0.0.1 即b=-1，故这里需特殊处理）
+                    b = origin.length();
+                }
+            isValid = whiteList.contains(origin.substring(a,b)); //将origin截出ip字符串
         }
         logger.info("跨域验证:origin="+origin+";;;;;;isValid="+isValid);// 如为跨域请求，下面的"Access-Control-Allow-Origin"值置为null，就无法访问了。。。如果为非跨域请求，这个为null不会受影响，依然允许访问
         response.setHeader("Access-Control-Allow-Origin", isValid ? origin : "null");// 允许指定域访问跨域资源(这里不能写*，*代表接受所有域名访问，如写*则下面一行代码无效。谨记)
