@@ -3,7 +3,8 @@ package com.nsoft.gkzp.plan.service;
 import com.nsoft.gkzp.plan.entity.HrRecruitEntryinfo;
 import com.nsoft.gkzp.plan.entity.HrRecruitEntryinfoBase;
 import com.nsoft.gkzp.syscore.web.UserContext;
-import com.nsoft.gkzp.util.Page;
+import com.nsoft.gkzp.util.PageVo;
+import com.nsoft.gkzp.util.ResultMsg;
 import org.json.JSONObject;
 
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +19,7 @@ public interface HrRecruitEntryinfoBaseService {
      * @param order 排序
      * @return
      */
-    public List<HrRecruitEntryinfoBase> list( HrRecruitEntryinfoBase hrRecruitEntryinfoBase, String order,Page page);
+    public List<HrRecruitEntryinfoBase> list(HrRecruitEntryinfoBase hrRecruitEntryinfoBase, String order, PageVo page);
 
 
     /**
@@ -61,7 +62,7 @@ public interface HrRecruitEntryinfoBaseService {
      * 根据用户来进行判断是否修改还是新增
      * @param jsonObject
      */
-    public void edit(JSONObject jsonObject,UserContext userContext);
+    public ResultMsg edit(JSONObject jsonObject, UserContext userContext);
 
     /**
      * 修改全部编辑

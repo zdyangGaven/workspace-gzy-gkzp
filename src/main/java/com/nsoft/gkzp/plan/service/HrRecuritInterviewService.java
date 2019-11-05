@@ -2,7 +2,7 @@ package com.nsoft.gkzp.plan.service;
 
 import com.nsoft.gkzp.plan.entity.HrRecuritInterview;
 import com.nsoft.gkzp.syscore.web.UserContext;
-import com.nsoft.gkzp.util.Page;
+import com.nsoft.gkzp.util.PageVo;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public interface HrRecuritInterviewService {
      * @param order 排序
      * @return
      */
-    public List<HrRecuritInterview> list(HrRecuritInterview hrRecuritInterview, String order, Page page);
+    public List<HrRecuritInterview> list(HrRecuritInterview hrRecuritInterview, String order, PageVo page);
 
     /**
      * 通过用户获取面试数据

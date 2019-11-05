@@ -4,7 +4,7 @@ import com.nsoft.gkzp.plan.entity.HrRecruitEntryinfoBase;
 import com.nsoft.gkzp.plan.entity.HrRecruitReviewRecord;
 import com.nsoft.gkzp.plan.entity.HrRecruitReviewRecordVo;
 import com.nsoft.gkzp.syscore.web.UserContext;
-import com.nsoft.gkzp.util.Page;
+import com.nsoft.gkzp.util.PageVo;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public interface HrRecruitReviewRecordService {
      * @param page
      * @return
      */
-    public List<HrRecruitReviewRecord> list(HrRecruitReviewRecord hrRecruitReviewRecord, String order, Page page);
+    public List<HrRecruitReviewRecord> list(HrRecruitReviewRecord hrRecruitReviewRecord, String order, PageVo page);
 
     /**
      * 通过基础信息id获取资格审核数据
@@ -38,6 +38,13 @@ public interface HrRecruitReviewRecordService {
      * @return
      */
     public HrRecruitReviewRecordVo getHrRecruitReviewRecordVoByUser(UserContext userContext);
+
+    /**
+     * 是否审核
+     * @param baseId 基础信息id
+     * @return
+     */
+    public boolean isReview(int baseId);
 
     /**
      * 新增

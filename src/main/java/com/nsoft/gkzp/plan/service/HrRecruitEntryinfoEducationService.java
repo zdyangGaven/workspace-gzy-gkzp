@@ -1,7 +1,7 @@
 package com.nsoft.gkzp.plan.service;
 
 import com.nsoft.gkzp.plan.entity.HrRecruitEntryinfoEducation;
-import com.nsoft.gkzp.util.Page;
+import com.nsoft.gkzp.util.PageVo;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public interface HrRecruitEntryinfoEducationService {
      * @param order 排序
      * @return
      */
-    public List<HrRecruitEntryinfoEducation> list( HrRecruitEntryinfoEducation hrRecruitEntryinfoEducation, String order,Page page);
+    public List<HrRecruitEntryinfoEducation> list(HrRecruitEntryinfoEducation hrRecruitEntryinfoEducation, String order, PageVo page);
 
     /**
      * 新增

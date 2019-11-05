@@ -9,7 +9,7 @@ import com.nsoft.gkzp.syscore.config.MyDefinedUtil;
 import com.nsoft.gkzp.syscore.web.AbstractController;
 import com.nsoft.gkzp.syscore.web.UserContext;
 import com.nsoft.gkzp.util.DataFormat;
-import com.nsoft.gkzp.util.Page;
+import com.nsoft.gkzp.util.PageVo;
 import com.nsoft.gkzp.util.ResultMsg;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,18 +123,8 @@ public class UserinfoController extends AbstractController {
             data = URLDecoder.decode(data, "UTF-8");
             JSONObject jsonObject = new JSONObject(data);
 
+            resultMsg = hrRecruitEntryinfoBaseService.edit(jsonObject, userContext);
 
-            //检验身份证
-            /*boolean verifyIdCard = hrRecruitEntryinfoBaseService.verifyIdCard(jsonObject.getJSONObject("baseInfo").getString(""));
-            if(verifyIdCard){
-                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"身份证已存在");
-                return resultMsg;
-            }*/
-
-            hrRecruitEntryinfoBaseService.edit(jsonObject,userContext);
-
-            //成功信息
-            resultMsg.setResultMsg(ResultMsg.MsgType.INFO,"");
             return resultMsg;
         } catch (Exception e) {
             e.printStackTrace();
@@ -215,6 +205,27 @@ public class UserinfoController extends AbstractController {
         return result;
     }
 
+    @RequestMapping("intercept/plan/userInfo/healthchkIsJoin")
+    public ResultMsg healthchkIsJoin(HttpServletRequest request,int isjoin){
+        ResultMsg resultMsg = new ResultMsg();
+        try {
+            UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
+            HrRecruitHealthchk hrRecruitHealthchkByUser = hrRecruitHealthchkService.getHrRecruitHealthchkByUser(userContext);
+            hrRecruitHealthchkByUser.setIsjoin(isjoin);
+            hrRecruitHealthchkByUser.setSyncisjoin(1);
+            hrRecruitHealthchkService.edit(hrRecruitHealthchkByUser);
+
+            //成功信息
+            resultMsg.setResultMsg(ResultMsg.MsgType.INFO,"体检提交成功");
+            return resultMsg;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"体检提交失败");
+        return resultMsg;
+    }
+
     /**
      * 通过用户获取体检数据
      * @param request
@@ -270,12 +281,24 @@ public class UserinfoController extends AbstractController {
     }
 
     /**
+     * 是否审核
+     * @param request
+     * @return
+     */
+    @RequestMapping("intercept/plan/userInfo/isReview")
+    public boolean isReview(HttpServletRequest request){
+        UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
+        int baseIdByUser = hrRecruitEntryinfoBaseService.getBaseIdByUser(userContext);
+        return hrRecruitReviewRecordService.isReview(baseIdByUser);
+    }
+
+    /**
      * 用户消息
      * @param request
      * @return
      */
     @RequestMapping("intercept/plan/userInfo/userMsg")
-    public List<HrRecruitNotice> userMsg(HttpServletRequest request, int hasRead, Page page) {
+    public List<HrRecruitNotice> userMsg(HttpServletRequest request, int hasRead, PageVo page) {
         UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
         //获取基础信息id
         int baseId = hrRecruitEntryinfoBaseService.getBaseIdByUser(userContext);
@@ -316,9 +339,12 @@ public class UserinfoController extends AbstractController {
     @PostMapping("plan/plan/upload/img")
     public ResultMsg uploadImg(@RequestParam("file") MultipartFile file, HttpServletRequest request){
         UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
+
+        int maxSize = 5000;
+
         //指定本地文件夹存储图片
         String filePath = myDefinedUtil.SYSTEM_FILE_FOLDER_IMG;
-        ResultMsg resultMsg = fileLoad.uploadFile(userContext,file, filePath);
+        ResultMsg resultMsg = fileLoad.uploadFile(userContext,file, filePath, maxSize);
         return resultMsg;
     }
 
@@ -329,10 +355,14 @@ public class UserinfoController extends AbstractController {
      * @throws Exception
      */
     @RequestMapping("plan/plan/download/img/{id}")
-    public void downloadImg(HttpServletResponse response, @PathVariable int id) throws Exception {
-
-        hrRecruitEntryinfoBaseService.downloadImg(response,id);
-
+    public String downloadImg(HttpServletResponse response, @PathVariable int id) throws Exception {
+        try {
+            hrRecruitEntryinfoBaseService.downloadImg(response,id);
+            return  "ok";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
     @RequestMapping("plan/userInfo/syncFile")
@@ -358,6 +388,7 @@ public class UserinfoController extends AbstractController {
         resultMsg.setResultMsg(ResultMsg.MsgType.INFO,"同步成功");
         return resultMsg;
     }
+
 
     /**
      * 用户信息同步文件

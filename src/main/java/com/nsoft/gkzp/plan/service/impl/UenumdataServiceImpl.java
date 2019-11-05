@@ -5,7 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.nsoft.gkzp.plan.dao.UenumdataDao;
 import com.nsoft.gkzp.plan.entity.Uenumdata;
 import com.nsoft.gkzp.plan.service.UenumdataService;
-import com.nsoft.gkzp.util.Page;
+import com.nsoft.gkzp.util.PageVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -18,7 +18,7 @@ public class UenumdataServiceImpl implements UenumdataService {
     UenumdataDao uenumdataDao;
 
     @Override
-    public List<Uenumdata> list(Uenumdata uenumdata, String order, Page page) {
+    public List<Uenumdata> list(Uenumdata uenumdata, String order, PageVo page) {
         //判断都有值通过
         if(page != null && page.getPageNum() != 0 && page.getPageSize() != 0){
             //分页处理，显示第一页的10条数据

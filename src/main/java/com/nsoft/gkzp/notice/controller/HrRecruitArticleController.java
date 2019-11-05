@@ -2,7 +2,7 @@ package com.nsoft.gkzp.notice.controller;
 
 import com.nsoft.gkzp.notice.entity.HrRecruitArticle;
 import com.nsoft.gkzp.notice.service.HrRecruitArticleService;
-import com.nsoft.gkzp.util.Page;
+import com.nsoft.gkzp.util.PageVo;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +32,7 @@ public class HrRecruitArticleController {
      * @return
      */
     @RequestMapping("/HrRecruitArticleController/list")
-    public List<HrRecruitArticle> list( HrRecruitArticle hrRecruitArticle, String order,Page page){
+    public List<HrRecruitArticle> list(HrRecruitArticle hrRecruitArticle, String order, PageVo page){
         return hrRecruitArticleService.list(hrRecruitArticle,order, page);
     }
 
@@ -68,7 +68,7 @@ public class HrRecruitArticleController {
     @RequestMapping("notice/syncFile")
     public void  syncFile(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // 文件保存路径
-        String filePath = "F:/file/";
+        String filePath = "E:/upload/Form/";
         System.out.println("进入");
         //操作成功则返回OK
         String result = "";

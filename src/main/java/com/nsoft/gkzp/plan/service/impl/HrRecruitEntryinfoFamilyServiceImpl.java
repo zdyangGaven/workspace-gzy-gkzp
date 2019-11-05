@@ -7,7 +7,7 @@ import com.nsoft.gkzp.plan.entity.HrRecruitEntryinfoFamily;
 import com.nsoft.gkzp.plan.service.HrRecruitEntryinfoFamilyService;
 import com.nsoft.gkzp.syscore.service.AbstractService;
 import com.nsoft.gkzp.syscore.service.ServiceException;
-import com.nsoft.gkzp.util.Page;
+import com.nsoft.gkzp.util.PageVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -29,7 +29,7 @@ public class HrRecruitEntryinfoFamilyServiceImpl extends AbstractService impleme
      * @return
      */
     @Override
-    public List<HrRecruitEntryinfoFamily> list( HrRecruitEntryinfoFamily hrRecruitEntryinfoFamily, String order,Page page) {
+    public List<HrRecruitEntryinfoFamily> list(HrRecruitEntryinfoFamily hrRecruitEntryinfoFamily, String order, PageVo page) {
         //判断都有值通过
         if(page != null && page.getPageNum() != 0 && page.getPageSize() != 0){
             //分页处理，显示第一页的10条数据

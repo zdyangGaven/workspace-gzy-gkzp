@@ -1,6 +1,6 @@
 package com.nsoft.gkzp.util;
 
-public class Page {
+public class PageVo {
     private int pageNum; //显示的页数
 
     private int pageSize; //每页显示的数目

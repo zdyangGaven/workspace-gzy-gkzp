@@ -1,7 +1,7 @@
 package com.nsoft.gkzp.plan.service;
 
 import com.nsoft.gkzp.plan.entity.HrPostType;
-import com.nsoft.gkzp.util.Page;
+import com.nsoft.gkzp.util.PageVo;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public interface HrPostTypeService {
      * @param order 排序
      * @return
      */
-    List<HrPostType> list(HrPostType hrPostType, String order, Page page);
+    List<HrPostType> list(HrPostType hrPostType, String order, PageVo page);
 
     /**
      * 新增
