@@ -30,6 +30,7 @@
     <result column="degreeName" jdbcType="NVARCHAR" property="degreeName" />
     <result column="titleName" jdbcType="NVARCHAR" property="titleName" />
     <result column="politicName" jdbcType="NVARCHAR" property="politicName" />
+    <result column="postIntentionName" jdbcType="NVARCHAR" property="postIntentionName" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -76,6 +77,7 @@
     ,( SELECT TypeName FROM HR_Post_Type WHERE n.Degree = ID ) degreeName
     ,( SELECT TypeName FROM HR_Post_Type WHERE n.Title = ID ) titleName
     ,( SELECT TypeName FROM HR_Post_Type WHERE n.Politic = ID ) politicName
+    ,( SELECT TypeName FROM HR_Post_Type WHERE n.PostIntention = ID ) postIntentionName
     from HR_Recurit_Plan_Needs AS n
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
