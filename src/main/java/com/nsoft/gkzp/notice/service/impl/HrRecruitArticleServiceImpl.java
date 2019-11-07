@@ -85,7 +85,9 @@ public class HrRecruitArticleServiceImpl implements HrRecruitArticleService {
             hrRecruitArticle.setAffixfileList(fileList);
         }
         //阅读次数
+        if(hrRecruitArticle.getClicktimes() == null) hrRecruitArticle.setClicktimes(0);
         hrRecruitArticle.setClicktimes(hrRecruitArticle.getClicktimes()+1);
+        hrRecruitArticleDao.updateByPrimaryKeySelective(hrRecruitArticle);
 
         return hrRecruitArticle;
     }

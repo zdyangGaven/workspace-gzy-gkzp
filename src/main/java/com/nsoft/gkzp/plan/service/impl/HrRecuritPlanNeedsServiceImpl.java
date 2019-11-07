@@ -356,6 +356,7 @@ public class HrRecuritPlanNeedsServiceImpl implements HrRecuritPlanNeedsService 
         hrRecruitEntryinfoBase.setPostid(hrRecuritPlanNeeds.getId());
         hrRecruitEntryinfoBase.setSignuptime(new Date());
         hrRecruitEntryinfoBase.setPosttypeid(hrRecuritPlanNeeds.getPosttype());
+        hrRecruitEntryinfoBase.setSyncstatus(1);
         hrRecruitEntryinfoBaseService.edit(hrRecruitEntryinfoBase);
     }
 }

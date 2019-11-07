@@ -83,8 +83,10 @@ public class HrRecruitReviewRecordServiceImpl implements HrRecruitReviewRecordSe
         int baseId = hrRecruitEntryinfoBases.get(0).getId();
         HrRecruitReviewRecord hrRecruitReviewRecord = new HrRecruitReviewRecord();
         hrRecruitReviewRecord.setBaseid(baseId);
+        hrRecruitReviewRecord.setNode(4);
+        System.out.println(hrRecruitReviewRecord);
         List<HrRecruitReviewRecord> hrRecruitReviewRecords = list(hrRecruitReviewRecord, null, null);
-
+        System.out.println(hrRecruitReviewRecords);
         //判断资格审核信息为空返回
         if(hrRecruitReviewRecords.size() == 0) return hrRecruitReviewRecordVo;
 

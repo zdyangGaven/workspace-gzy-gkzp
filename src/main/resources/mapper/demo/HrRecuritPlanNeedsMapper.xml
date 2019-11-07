@@ -27,6 +27,9 @@
     <result column="DeptName" jdbcType="NVARCHAR" property="deptname" />
     <!--把int转成对应的类别的名称-->
     <result column="PostTypeName" jdbcType="NVARCHAR" property="postTypeName" />
+    <result column="degreeName" jdbcType="NVARCHAR" property="degreeName" />
+    <result column="titleName" jdbcType="NVARCHAR" property="titleName" />
+    <result column="politicName" jdbcType="NVARCHAR" property="politicName" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -70,6 +73,9 @@
     'false' as QUERYID,
     <include refid="Base_Column_List" />
     ,( SELECT TypeName FROM HR_Post_Type WHERE n.PostType = ID ) PostTypeName
+    ,( SELECT TypeName FROM HR_Post_Type WHERE n.Degree = ID ) degreeName
+    ,( SELECT TypeName FROM HR_Post_Type WHERE n.Title = ID ) titleName
+    ,( SELECT TypeName FROM HR_Post_Type WHERE n.Politic = ID ) politicName
     from HR_Recurit_Plan_Needs AS n
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />

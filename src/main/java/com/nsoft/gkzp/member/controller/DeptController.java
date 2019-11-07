@@ -18,4 +18,9 @@ public class DeptController {
     public List<Dept> list(Dept Dept, String order, PageVo page){
         return deptService.list(Dept,order,page);
     }
+
+    @RequestMapping("dept/getDeptByDeptName")
+    List<Dept> getDeptByDeptName(String deptName){
+        return deptService.getDeptByDeptName(deptName);
+    }
 }

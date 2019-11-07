@@ -18,6 +18,19 @@ public class HrRecruitReviewRecord implements Serializable {
 
     private String reason;
 
+    @Override
+    public String toString() {
+        return "HrRecruitReviewRecord{" +
+                "id=" + id +
+                ", baseid=" + baseid +
+                ", node=" + node +
+                ", actionman='" + actionman + '\'' +
+                ", actiontime=" + actiontime +
+                ", result=" + result +
+                ", reason='" + reason + '\'' +
+                '}';
+    }
+
     public Integer getId() {
         return id;
     }
