@@ -57,6 +57,8 @@ public class HrRecuritPlanNeedsDo implements Serializable {
 
     private String politicName;
 
+    private String postIntentionName;
+
     @Override
     public String toString() {
         return "HrRecuritPlanNeedsDo{" +
@@ -85,6 +87,14 @@ public class HrRecuritPlanNeedsDo implements Serializable {
                 ", deptname='" + deptname + '\'' +
                 ", postTypeName='" + postTypeName + '\'' +
                 '}';
+    }
+
+    public String getPostIntentionName() {
+        return postIntentionName;
+    }
+
+    public void setPostIntentionName(String postIntentionName) {
+        this.postIntentionName = postIntentionName;
     }
 
     public String getDegreeName() {
