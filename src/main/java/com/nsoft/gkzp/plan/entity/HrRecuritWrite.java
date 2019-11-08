@@ -1,8 +1,9 @@
 package com.nsoft.gkzp.plan.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class HrRecuritWrite {
+public class HrRecuritWrite implements Serializable {
     private Integer id;
 
     private Integer planid;
@@ -26,6 +27,8 @@ public class HrRecuritWrite {
     private String examScore;
 
     private String examOrder;
+
+    private static final long serialVersionUID = 1L;
 
     public Integer getId() {
         return id;
@@ -121,5 +124,28 @@ public class HrRecuritWrite {
 
     public void setExamOrder(String examOrder) {
         this.examOrder = examOrder == null ? null : examOrder.trim();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
+        sb.append(", planid=").append(planid);
+        sb.append(", baseid=").append(baseid);
+        sb.append(", sex=").append(sex);
+        sb.append(", postid=").append(postid);
+        sb.append(", posttypeid=").append(posttypeid);
+        sb.append(", zkzNumber=").append(zkzNumber);
+        sb.append(", examRoom=").append(examRoom);
+        sb.append(", examTime=").append(examTime);
+        sb.append(", status=").append(status);
+        sb.append(", examScore=").append(examScore);
+        sb.append(", examOrder=").append(examOrder);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
     }
 }

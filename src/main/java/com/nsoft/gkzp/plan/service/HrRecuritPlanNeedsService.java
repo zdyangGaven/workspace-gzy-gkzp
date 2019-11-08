@@ -49,6 +49,12 @@ public interface HrRecuritPlanNeedsService {
      */
     public List<HrRecuritPlanNeedsDo> find(HrRecuritPlanNeeds hrRecuritPlanNeeds, String order, PageVo page, List<Integer> planIdList);
 
+    /**
+     * 通过id查询岗位 包括关联类别表的信息
+     * @param id
+     * @return
+     */
+    public HrRecuritPlanNeedsDo findById(int id);
 
     /**
      * 申请职位  获取用户的当前状态  是否申请职位，申请职位时间

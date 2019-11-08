@@ -30,6 +30,10 @@ public class UserinfoController extends AbstractController {
     @Autowired
     HrRecruitEntryinfoBaseService hrRecruitEntryinfoBaseService;
 
+    //计划
+    @Autowired
+    HrRecuritPlanService hrRecuritPlanService;
+
     //体检
     @Autowired
     HrRecruitHealthchkService hrRecruitHealthchkService;
@@ -101,6 +105,7 @@ public class UserinfoController extends AbstractController {
             return resultMsg;
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+            logger.error("基础信息新增报错"+e.getMessage(),e);
         }
         //错误信息
         resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"");
@@ -127,7 +132,7 @@ public class UserinfoController extends AbstractController {
 
             return resultMsg;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("信息修改报错"+e.getMessage(),e);
 
         }
         //错误信息
@@ -232,7 +237,7 @@ public class UserinfoController extends AbstractController {
             resultMsg.setResultMsg(ResultMsg.MsgType.INFO,"体检提交成功");
             return resultMsg;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("体检错误"+e.getMessage(),e);
         }
 
         resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"体检提交失败");
@@ -246,8 +251,14 @@ public class UserinfoController extends AbstractController {
      */
     @RequestMapping("intercept/plan/userInfo/getHrRecruitHealthchkByUser")
     public HrRecruitHealthchk getHrRecruitHealthchkByUser(HttpServletRequest request) {
-        UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
-        return hrRecruitHealthchkService.getHrRecruitHealthchkByUser(userContext);
+        try {
+            UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
+            return hrRecruitHealthchkService.getHrRecruitHealthchkByUser(userContext);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("获取体检数据出错："+e.getMessage(),e);
+        }
+        return null;
     }
 
     /**
@@ -263,14 +274,19 @@ public class UserinfoController extends AbstractController {
         HrRecruitEntryinfoBase hrRecruitEntryinfoBase = hrRecruitEntryinfoBaseService.getBaseByUser(userContext);
 
         //岗位
-        HrRecuritPlanNeeds hrRecuritPlanNeeds = hrRecuritPlanNeedsService.getHrRecuritPlanNeedsById(hrRecruitEntryinfoBase.getPostid());
+        HrRecuritPlanNeedsDo hrRecuritPlanNeedsDo = hrRecuritPlanNeedsService.findById(hrRecruitEntryinfoBase.getPostid());
+
+        //计划
+        HrRecuritPlan hrRecuritPlan = hrRecuritPlanService.getHrRecuritPlanById(hrRecruitEntryinfoBase.getPlanid());
+
 
         //面试信息
         HrRecuritInterview hrRecuritInterview = hrRecuritInterviewService.getHrRecuritInterviewByUser(userContext);
 
         map.put("hrRecruitEntryinfoBase",hrRecruitEntryinfoBase);
-        map.put("hrRecuritPlanNeeds",hrRecuritPlanNeeds);
+        map.put("hrRecuritPlanNeedsDo",hrRecuritPlanNeedsDo);
         map.put("hrRecuritInterview",hrRecuritInterview);
+        map.put("hrRecuritPlan",hrRecuritPlan);
         return map;
     }
 
@@ -287,14 +303,18 @@ public class UserinfoController extends AbstractController {
         HrRecruitEntryinfoBase hrRecruitEntryinfoBase = hrRecruitEntryinfoBaseService.getBaseByUser(userContext);
 
         //岗位
-        HrRecuritPlanNeeds hrRecuritPlanNeeds = hrRecuritPlanNeedsService.getHrRecuritPlanNeedsById(hrRecruitEntryinfoBase.getPostid());
+        HrRecuritPlanNeedsDo hrRecuritPlanNeedsDo = hrRecuritPlanNeedsService.findById(hrRecruitEntryinfoBase.getPostid());
+
+        //计划
+        HrRecuritPlan hrRecuritPlan = hrRecuritPlanService.getHrRecuritPlanById(hrRecruitEntryinfoBase.getPlanid());
 
         //笔试信息
         HrRecuritWrite hrRecuritWrite = hrRecuritWriteService.getHrRecuritWriteByUser(userContext);
 
         map.put("hrRecruitEntryinfoBase",hrRecruitEntryinfoBase);
-        map.put("hrRecuritPlanNeeds",hrRecuritPlanNeeds);
+        map.put("hrRecuritPlanNeedsDo",hrRecuritPlanNeedsDo);
         map.put("hrRecuritWrite",hrRecuritWrite);
+        map.put("hrRecuritPlan",hrRecuritPlan);
         return map;
     }
 

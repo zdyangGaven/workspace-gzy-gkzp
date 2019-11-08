@@ -171,6 +171,23 @@ public class HrRecuritPlanNeedsServiceImpl implements HrRecuritPlanNeedsService 
     }
 
     /**
+     * 通过id查询岗位 包括关联类别表的信息
+     * @param id
+     * @return
+     */
+    @Override
+    public HrRecuritPlanNeedsDo findById(int id) {
+        HrRecuritPlanNeedsExample hrRecuritPlanNeedsExample = new HrRecuritPlanNeedsExample();
+        HrRecuritPlanNeedsExample.Criteria criteria = hrRecuritPlanNeedsExample.createCriteria();
+        criteria.andIdEqualTo(id);
+        List<HrRecuritPlanNeedsDo> hrRecuritPlanNeedsDos = hrRecuritPlanNeedsMapper.selectByExample(hrRecuritPlanNeedsExample);
+
+        if(hrRecuritPlanNeedsDos.size() == 0) return null;
+
+        return hrRecuritPlanNeedsDos.get(0);
+    }
+
+    /**
      * 申请职位  获取用户的当前状态  是否申请职位，申请职位时间
      * @param userContext
      * @return

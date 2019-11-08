@@ -1,8 +1,9 @@
 package com.nsoft.gkzp.plan.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class HrRecuritInterview {
+public class HrRecuritInterview implements Serializable {
     private Integer id;
 
     private Integer planid;
@@ -26,6 +27,16 @@ public class HrRecuritInterview {
     private String interScore;
 
     private String interOrder;
+
+    private String lounge;
+
+    private String waitFor;
+
+    private String skillTest;
+
+    private String remark;
+
+    private static final long serialVersionUID = 1L;
 
     public Integer getId() {
         return id;
@@ -121,5 +132,64 @@ public class HrRecuritInterview {
 
     public void setInterOrder(String interOrder) {
         this.interOrder = interOrder == null ? null : interOrder.trim();
+    }
+
+    public String getLounge() {
+        return lounge;
+    }
+
+    public void setLounge(String lounge) {
+        this.lounge = lounge == null ? null : lounge.trim();
+    }
+
+    public String getWaitFor() {
+        return waitFor;
+    }
+
+    public void setWaitFor(String waitFor) {
+        this.waitFor = waitFor == null ? null : waitFor.trim();
+    }
+
+    public String getSkillTest() {
+        return skillTest;
+    }
+
+    public void setSkillTest(String skillTest) {
+        this.skillTest = skillTest == null ? null : skillTest.trim();
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
+        sb.append(", planid=").append(planid);
+        sb.append(", baseid=").append(baseid);
+        sb.append(", sex=").append(sex);
+        sb.append(", postid=").append(postid);
+        sb.append(", posttypeid=").append(posttypeid);
+        sb.append(", zkzNumber=").append(zkzNumber);
+        sb.append(", interRoom=").append(interRoom);
+        sb.append(", interTime=").append(interTime);
+        sb.append(", status=").append(status);
+        sb.append(", interScore=").append(interScore);
+        sb.append(", interOrder=").append(interOrder);
+        sb.append(", lounge=").append(lounge);
+        sb.append(", waitFor=").append(waitFor);
+        sb.append(", skillTest=").append(skillTest);
+        sb.append(", remark=").append(remark);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
     }
 }
