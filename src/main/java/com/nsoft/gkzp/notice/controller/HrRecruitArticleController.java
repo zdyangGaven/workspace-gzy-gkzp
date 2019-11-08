@@ -2,6 +2,7 @@ package com.nsoft.gkzp.notice.controller;
 
 import com.nsoft.gkzp.notice.entity.HrRecruitArticle;
 import com.nsoft.gkzp.notice.service.HrRecruitArticleService;
+import com.nsoft.gkzp.syscore.web.AbstractController;
 import com.nsoft.gkzp.util.PageVo;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-public class HrRecruitArticleController {
+public class HrRecruitArticleController extends AbstractController {
 
     @Autowired
     HrRecruitArticleService hrRecruitArticleService;
@@ -33,7 +34,12 @@ public class HrRecruitArticleController {
      */
     @RequestMapping("/HrRecruitArticleController/list")
     public List<HrRecruitArticle> list(HrRecruitArticle hrRecruitArticle, String order, PageVo page){
-        return hrRecruitArticleService.list(hrRecruitArticle,order, page);
+        try {
+            return hrRecruitArticleService.list(hrRecruitArticle,order, page);
+        } catch (Exception e) {
+            logger.error("公告出错："+e.getMessage(),e);
+        }
+        return null;
     }
 
     /**
@@ -43,7 +49,12 @@ public class HrRecruitArticleController {
      */
     @RequestMapping("notice/getHrRecruitArticleById")
     public HrRecruitArticle getHrRecruitArticleById(int id){
-        return hrRecruitArticleService.getHrRecruitArticleById(id);
+        try {
+            return hrRecruitArticleService.getHrRecruitArticleById(id);
+        } catch (Exception e) {
+            logger.error("公告详情出错："+e.getMessage(),e);
+        }
+        return null;
     }
 
     /**
@@ -53,10 +64,15 @@ public class HrRecruitArticleController {
      */
     @RequestMapping("notice/getHrRecruitArticleByTitle")
     public List<HrRecruitArticle> getHrRecruitArticleByTitle(String title){
-        if(title.equals("") || title == null) return null;
-        HrRecruitArticle hrRecruitArticle = new HrRecruitArticle();
-        hrRecruitArticle.setTitle(title);
-        return hrRecruitArticleService.list(hrRecruitArticle,null,null);
+        try {
+            if(title.equals("") || title == null) return null;
+            HrRecruitArticle hrRecruitArticle = new HrRecruitArticle();
+            hrRecruitArticle.setTitle(title);
+            return hrRecruitArticleService.list(hrRecruitArticle,null,null);
+        } catch (Exception e) {
+            logger.error("模糊搜索公告出错："+e.getMessage(),e);
+        }
+        return null;
     }
 
     /**

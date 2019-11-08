@@ -77,8 +77,13 @@ public class UserinfoController extends AbstractController {
      */
     @RequestMapping("intercept/plan/userInfo/getInfoByUser")
     public HrRecruitEntryinfo getInfoByUser(HttpServletRequest request){
-        UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
-        return hrRecruitEntryinfoBaseService.getInfoByUser(userContext);
+        try {
+            UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
+            return hrRecruitEntryinfoBaseService.getInfoByUser(userContext);
+        } catch (Exception e) {
+            logger.error("获取用户信息错误："+e.getMessage(),e);
+        }
+        return null;
     }
 
 
@@ -104,7 +109,6 @@ public class UserinfoController extends AbstractController {
             resultMsg.setResultMsg(ResultMsg.MsgType.INFO,"");
             return resultMsg;
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
             logger.error("基础信息新增报错"+e.getMessage(),e);
         }
         //错误信息
@@ -147,67 +151,70 @@ public class UserinfoController extends AbstractController {
      */
     @RequestMapping("intercept/plan/userInfo/review")
     public HashMap<String, Object> review(HttpServletRequest request) {
+        try {
+            HashMap<String, Object> result = new HashMap<>();
+            //设置默认值为null
+            result.put("HrRecuritWrite",null);
+            result.put("HrRecuritWriteMsg",null);
+            result.put("HrRecuritInterview",null);
+            result.put("HrRecuritInterviewMsg",null);
+            result.put("HrRecruitHealthchk",null);
+            result.put("HrRecruitHealthchkMsg",null);
+            result.put("HrRecruitReviewRecord",null);
+            result.put("HrRecruitReviewRecordMsg",null);
 
-        HashMap<String, Object> result = new HashMap<>();
-        //设置默认值为null
-        result.put("HrRecuritWrite",null);
-        result.put("HrRecuritWriteMsg",null);
-        result.put("HrRecuritInterview",null);
-        result.put("HrRecuritInterviewMsg",null);
-        result.put("HrRecruitHealthchk",null);
-        result.put("HrRecruitHealthchkMsg",null);
-        result.put("HrRecruitReviewRecord",null);
-        result.put("HrRecruitReviewRecordMsg",null);
+            UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
+            int baseId = hrRecruitEntryinfoBaseService.getBaseIdByUser(userContext);
 
-        UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
-        int baseId = hrRecruitEntryinfoBaseService.getBaseIdByUser(userContext);
+            if(baseId == 0)return null;
 
-        if(baseId == 0)return null;
+            //岗位信息
+            HrRecuritPlanNeedsVo hrRecuritPlanNeedsVoByUser = hrRecuritPlanNeedsService.getHrRecuritPlanNeedsVoByUser(userContext);
 
-        //岗位信息
-        HrRecuritPlanNeedsVo hrRecuritPlanNeedsVoByUser = hrRecuritPlanNeedsService.getHrRecuritPlanNeedsVoByUser(userContext);
+            if(hrRecuritPlanNeedsVoByUser == null) return null;
+            result.put("HrRecuritPlanNeeds",hrRecuritPlanNeedsVoByUser.getHrRecuritPlanNeedsDo());
 
-        if(hrRecuritPlanNeedsVoByUser == null) return null;
-        result.put("HrRecuritPlanNeeds",hrRecuritPlanNeedsVoByUser.getHrRecuritPlanNeedsDo());
+            //获取通知消息
+            HrRecruitNotice hrRecruitNoticeSelect = new HrRecruitNotice();
+            hrRecruitNoticeSelect.setBaseid(baseId);
+            hrRecruitNoticeSelect.setStatus(1);
+            List<HrRecruitNotice> hrRecruitNotices = hrRecruitNoticeService.list(hrRecruitNoticeSelect, null, null);
 
-        //获取通知消息
-        HrRecruitNotice hrRecruitNoticeSelect = new HrRecruitNotice();
-        hrRecruitNoticeSelect.setBaseid(baseId);
-        hrRecruitNoticeSelect.setStatus(1);
-        List<HrRecruitNotice> hrRecruitNotices = hrRecruitNoticeService.list(hrRecruitNoticeSelect, null, null);
+            //遍历消息读取类型
+            for (HrRecruitNotice hrRecruitNotice:hrRecruitNotices) {
+                int type = hrRecruitNotice.getType();
+                if(type == 1){ //笔试
+                    HrRecuritWrite hrRecuritWrite = hrRecuritWriteService.getHrRecuritWriteByBaseId(baseId);
+                    result.put("HrRecuritWrite",hrRecuritWrite);
+                    result.put("HrRecuritWriteMsg",hrRecruitNotice);
+                } else if(type == 2){ //面试
+                    HrRecuritInterview hrRecuritInterview = hrRecuritInterviewService.getHrRecuritInterviewByBaseId(baseId);
+                    result.put("HrRecuritInterview",hrRecuritInterview);
+                    result.put("HrRecuritInterviewMsg",hrRecruitNotice);
+                } else if(type == 3){ //体检
+                    HrRecruitHealthchk hrRecruitHealthchk = hrRecruitHealthchkService.getHrRecruitHealthchkByBaseId(baseId);
+                    result.put("HrRecruitHealthchk",hrRecruitHealthchk);
+                    result.put("HrRecruitHealthchkMsg",hrRecruitNotice);
+                } else if(type == 4){ //审核结果
+                    HrRecruitReviewRecord hrRecruitReviewRecord = hrRecruitReviewRecordService.getHrRecruitReviewRecordByBaseId(baseId);
+                    result.put("HrRecruitReviewRecord",hrRecruitReviewRecord);
 
-        //遍历消息读取类型
-        for (HrRecruitNotice hrRecruitNotice:hrRecruitNotices) {
-            int type = hrRecruitNotice.getType();
-            if(type == 1){ //笔试
-                HrRecuritWrite hrRecuritWrite = hrRecuritWriteService.getHrRecuritWriteByBaseId(baseId);
-                result.put("HrRecuritWrite",hrRecuritWrite);
-                result.put("HrRecuritWriteMsg",hrRecruitNotice);
-            } else if(type == 2){ //面试
-                HrRecuritInterview hrRecuritInterview = hrRecuritInterviewService.getHrRecuritInterviewByBaseId(baseId);
-                result.put("HrRecuritInterview",hrRecuritInterview);
-                result.put("HrRecuritInterviewMsg",hrRecruitNotice);
-            } else if(type == 3){ //体检
-                HrRecruitHealthchk hrRecruitHealthchk = hrRecruitHealthchkService.getHrRecruitHealthchkByBaseId(baseId);
-                result.put("HrRecruitHealthchk",hrRecruitHealthchk);
-                result.put("HrRecruitHealthchkMsg",hrRecruitNotice);
-            } else if(type == 4){ //审核结果
-                HrRecruitReviewRecord hrRecruitReviewRecord = hrRecruitReviewRecordService.getHrRecruitReviewRecordByBaseId(baseId);
-                result.put("HrRecruitReviewRecord",hrRecruitReviewRecord);
-
-                String affix = hrRecruitNotice.getAffix();
-                //文件不为空
-                if(affix != null && affix != ""){
-                    //查询文件
-                    Integer[] affixArr = dataFormat.stringArrToIntArr(affix.split(","));
-                    List<FileVo> fileList = fileLoad.getFileListByIds(affixArr);
-                    hrRecruitNotice.setAffixList(fileList);
+                    String affix = hrRecruitNotice.getAffix();
+                    //文件不为空
+                    if(affix != null && affix != ""){
+                        //查询文件
+                        Integer[] affixArr = dataFormat.stringArrToIntArr(affix.split(","));
+                        List<FileVo> fileList = fileLoad.getFileListByIds(affixArr);
+                        hrRecruitNotice.setAffixList(fileList);
+                    }
+                    result.put("HrRecruitReviewRecordMsg",hrRecruitNotice);
                 }
-                result.put("HrRecruitReviewRecordMsg",hrRecruitNotice);
             }
+            return result;
+        } catch (Exception e) {
+            logger.error("考核管理错误："+e.getMessage(),e);
         }
-
-        return result;
+        return null;
     }
 
     /**
@@ -237,7 +244,7 @@ public class UserinfoController extends AbstractController {
             resultMsg.setResultMsg(ResultMsg.MsgType.INFO,"体检提交成功");
             return resultMsg;
         } catch (Exception e) {
-            logger.error("体检错误"+e.getMessage(),e);
+            logger.error("体检错误:"+e.getMessage(),e);
         }
 
         resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"体检提交失败");
@@ -268,54 +275,60 @@ public class UserinfoController extends AbstractController {
      */
     @RequestMapping("intercept/plan/userInfo/getHrRecuritInterviewPrint")
     public HashMap<String, Object> getHrRecuritInterviewByUser(HttpServletRequest request) {
-        UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
-        HashMap<String, Object> map = new HashMap<>();
-        //基础信息
-        HrRecruitEntryinfoBase hrRecruitEntryinfoBase = hrRecruitEntryinfoBaseService.getBaseByUser(userContext);
+        try {
+            UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
+            HashMap<String, Object> map = new HashMap<>();
+            //基础信息
+            HrRecruitEntryinfoBase hrRecruitEntryinfoBase = hrRecruitEntryinfoBaseService.getBaseByUser(userContext);
+            //岗位
+            HrRecuritPlanNeedsDo hrRecuritPlanNeedsDo = hrRecuritPlanNeedsService.findById(hrRecruitEntryinfoBase.getPostid());
+            //计划
+            HrRecuritPlan hrRecuritPlan = hrRecuritPlanService.getHrRecuritPlanById(hrRecruitEntryinfoBase.getPlanid());
+            //面试信息
+            HrRecuritInterview hrRecuritInterview = hrRecuritInterviewService.getHrRecuritInterviewByUser(userContext);
 
-        //岗位
-        HrRecuritPlanNeedsDo hrRecuritPlanNeedsDo = hrRecuritPlanNeedsService.findById(hrRecruitEntryinfoBase.getPostid());
-
-        //计划
-        HrRecuritPlan hrRecuritPlan = hrRecuritPlanService.getHrRecuritPlanById(hrRecruitEntryinfoBase.getPlanid());
-
-
-        //面试信息
-        HrRecuritInterview hrRecuritInterview = hrRecuritInterviewService.getHrRecuritInterviewByUser(userContext);
-
-        map.put("hrRecruitEntryinfoBase",hrRecruitEntryinfoBase);
-        map.put("hrRecuritPlanNeedsDo",hrRecuritPlanNeedsDo);
-        map.put("hrRecuritInterview",hrRecuritInterview);
-        map.put("hrRecuritPlan",hrRecuritPlan);
-        return map;
+            map.put("hrRecruitEntryinfoBase",hrRecruitEntryinfoBase);
+            map.put("hrRecuritPlanNeedsDo",hrRecuritPlanNeedsDo);
+            map.put("hrRecuritInterview",hrRecuritInterview);
+            map.put("hrRecuritPlan",hrRecuritPlan);
+            return map;
+        } catch (Exception e) {
+            logger.error("面试打印准考证报错："+e.getMessage(),e);
+        }
+        return null;
     }
 
     /**
-     * 通过用户获取笔试数据
+     * 通过用户获取笔试数据  打印准考证
      * @param request
      * @return
      */
     @RequestMapping("intercept/plan/userInfo/getHrRecuritWritePrint")
     public HashMap<String, Object> getHrRecuritWriteByUser(HttpServletRequest request) {
-        UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
-        HashMap<String, Object> map = new HashMap<>();
-        //基础信息
-        HrRecruitEntryinfoBase hrRecruitEntryinfoBase = hrRecruitEntryinfoBaseService.getBaseByUser(userContext);
+        try {
+            UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
+            HashMap<String, Object> map = new HashMap<>();
+            //基础信息
+            HrRecruitEntryinfoBase hrRecruitEntryinfoBase = hrRecruitEntryinfoBaseService.getBaseByUser(userContext);
 
-        //岗位
-        HrRecuritPlanNeedsDo hrRecuritPlanNeedsDo = hrRecuritPlanNeedsService.findById(hrRecruitEntryinfoBase.getPostid());
+            //岗位
+            HrRecuritPlanNeedsDo hrRecuritPlanNeedsDo = hrRecuritPlanNeedsService.findById(hrRecruitEntryinfoBase.getPostid());
 
-        //计划
-        HrRecuritPlan hrRecuritPlan = hrRecuritPlanService.getHrRecuritPlanById(hrRecruitEntryinfoBase.getPlanid());
+            //计划
+            HrRecuritPlan hrRecuritPlan = hrRecuritPlanService.getHrRecuritPlanById(hrRecruitEntryinfoBase.getPlanid());
 
-        //笔试信息
-        HrRecuritWrite hrRecuritWrite = hrRecuritWriteService.getHrRecuritWriteByUser(userContext);
+            //笔试信息
+            HrRecuritWrite hrRecuritWrite = hrRecuritWriteService.getHrRecuritWriteByUser(userContext);
 
-        map.put("hrRecruitEntryinfoBase",hrRecruitEntryinfoBase);
-        map.put("hrRecuritPlanNeedsDo",hrRecuritPlanNeedsDo);
-        map.put("hrRecuritWrite",hrRecuritWrite);
-        map.put("hrRecuritPlan",hrRecuritPlan);
-        return map;
+            map.put("hrRecruitEntryinfoBase",hrRecruitEntryinfoBase);
+            map.put("hrRecuritPlanNeedsDo",hrRecuritPlanNeedsDo);
+            map.put("hrRecuritWrite",hrRecuritWrite);
+            map.put("hrRecuritPlan",hrRecuritPlan);
+            return map;
+        } catch (Exception e) {
+            logger.error("笔试打印准考证报错："+e.getMessage(),e);
+        }
+        return null;
     }
 
     /**
@@ -325,18 +338,23 @@ public class UserinfoController extends AbstractController {
      */
     @RequestMapping("intercept/plan/userInfo/getHrRecruitReviewRecordVoByUser")
     public HrRecruitReviewRecordVo getHrRecruitReviewRecordVoByUser(HttpServletRequest request) {
-        HrRecruitReviewRecordVo result = new HrRecruitReviewRecordVo();
-        
-        UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
-        HrRecruitReviewRecordVo hrRecruitReviewRecordVo = hrRecruitReviewRecordService.getHrRecruitReviewRecordVoByUser(userContext);
+        try {
+            HrRecruitReviewRecordVo result = new HrRecruitReviewRecordVo();
 
-        result.setHrRecruitReviewRecord(hrRecruitReviewRecordVo.getHrRecruitReviewRecord());
-        //建一个新的基础信息
-        HrRecruitEntryinfoBase hrRecruitEntryinfoBase = new HrRecruitEntryinfoBase();
-        //只获取报名时间
-        hrRecruitEntryinfoBase.setSignuptime(hrRecruitReviewRecordVo.getHrRecruitEntryinfoBase().getSignuptime());
-        result.setHrRecruitEntryinfoBase(hrRecruitEntryinfoBase);
-        return result;
+            UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
+            HrRecruitReviewRecordVo hrRecruitReviewRecordVo = hrRecruitReviewRecordService.getHrRecruitReviewRecordVoByUser(userContext);
+
+            result.setHrRecruitReviewRecord(hrRecruitReviewRecordVo.getHrRecruitReviewRecord());
+            //建一个新的基础信息
+            HrRecruitEntryinfoBase hrRecruitEntryinfoBase = new HrRecruitEntryinfoBase();
+            //只获取报名时间
+            hrRecruitEntryinfoBase.setSignuptime(hrRecruitReviewRecordVo.getHrRecruitEntryinfoBase().getSignuptime());
+            result.setHrRecruitEntryinfoBase(hrRecruitEntryinfoBase);
+            return result;
+        } catch (Exception e) {
+            logger.error("获取资格审核错误："+e.getMessage(),e);
+        }
+        return null;
     }
 
     /**
@@ -346,9 +364,14 @@ public class UserinfoController extends AbstractController {
      */
     @RequestMapping("intercept/plan/userInfo/isReview")
     public boolean isReview(HttpServletRequest request){
-        UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
-        int baseIdByUser = hrRecruitEntryinfoBaseService.getBaseIdByUser(userContext);
-        return hrRecruitReviewRecordService.isReview(baseIdByUser);
+        try {
+            UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
+            int baseIdByUser = hrRecruitEntryinfoBaseService.getBaseIdByUser(userContext);
+            return hrRecruitReviewRecordService.isReview(baseIdByUser);
+        } catch (Exception e) {
+            logger.error("判断是否审核出错："+e.getMessage(),e);
+        }
+        return false;
     }
 
     /**
@@ -358,16 +381,21 @@ public class UserinfoController extends AbstractController {
      */
     @RequestMapping("intercept/plan/userInfo/userMsg")
     public List<HrRecruitNotice> userMsg(HttpServletRequest request, int hasRead, PageVo page) {
-        UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
-        //获取基础信息id
-        int baseId = hrRecruitEntryinfoBaseService.getBaseIdByUser(userContext);
+        try {
+            UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
+            //获取基础信息id
+            int baseId = hrRecruitEntryinfoBaseService.getBaseIdByUser(userContext);
 
-        HrRecruitNotice hrRecruitNotice = new HrRecruitNotice();
-        hrRecruitNotice.setBaseid(baseId);
-        hrRecruitNotice.setStatus(1);
-        hrRecruitNotice.setHasread(hasRead);
-        List<HrRecruitNotice> list = hrRecruitNoticeService.list(hrRecruitNotice, null, page);
-        return list;
+            HrRecruitNotice hrRecruitNotice = new HrRecruitNotice();
+            hrRecruitNotice.setBaseid(baseId);
+            hrRecruitNotice.setStatus(1);
+            hrRecruitNotice.setHasread(hasRead);
+            List<HrRecruitNotice> list = hrRecruitNoticeService.list(hrRecruitNotice, null, page);
+            return list;
+        } catch (Exception e) {
+            logger.error("获取用户消息出错："+e.getMessage(),e);
+        }
+        return null;
     }
 
     /**
@@ -376,7 +404,11 @@ public class UserinfoController extends AbstractController {
      */
     @RequestMapping("intercept/plan/userInfo/read")
     public void read(int id){
-        hrRecruitNoticeService.read(id);
+        try {
+            hrRecruitNoticeService.read(id);
+        } catch (Exception e) {
+            logger.error("设为阅读出错："+e.getMessage(),e);
+        }
     }
 
     /**
@@ -385,8 +417,12 @@ public class UserinfoController extends AbstractController {
      */
     @RequestMapping("intercept/plan/userInfo/userReadAll")
     public void userReadAll(HttpServletRequest request) {
-        UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
-        hrRecruitNoticeService.userReadAll(userContext);
+        try {
+            UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
+            hrRecruitNoticeService.userReadAll(userContext);
+        } catch (Exception e) {
+            logger.error("用户所有设为已读出错："+e.getMessage(),e);
+        }
     }
 
 
@@ -397,14 +433,18 @@ public class UserinfoController extends AbstractController {
      */
     @PostMapping("plan/plan/upload/img")
     public ResultMsg uploadImg(@RequestParam("file") MultipartFile file, HttpServletRequest request){
-        UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
-
-        int maxSize = 5000;
-
-        //指定本地文件夹存储图片
-        String filePath = myDefinedUtil.SYSTEM_FILE_FOLDER_IMG;
-        ResultMsg resultMsg = fileLoad.uploadFile(userContext,file, filePath, maxSize);
-        return resultMsg;
+        try {
+            UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
+            //最大文件大小 单位kb。
+            int maxSize = 5000;
+            //指定本地文件夹存储图片
+            String filePath = myDefinedUtil.SYSTEM_FILE_FOLDER_IMG;
+            ResultMsg resultMsg = fileLoad.uploadFile(userContext,file, filePath, maxSize);
+            return resultMsg;
+        } catch (Exception e) {
+            logger.error("上传头像出错："+e.getMessage(),e);
+        }
+        return null;
     }
 
     /**
@@ -414,14 +454,12 @@ public class UserinfoController extends AbstractController {
      * @throws Exception
      */
     @RequestMapping("plan/plan/download/img/{id}")
-    public String downloadImg(HttpServletResponse response, @PathVariable int id) throws Exception {
+    public void downloadImg(HttpServletResponse response, @PathVariable int id) throws Exception {
         try {
             hrRecruitEntryinfoBaseService.downloadImg(response,id);
-            return  "ok";
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("下载头像出错："+e.getMessage(),e);
         }
-        return "";
     }
 
     @RequestMapping("plan/userInfo/syncFile")
@@ -449,46 +487,5 @@ public class UserinfoController extends AbstractController {
     }
 
 
-    /**
-     * 用户信息同步文件
-     */
-    /*@RequestMapping("plan/userInfo/syncFile")
-    public ResultMsg syncFile() throws IOException {
-        try {
-            //查询未同步的文件
-            HrRecruitFile hrRecruitFile = new HrRecruitFile();
-            hrRecruitFile.setSyncfile(1);
-            List<HrRecruitFile> hrRecruitFiles = fileLoad.fileList(hrRecruitFile, null, null);
-            //保存文件进容器
-            Map<String, File> files = new HashMap<String, File>();
-            //本次的id集合
-            List<Integer> ids = new ArrayList<>();
-            for (HrRecruitFile hrRecruitFileEach:hrRecruitFiles) {
-                //保存文件
-                File file = new File(hrRecruitFileEach.getFileurl());
-                files.put(file.getName(), file);
 
-                //保存id
-                ids.add(hrRecruitFileEach.getId());
-            }
-            //同步
-            String result = fileLoad.upLoadFilePost(myDefinedUtil.USERINFO_SYNCFILE_URL, files);
-            //判断是否同步成功  成功进行修改本次同步文件的值
-            if(result != null && result.equals("ok")){
-                Example example = new Example(HrRecruitEntryinfoWork.class);
-                example.createCriteria().andIn("id",ids);
-
-                HrRecruitFile hrRecruitFileEdit = new HrRecruitFile();
-                hrRecruitFileEdit.setSyncfile(2);
-                fileLoad.fileEditExample(hrRecruitFileEdit,example);
-                resultMsg.setResultMsg(ResultMsg.MsgType.INFO,"同步成功");
-                return resultMsg;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
-        resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"同步失败");
-        return resultMsg;
-    }*/
 }

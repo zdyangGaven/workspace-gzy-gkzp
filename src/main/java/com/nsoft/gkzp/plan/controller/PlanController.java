@@ -60,7 +60,12 @@ public class PlanController extends AbstractController {
      */
     @RequestMapping("HrPostTypeController/list")
     public List<HrPostType> hrPostTypeControllerList(HrPostType hrPostType, String order, PageVo page){
-        return hrPostTypeService.list(hrPostType,order, page);
+        try {
+            return hrPostTypeService.list(hrPostType,order, page);
+        } catch (Exception e) {
+            logger.error("招聘类别出错："+e.getMessage(),e);
+        }
+        return null;
     }
 
     /**
@@ -70,10 +75,15 @@ public class PlanController extends AbstractController {
      */
     @RequestMapping("plan/getPlanByCurrentTime")
     public List<HrRecuritPlan> getPlanByCurrentTime(HrRecuritPlan hrRecuritPlan, String order, PageVo page){
-        //传入当前时间
-        hrRecuritPlan.setStarttime(new Date());
-        hrRecuritPlan.setEndtime(new Date());
-        return hrRecuritPlanService.list(hrRecuritPlan,order, page);
+        try {
+            //传入当前时间
+            hrRecuritPlan.setStarttime(new Date());
+            hrRecuritPlan.setEndtime(new Date());
+            return hrRecuritPlanService.list(hrRecuritPlan,order, page);
+        } catch (Exception e) {
+            logger.error("获取计划出错:"+e.getMessage(),e);
+        }
+        return null;
     }
 
     //招聘技术人才需求
@@ -86,10 +96,13 @@ public class PlanController extends AbstractController {
      */
     @RequestMapping("plan/plan/hrRecuritPlanNeeds/list")
     public List<HrRecuritPlanNeeds> hrRecuritPlanNeedsList(HrRecuritPlanNeeds hrRecuritPlanNeeds, String order, PageVo page){
-        return hrRecuritPlanNeedsService.list(hrRecuritPlanNeeds,order, page);
+        try {
+            return hrRecuritPlanNeedsService.list(hrRecuritPlanNeeds,order, page);
+        } catch (Exception e) {
+            logger.error("获取岗位出错："+e.getMessage(),e);
+        }
+        return null;
     }
-
-
 
 
     /**
@@ -101,7 +114,12 @@ public class PlanController extends AbstractController {
      */
     @RequestMapping("/plan/getPlanNeedsListByPlan")
     public List<HrRecuritPlanNeedsDo> getPlanNeedsListByPlan(HrRecuritPlanNeeds hrRecuritPlanNeeds, String order, PageVo page){
-        return hrRecuritPlanNeedsService.getListByPlan(hrRecuritPlanNeeds,order,page);
+        try {
+            return hrRecuritPlanNeedsService.getListByPlan(hrRecuritPlanNeeds,order,page);
+        } catch (Exception e) {
+            logger.error("获取岗位出错："+e.getMessage(),e);
+        }
+        return null;
     }
 
     /**
@@ -111,17 +129,27 @@ public class PlanController extends AbstractController {
      */
     @RequestMapping("intercept/plan/getHrRecuritPlanNeedsVoByUser")
     public HrRecuritPlanNeedsVo getHrRecuritPlanNeedsVoByUser(HttpServletRequest request) {
-        UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
-        HrRecuritPlanNeedsVo hrRecuritPlanNeedsVoByUser = hrRecuritPlanNeedsService.getHrRecuritPlanNeedsVoByUser(userContext);
-        if(hrRecuritPlanNeedsVoByUser != null)hrRecuritPlanNeedsVoByUser.setHrRecruitEntryinfoBase(null);
-        return hrRecuritPlanNeedsVoByUser;
+        try {
+            UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
+            HrRecuritPlanNeedsVo hrRecuritPlanNeedsVoByUser = hrRecuritPlanNeedsService.getHrRecuritPlanNeedsVoByUser(userContext);
+            if(hrRecuritPlanNeedsVoByUser != null)hrRecuritPlanNeedsVoByUser.setHrRecruitEntryinfoBase(null);
+            return hrRecuritPlanNeedsVoByUser;
+        } catch (Exception e) {
+            logger.error("根据登录用户获取岗位信息和招聘计划错误："+e.getMessage(),e);
+        }
+        return null;
     }
 
-    //根据岗位id获取岗位信息和招聘计划
+    //根据岗位id获取岗位信息和招聘计划 岗位详情
     @RequestMapping("plan/plan/getHrRecuritPlanNeedsVoById")
     public HrRecuritPlanNeedsVo getHrRecuritPlanNeedsVoById(int id) {
-        HrRecuritPlanNeedsVo hrRecuritPlanNeedsVoByUser = hrRecuritPlanNeedsService.getHrRecuritPlanNeedsVoById(id);
-        return hrRecuritPlanNeedsVoByUser;
+        try {
+            HrRecuritPlanNeedsVo hrRecuritPlanNeedsVoByUser = hrRecuritPlanNeedsService.getHrRecuritPlanNeedsVoById(id);
+            return hrRecuritPlanNeedsVoByUser;
+        } catch (Exception e) {
+            logger.error("岗位详情出错:"+e.getMessage(),e);
+        }
+        return null;
     }
 
     /**
@@ -131,25 +159,30 @@ public class PlanController extends AbstractController {
      */
     @RequestMapping("plan/plan/getHrRecruitReviewRecordVoByIdCard")
     public HrRecruitReviewRecordVo getHrRecruitReviewRecordVoByName(String idCard){
-        //输入为空返回
-        if(idCard.trim().equals("") || idCard == null) return null;
+        try {
+            //输入为空返回
+            if(idCard.trim().equals("") || idCard == null) return null;
 
-        HrRecruitReviewRecordVo result = new HrRecruitReviewRecordVo();
+            HrRecruitReviewRecordVo result = new HrRecruitReviewRecordVo();
 
-        HrRecruitEntryinfoBase infoBase = new HrRecruitEntryinfoBase();
-        infoBase.setIdcardno(idCard);
-        HrRecruitReviewRecordVo hrRecruitReviewRecordVo = hrRecruitReviewRecordService.getHrRecruitReviewRecordVoByInfoBase(infoBase);
-        //资格审核为空返回null
-        if(hrRecruitReviewRecordVo == null) return null;
+            HrRecruitEntryinfoBase infoBase = new HrRecruitEntryinfoBase();
+            infoBase.setIdcardno(idCard);
+            HrRecruitReviewRecordVo hrRecruitReviewRecordVo = hrRecruitReviewRecordService.getHrRecruitReviewRecordVoByInfoBase(infoBase);
+            //资格审核为空返回null
+            if(hrRecruitReviewRecordVo == null) return null;
 
-        result.setHrRecruitReviewRecord(hrRecruitReviewRecordVo.getHrRecruitReviewRecord());
-        //建一个新的基础信息
-        HrRecruitEntryinfoBase hrRecruitEntryinfoBase = new HrRecruitEntryinfoBase();
-        System.out.println(hrRecruitReviewRecordVo.getHrRecruitEntryinfoBase());
-        //只获取报名时间
-        hrRecruitEntryinfoBase.setSignuptime(hrRecruitReviewRecordVo.getHrRecruitEntryinfoBase().getSignuptime());
-        result.setHrRecruitEntryinfoBase(hrRecruitEntryinfoBase);
-        return result;
+            result.setHrRecruitReviewRecord(hrRecruitReviewRecordVo.getHrRecruitReviewRecord());
+            //建一个新的基础信息
+            HrRecruitEntryinfoBase hrRecruitEntryinfoBase = new HrRecruitEntryinfoBase();
+            System.out.println(hrRecruitReviewRecordVo.getHrRecruitEntryinfoBase());
+            //只获取报名时间
+            hrRecruitEntryinfoBase.setSignuptime(hrRecruitReviewRecordVo.getHrRecruitEntryinfoBase().getSignuptime());
+            result.setHrRecruitEntryinfoBase(hrRecruitEntryinfoBase);
+            return result;
+        } catch (Exception e) {
+            logger.error("身份证号查询资格审核出错："+e.getMessage(),e);
+        }
+        return null;
     }
 
 
@@ -169,7 +202,7 @@ public class PlanController extends AbstractController {
             resultMsg.setResultMsg(ResultMsg.MsgType.INFO,"申请岗位成功");
             return resultMsg;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("申请职位报错:"+e.getMessage(),e);
         }
         resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"申请岗位失败");
         return resultMsg;
@@ -196,7 +229,7 @@ public class PlanController extends AbstractController {
             resultMsg.setResultMsg(ResultMsg.MsgType.INFO,"申请岗位成功");
             return resultMsg;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("申请职位使用旧的信息报错:"+e.getMessage(),e);
         }
         resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"申请岗位失败");
         return resultMsg;
@@ -209,8 +242,13 @@ public class PlanController extends AbstractController {
      */
     @RequestMapping("intercept/plan/plan/getApplyByUser")
     public ResultMsg getApplyByUser(HttpServletRequest request){
-        UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
-        return hrRecuritPlanNeedsService.getApplyByUser(userContext);
+        try {
+            UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
+            return hrRecuritPlanNeedsService.getApplyByUser(userContext);
+        } catch (Exception e) {
+            logger.error("获取用户申请职位状态报错:"+e.getMessage(),e);
+        }
+        return null;
     }
 
 
@@ -221,9 +259,14 @@ public class PlanController extends AbstractController {
      */
     @RequestMapping("plan/plan/uenumdataList")
     public List<Uenumdata> uenumdataList(){
-        Uenumdata uenumdata = new Uenumdata();
-        uenumdata.setEnumtypecode("SS_race");
-        return uenumdataService.list(uenumdata,null,null);
+        try {
+            Uenumdata uenumdata = new Uenumdata();
+            uenumdata.setEnumtypecode("SS_race");
+            return uenumdataService.list(uenumdata,null,null);
+        } catch (Exception e) {
+            logger.error("查询民族出错:"+e.getMessage(),e);
+        }
+        return null;
     }
 
 }
