@@ -175,14 +175,14 @@ public class FileLoad {
         //查询文件
         Example example = new Example(Affixfile.class);
         example.createCriteria().andIn("id",idList);
-        List<HrRecruitFile> hrRecruitFiles = hrRecruitFileDao.selectByExample(example);
+        List<Affixfile> affixfiles = affixfileDao.selectByExample(example);
 
         //组装文件list
         List<FileVo> fileVos = new ArrayList<>();
-        for (HrRecruitFile hrRecruitFile:hrRecruitFiles) {
+        for (Affixfile affixfile:affixfiles) {
             FileVo fileVo = new FileVo();
-            fileVo.setId(hrRecruitFile.getId());
-            fileVo.setName(hrRecruitFile.getFilecname());
+            fileVo.setId(affixfile.getId());
+            fileVo.setName(affixfile.getFilecname());
             fileVos.add(fileVo);
         }
 

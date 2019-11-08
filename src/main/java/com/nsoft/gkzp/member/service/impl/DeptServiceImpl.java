@@ -18,6 +18,13 @@ public class DeptServiceImpl implements DeptService {
     @Autowired
     DeptDao deptDao;
 
+    /**
+     * 查询
+     * @param dept
+     * @param order
+     * @param page
+     * @return
+     */
     @Override
     public List<Dept> list(Dept dept, String order, PageVo page) {
         //判断都有值通过
@@ -38,5 +45,20 @@ public class DeptServiceImpl implements DeptService {
         // 取分页信息
         PageInfo<Dept> pageInfo = new PageInfo<Dept>(list);
         return list;
+    }
+
+    @Override
+    public List<Dept> getDeptByDeptName(String deptName) {
+        //查询出部门id
+        Dept dept = new Dept();
+        dept.setDeptname(deptName);
+        List<Dept> select = deptDao.select(dept);
+        if(select.size() == 0) return null;
+        Integer parentId = select.get(0).getId();
+        
+        //查询部门的子类
+        Dept deptChild = new Dept();
+        deptChild.setParentid(parentId);
+        return deptDao.select(deptChild);
     }
 }

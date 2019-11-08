@@ -205,12 +205,25 @@ public class UserinfoController extends AbstractController {
         return result;
     }
 
+    /**
+     * 使用进行体检
+     * @param request
+     * @param isjoin
+     * @return
+     */
     @RequestMapping("intercept/plan/userInfo/healthchkIsJoin")
     public ResultMsg healthchkIsJoin(HttpServletRequest request,int isjoin){
         ResultMsg resultMsg = new ResultMsg();
         try {
             UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
             HrRecruitHealthchk hrRecruitHealthchkByUser = hrRecruitHealthchkService.getHrRecruitHealthchkByUser(userContext);
+            //判断是否出结果
+            Integer result = hrRecruitHealthchkByUser.getResult();
+            if(result == 1 || result == 2){
+                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"体检结果已出，不能进行修改！");
+                return resultMsg;
+            }
+
             hrRecruitHealthchkByUser.setIsjoin(isjoin);
             hrRecruitHealthchkByUser.setSyncisjoin(1);
             hrRecruitHealthchkService.edit(hrRecruitHealthchkByUser);
@@ -238,14 +251,27 @@ public class UserinfoController extends AbstractController {
     }
 
     /**
-     * 通过用户获取面试数据
+     * 通过用户获取面试数据  打印准考证
      * @param request
      * @return
      */
-    @RequestMapping("intercept/plan/userInfo/getHrRecuritInterviewByUser")
-    public HrRecuritInterview getHrRecuritInterviewByUser(HttpServletRequest request) {
+    @RequestMapping("intercept/plan/userInfo/getHrRecuritInterviewPrint")
+    public HashMap<String, Object> getHrRecuritInterviewByUser(HttpServletRequest request) {
         UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
-        return hrRecuritInterviewService.getHrRecuritInterviewByUser(userContext);
+        HashMap<String, Object> map = new HashMap<>();
+        //基础信息
+        HrRecruitEntryinfoBase hrRecruitEntryinfoBase = hrRecruitEntryinfoBaseService.getBaseByUser(userContext);
+
+        //岗位
+        HrRecuritPlanNeeds hrRecuritPlanNeeds = hrRecuritPlanNeedsService.getHrRecuritPlanNeedsById(hrRecruitEntryinfoBase.getPostid());
+
+        //面试信息
+        HrRecuritInterview hrRecuritInterview = hrRecuritInterviewService.getHrRecuritInterviewByUser(userContext);
+
+        map.put("hrRecruitEntryinfoBase",hrRecruitEntryinfoBase);
+        map.put("hrRecuritPlanNeeds",hrRecuritPlanNeeds);
+        map.put("hrRecuritInterview",hrRecuritInterview);
+        return map;
     }
 
     /**
@@ -253,10 +279,23 @@ public class UserinfoController extends AbstractController {
      * @param request
      * @return
      */
-    @RequestMapping("intercept/plan/userInfo/getHrRecuritWriteByUser")
-    public HrRecuritWrite getHrRecuritWriteByUser(HttpServletRequest request) {
+    @RequestMapping("intercept/plan/userInfo/getHrRecuritWritePrint")
+    public HashMap<String, Object> getHrRecuritWriteByUser(HttpServletRequest request) {
         UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
-        return hrRecuritWriteService.getHrRecuritWriteByUser(userContext);
+        HashMap<String, Object> map = new HashMap<>();
+        //基础信息
+        HrRecruitEntryinfoBase hrRecruitEntryinfoBase = hrRecruitEntryinfoBaseService.getBaseByUser(userContext);
+
+        //岗位
+        HrRecuritPlanNeeds hrRecuritPlanNeeds = hrRecuritPlanNeedsService.getHrRecuritPlanNeedsById(hrRecruitEntryinfoBase.getPostid());
+
+        //笔试信息
+        HrRecuritWrite hrRecuritWrite = hrRecuritWriteService.getHrRecuritWriteByUser(userContext);
+
+        map.put("hrRecruitEntryinfoBase",hrRecruitEntryinfoBase);
+        map.put("hrRecuritPlanNeeds",hrRecuritPlanNeeds);
+        map.put("hrRecuritWrite",hrRecuritWrite);
+        return map;
     }
 
     /**
