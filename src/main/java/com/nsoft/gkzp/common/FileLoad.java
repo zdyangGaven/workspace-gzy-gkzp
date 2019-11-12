@@ -30,6 +30,7 @@ public class FileLoad {
     @Autowired
     AffixfileDao affixfileDao;
 
+
     /**
      * 上传文件
      * @param file 文件
@@ -40,8 +41,6 @@ public class FileLoad {
     public ResultMsg uploadFile(UserContext userContext, MultipartFile file, String filePath,int maxSize){
         ResultMsg resultMsg = new ResultMsg();
 
-        System.out.println(file.getSize()/1024);
-        System.out.println(file.getSize()/1024>maxSize);
         if(file.getSize()/1024>maxSize){
             resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"上传文件过大");
             return resultMsg;
@@ -80,11 +79,49 @@ public class FileLoad {
         return resultMsg;
     }
 
+    /*public ResultData upload(MultipartFile file) {
+        if (!file.isEmpty()) {
+
+            StringBuffer requestURL = sessionUtil.getRequestURL();
+            int end = requestURL.indexOf("/user/upload");
+            String basePath = requestURL.substring(0, end);
+            String savePath = basePath + "/static/img/logo/";
+            // 获取文件名称,包含后缀
+            String fileName = file.getOriginalFilename();
+
+            String saveDbPath = savePath + fileName;
+
+            // 存放在这个路径下：该路径是该工程目录下的static文件下：(注：该文件可能需要自己创建)
+            // 放在static下的原因是，存放的是静态文件资源，即通过浏览器输入本地服务器地址，加文件名时是可以访问到的
+            String path = ClassUtils.getDefaultClassLoader().getResource("").getPath() + "static/img/logo/";
+
+            // 该方法是对文件写入的封装，在util类中，导入该包即可使用，后面会给出方法
+            try {
+                FileUtil.fileupload(file.getBytes(), path, fileName);
+                // 接着创建对应的实体类，将以下路径进行添加，然后通过数据库操作方法写入
+                User user = sessionUtil.getSessionUser();
+                user.setLogo(saveDbPath);
+                User whereUser = new User();
+                whereUser.setId(user.getId());
+                ConfigHelper.upate(user, "user", whereUser);
+                Map<String, Object> map = new HashMap<>();
+                map.put("msg", "头像修改成功");
+                map.put("data", user);
+                return ResultData.ok(map);
+            }catch (Exception e) {
+                return ResultData.failed(e.getMessage());
+            }
+
+        } else {
+            return ResultData.failed("上传图片失败");
+        }
+    }*/
+
     /**
      * 下载文件
      * @param response
-     * @param fileName
-     * @param filePath
+     * @param fileName  文件名称
+     * @param filePath  文件路径
      * @throws Exception
      */
     public void downloadFile(HttpServletResponse response,String fileName,String filePath) throws Exception{
@@ -194,11 +231,12 @@ public class FileLoad {
      * @param id
      * @return
      */
-    public FileVo getAffixfileWithBLOBsByid(int id){
+    public FileVo getAffixFileById(int id){
         Affixfile affixfile = affixfileDao.selectByPrimaryKey(id);
         FileVo fileVo = new FileVo();
         fileVo.setId(affixfile.getId());
         fileVo.setName(affixfile.getFilecname());
+        fileVo.setUrl(affixfile.getFileurl());
         return fileVo;
     }
 

@@ -1,7 +1,10 @@
 package com.nsoft.gkzp.notice.controller;
 
+import com.nsoft.gkzp.common.FileLoad;
+import com.nsoft.gkzp.common.entity.FileVo;
 import com.nsoft.gkzp.notice.entity.HrRecruitArticle;
 import com.nsoft.gkzp.notice.service.HrRecruitArticleService;
+import com.nsoft.gkzp.syscore.config.MyDefinedUtil;
 import com.nsoft.gkzp.syscore.web.AbstractController;
 import com.nsoft.gkzp.util.PageVo;
 import org.apache.commons.lang.StringUtils;
@@ -16,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +29,13 @@ public class HrRecruitArticleController extends AbstractController {
 
     @Autowired
     HrRecruitArticleService hrRecruitArticleService;
+
+    @Autowired
+    FileLoad fileLoad;
+
+    //配置文件
+    @Autowired
+    MyDefinedUtil myDefinedUtil;
 
     /**
      * 查询公告数据
@@ -35,9 +47,30 @@ public class HrRecruitArticleController extends AbstractController {
     @RequestMapping("/HrRecruitArticleController/list")
     public List<HrRecruitArticle> list(HrRecruitArticle hrRecruitArticle, String order, PageVo page){
         try {
+            hrRecruitArticle.setStatus(1);
             return hrRecruitArticleService.list(hrRecruitArticle,order, page);
         } catch (Exception e) {
             logger.error("公告出错："+e.getMessage(),e);
+        }
+        return null;
+    }
+
+    /**
+     * 招聘公告和聘用公告显示
+     * @return
+     */
+    @RequestMapping("notice/findRecruitmentAndHire")
+    public List<HrRecruitArticle> findRecruitmentAndHire(PageVo page){
+        try {
+            HrRecruitArticle hrRecruitArticle = new HrRecruitArticle();
+            hrRecruitArticle.setStatus(1);
+
+            ArrayList<Object> types = new ArrayList<>();
+            types.add(1);
+            types.add(3);
+            return hrRecruitArticleService.list(hrRecruitArticle,"id DESC",page,types);
+        } catch (Exception e) {
+            logger.error("招聘公告和聘用公告显示出错："+e.getMessage(),e);
         }
         return null;
     }
@@ -76,20 +109,38 @@ public class HrRecruitArticleController extends AbstractController {
     }
 
     /**
+     * 图片、文件下载
+     * @param request
+     * @param response
+     * @param AffixID  文件id
+     * @throws Exception
+     */
+    @RequestMapping("/com/down")
+    public void down(HttpServletRequest request, HttpServletResponse response,Integer AffixID) throws Exception {
+        FileVo fileVo = fileLoad.getAffixFileById(AffixID);
+        fileLoad.downloadFile(response,fileVo.getName(),fileVo.getUrl());
+    }
+
+    /**
      * 接收内网推送的文件
      * @param request
      * @param response
      * @return
      */
     @RequestMapping("notice/syncFile")
-    public void  syncFile(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void  syncFile(HttpServletRequest request, HttpServletResponse response,String FileUrl) throws IOException {
+        System.out.println(FileUrl);
+        /*System.out.println(URLDecoder.decode(FileUrl,"UTF-8"));*/
         // 文件保存路径
-        String filePath = "E:/upload/Form/";
-        System.out.println("进入");
+        String filePath = myDefinedUtil.SYSTEM_FILE_FOLDER_IMG;
+        //获取年份
+        Calendar date = Calendar.getInstance();
+        String year = String.valueOf(date.get(Calendar.YEAR));
+        filePath = filePath+year+"/";
+
         //操作成功则返回OK
         String result = "";
         MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
-        System.out.println(multiRequest);
         //解析request，将结果放置在list中
         Map<String, List<MultipartFile>> fileMap = multiRequest.getMultiFileMap();
         for (String key : fileMap.keySet()) {

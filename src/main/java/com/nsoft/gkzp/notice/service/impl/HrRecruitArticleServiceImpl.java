@@ -38,7 +38,11 @@ public class HrRecruitArticleServiceImpl implements HrRecruitArticleService {
      */
     @Override
     public List<HrRecruitArticle> list(HrRecruitArticle hrRecruitArticle, String order, PageVo page) {
+        return list(hrRecruitArticle,order,page,null);
+    }
 
+    @Override
+    public List<HrRecruitArticle> list(HrRecruitArticle hrRecruitArticle, String order, PageVo page, List<Object> typeList) {
         //判断都有值通过
         if(page != null && page.getPageNum() != 0 && page.getPageSize() != 0){
             //分页处理，显示第一页的10条数据
@@ -57,6 +61,13 @@ public class HrRecruitArticleServiceImpl implements HrRecruitArticleService {
 
         //清除
         hrRecruitArticle.setTitle(null);
+
+        //类型包含
+        if(typeList != null){
+            criteria.andIn("type",typeList);
+            //清除
+            hrRecruitArticle.setType(null);
+        }
 
         //筛选
         criteria.andEqualTo(hrRecruitArticle);
