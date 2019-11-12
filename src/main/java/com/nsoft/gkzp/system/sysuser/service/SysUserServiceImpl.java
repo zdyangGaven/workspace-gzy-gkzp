@@ -32,6 +32,7 @@ public class SysUserServiceImpl extends AbstractService implements SysUserServic
             sysUser =sysUserDao.login(uName,pwd);
         } catch (Exception e) {
             e.printStackTrace();
+            logger.error("登录验证出错 参数：uName="+uName,e);
             throw new ServiceException("登录校验出错 uName="+uName, e);
         }
         return sysUser;
@@ -51,7 +52,7 @@ public class SysUserServiceImpl extends AbstractService implements SysUserServic
                 id = temp.intValue();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("查找ID出错 column="+column+",value="+value, e);
             throw new ServiceException("查找ID出错 column="+column+",value="+value, e);
         }
 
@@ -70,7 +71,7 @@ public class SysUserServiceImpl extends AbstractService implements SysUserServic
              sysUserDao.saveRegister(loginName,password);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("向数据库插入注册信息时出错 loginName="+loginName+",password="+password, e);
             throw new ServiceException("向数据库插入注册信息时出错 loginName="+loginName+",password="+password, e);
         }
     }
@@ -86,7 +87,7 @@ public class SysUserServiceImpl extends AbstractService implements SysUserServic
             sysUserDao.changePWD(id,password);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("向数据库修改密码时出错 id="+id+",password="+password, e);
             throw new ServiceException("向数据库修改密码时出错 id="+id+",password="+password, e);
         }
     }
@@ -104,7 +105,7 @@ public class SysUserServiceImpl extends AbstractService implements SysUserServic
             list = sysUserDao.getUserInfos(fuzzyChars);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("查询获取用户信息时出错 fuzzyChars="+fuzzyChars, e);
             throw new ServiceException("查询获取用户信息时出错", e);
         }
         return list;
