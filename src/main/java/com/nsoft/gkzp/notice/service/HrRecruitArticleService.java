@@ -17,6 +17,16 @@ public interface HrRecruitArticleService {
     List<HrRecruitArticle> list(HrRecruitArticle hrRecruitArticle, String order, PageVo page);
 
     /**
+     * 查询公告数据
+     * @param hrRecruitArticle
+     * @param order 排序
+     * @param page 分页
+     * @param typeList 类型的包含查询
+     * @return
+     */
+    List<HrRecruitArticle> list(HrRecruitArticle hrRecruitArticle, String order, PageVo page,List<Object> typeList);
+
+    /**
      * 通过id查询
      * @param id
      * @return

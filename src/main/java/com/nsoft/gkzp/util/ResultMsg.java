@@ -54,12 +54,26 @@ public class ResultMsg  implements Serializable {
         this.data = data;
     }
 
+
     public void setResultMsg(int type, String msg, Object data){
         this.type = type;
         this.msg = msg;
         this.data = data;
     }
 
+    public ResultMsg() {
+    }
+
+    public ResultMsg(int type, String msg) {
+        this.type = type;
+        this.msg = msg;
+    }
+
+    public ResultMsg(int type, String msg, Object data) {
+        this.type = type;
+        this.msg = msg;
+        this.data = data;
+    }
 
     @Override
     public String toString() {

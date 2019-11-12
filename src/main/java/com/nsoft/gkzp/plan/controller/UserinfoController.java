@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.WebUtils;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.HashMap;
@@ -262,7 +264,6 @@ public class UserinfoController extends AbstractController {
             UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
             return hrRecruitHealthchkService.getHrRecruitHealthchkByUser(userContext);
         } catch (Exception e) {
-            e.printStackTrace();
             logger.error("获取体检数据出错："+e.getMessage(),e);
         }
         return null;
@@ -433,14 +434,39 @@ public class UserinfoController extends AbstractController {
      */
     @PostMapping("plan/plan/upload/img")
     public ResultMsg uploadImg(@RequestParam("file") MultipartFile file, HttpServletRequest request){
+        ResultMsg resultMsg = new ResultMsg();
         try {
             UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
             //最大文件大小 单位kb。
             int maxSize = 5000;
+
+            if (file.isEmpty()) {
+                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR, "文件不存在");
+                return resultMsg;
+            }
+
+            //对文文件的全名进行截取然后在后缀名进行删选。
+            int begin = file.getOriginalFilename().indexOf(".");
+            int last = file.getOriginalFilename().length();
+            //获得文件后缀名
+            String type = file.getOriginalFilename().substring(begin, last);
+            //我这边需要的xlsx文件所以说我这边直接判断就是了
+            if (!type.equals(".jpg") && !type.equals(".png")){
+                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"请选择jpg或png类型");
+                return resultMsg;
+            }
+
+            BufferedImage bufferedImage = ImageIO.read(file.getInputStream()); // 通过MultipartFile得到InputStream，从而得到BufferedImage
+            Integer width = bufferedImage.getWidth();
+            Integer height = bufferedImage.getHeight();
+            if(width != 295 || height != 413) return new ResultMsg(ResultMsg.MsgType.ERROR,"请选择正确的图片尺寸大小");
+
+
+
             //指定本地文件夹存储图片
             String filePath = myDefinedUtil.SYSTEM_FILE_FOLDER_IMG;
-            ResultMsg resultMsg = fileLoad.uploadFile(userContext,file, filePath, maxSize);
-            return resultMsg;
+
+            return fileLoad.uploadFile(userContext,file, filePath, maxSize);
         } catch (Exception e) {
             logger.error("上传头像出错："+e.getMessage(),e);
         }

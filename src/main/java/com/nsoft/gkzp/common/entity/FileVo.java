@@ -6,6 +6,24 @@ public class FileVo {
 
     private String name;
 
+    private String url;
+
+    @Override
+    public String toString() {
+        return "FileVo{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public int getId() {
         return id;
     }
