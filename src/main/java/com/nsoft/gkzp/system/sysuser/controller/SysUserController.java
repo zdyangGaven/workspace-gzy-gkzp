@@ -126,7 +126,7 @@ public class SysUserController {
             }
 
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error("登录报错喽:参数为：loginName="+loginName,e);
             //model.addAttribute(MESSAGE, "登录产生异常!");
             //return ERRORPAGE;
             resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"登录产生异常! 请重新登录");
@@ -232,7 +232,7 @@ public class SysUserController {
             sysUserService.saveRegister(loginName,SHApassword);
 
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error("注册报错喽：",e);
            //model.addAttribute(MESSAGE, "注册产生异常!");
             //return REGISTER_ERRORPAGE;
             resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"注册产生异常! 请联系管理员");
@@ -315,7 +315,7 @@ public class SysUserController {
             sysUserService.changePWD(userContext.getLoginUserId(),SHApassword);
 
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error("修改密码报错喽：",e);
             resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"修改密码产生异常! 请联系管理员");
             return resultMsg;
         }
@@ -347,7 +347,7 @@ public class SysUserController {
                 resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"用户未登陆!");
             }
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error("从session中获得登录用户名报错喽：",e);
             resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"出现异常！");
         }
 
@@ -367,7 +367,7 @@ public class SysUserController {
             WebUtils.setSessionAttribute(request, "userContext", null);
             // resultMsg.setResultMsg(ResultMsg.MsgType.INFO,"注销成功");
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error("注销操作报错喽：",e);
             //  resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"注销失败");
         }
         //  return resultMsg;
@@ -397,7 +397,7 @@ public class SysUserController {
             result.put("total",data.getTotal());
 
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error("获取用户信息报错喽：",e);
             //   throw new ControllerException("分页查询失败",e,userContext);
         }
 
@@ -430,7 +430,6 @@ public class SysUserController {
             }
 
         }catch (Exception e){
-            e.printStackTrace();
             logger.error("密码初始化错误id="+id+"loginName="+loginName+";\n "+e.getMessage());
             resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"系统出现错误，请联系管理员");
         }
@@ -589,7 +588,7 @@ public class SysUserController {
             baos.close();
             sos.close();
         }catch (Exception e) {
-            e.printStackTrace();
+            logger.error("生成验证码报错喽：",e);
 
         }
     }
