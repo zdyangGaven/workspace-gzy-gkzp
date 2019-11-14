@@ -47,6 +47,25 @@ public class HrPostTypeServiceImpl implements HrPostTypeService {
     }
 
     /**
+     * 根据类型查询子类
+     * @param typeString
+     * @return
+     */
+    @Override
+    public List<HrPostType> getPostTypeByTypeString(String typeString) {
+        HrPostType hrPostType = new HrPostType();
+        hrPostType.setTypestring(typeString);
+        List<HrPostType> select = hrPostTypeDao.select(hrPostType);
+        if(select.size() == 0) return null;
+
+        Integer parentId = select.get(0).getId();
+        HrPostType hrPostTypeChild = new HrPostType();
+        hrPostTypeChild.setTypeparent(parentId);
+
+        return hrPostTypeDao.select(hrPostTypeChild);
+    }
+
+    /**
      * 新增
      * @param hrPostType
      */

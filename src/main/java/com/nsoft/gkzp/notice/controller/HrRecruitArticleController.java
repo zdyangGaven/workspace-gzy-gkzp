@@ -85,7 +85,7 @@ public class HrRecruitArticleController extends AbstractController {
         try {
             return hrRecruitArticleService.getHrRecruitArticleById(id);
         } catch (Exception e) {
-            logger.error("公告详情出错："+e.getMessage(),e);
+            logger.error("公告详情出错：id="+id,e);
         }
         return null;
     }
@@ -103,7 +103,7 @@ public class HrRecruitArticleController extends AbstractController {
             hrRecruitArticle.setTitle(title);
             return hrRecruitArticleService.list(hrRecruitArticle,null,null);
         } catch (Exception e) {
-            logger.error("模糊搜索公告出错："+e.getMessage(),e);
+            logger.error("模糊搜索公告出错：title="+title,e);
         }
         return null;
     }

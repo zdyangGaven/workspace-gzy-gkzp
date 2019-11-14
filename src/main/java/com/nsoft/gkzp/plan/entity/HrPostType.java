@@ -9,7 +9,7 @@ public class HrPostType {
 
     private String typeremark;
 
-    private String typeparent;
+    private Integer typeparent;
 
     private String typestring;
 
@@ -45,12 +45,12 @@ public class HrPostType {
         this.typeremark = typeremark == null ? null : typeremark.trim();
     }
 
-    public String getTypeparent() {
+    public Integer getTypeparent() {
         return typeparent;
     }
 
-    public void setTypeparent(String typeparent) {
-        this.typeparent = typeparent == null ? null : typeparent.trim();
+    public void setTypeparent(Integer typeparent) {
+        this.typeparent = typeparent;
     }
 
     public String getTypestring() {

@@ -69,6 +69,21 @@ public class PlanController extends AbstractController {
     }
 
     /**
+     * 通过类型查询子类
+     * @param typeString
+     * @return
+     */
+    @RequestMapping("plan/plan/getPostTypeByTypeString")
+    public List<HrPostType> getPostTypeByTypeString(String typeString){
+        try {
+            return hrPostTypeService.getPostTypeByTypeString(typeString);
+        } catch (Exception e) {
+            logger.error("招聘类别出错：typeString="+typeString,e);
+        }
+        return null;
+    }
+
+    /**
      * 计划的集合
      * @param page 分页
      * @return
@@ -115,6 +130,7 @@ public class PlanController extends AbstractController {
     @RequestMapping("/plan/getPlanNeedsListByPlan")
     public List<HrRecuritPlanNeedsDo> getPlanNeedsListByPlan(HrRecuritPlanNeeds hrRecuritPlanNeeds, String order, PageVo page){
         try {
+            System.out.println(hrRecuritPlanNeeds);
             return hrRecuritPlanNeedsService.getListByPlan(hrRecuritPlanNeeds,order,page);
         } catch (Exception e) {
             logger.error("获取岗位出错："+e.getMessage(),e);

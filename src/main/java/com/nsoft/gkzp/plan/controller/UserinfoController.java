@@ -231,11 +231,14 @@ public class UserinfoController extends AbstractController {
         try {
             UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
             HrRecruitHealthchk hrRecruitHealthchkByUser = hrRecruitHealthchkService.getHrRecruitHealthchkByUser(userContext);
-            //判断是否出结果
-            Integer result = hrRecruitHealthchkByUser.getResult();
-            if(result == 1 || result == 2){
-                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"体检结果已出，不能进行修改！");
-                return resultMsg;
+
+            if(hrRecruitHealthchkByUser.getResult() != null){
+                //判断是否出结果
+                Integer result = hrRecruitHealthchkByUser.getResult();
+                if(result == 1 || result == 2){
+                    resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"体检结果已出，不能进行修改！");
+                    return resultMsg;
+                }
             }
 
             hrRecruitHealthchkByUser.setIsjoin(isjoin);

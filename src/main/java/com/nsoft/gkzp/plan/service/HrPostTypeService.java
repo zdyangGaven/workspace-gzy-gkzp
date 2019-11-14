@@ -16,6 +16,13 @@ public interface HrPostTypeService {
     List<HrPostType> list(HrPostType hrPostType, String order, PageVo page);
 
     /**
+     * 通过类型查询子类
+     * @param typeString
+     * @return
+     */
+    List<HrPostType> getPostTypeByTypeString(String typeString);
+
+    /**
      * 新增
      * @param hrPostType
      */
