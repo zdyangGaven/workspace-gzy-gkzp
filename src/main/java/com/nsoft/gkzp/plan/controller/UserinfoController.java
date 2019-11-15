@@ -462,7 +462,7 @@ public class UserinfoController extends AbstractController {
             BufferedImage bufferedImage = ImageIO.read(file.getInputStream()); // 通过MultipartFile得到InputStream，从而得到BufferedImage
             Integer width = bufferedImage.getWidth();
             Integer height = bufferedImage.getHeight();
-            if(width != 295 || height != 413) return new ResultMsg(ResultMsg.MsgType.ERROR,"请选择正确的图片尺寸大小");
+            if(width != 100 || height != 140) return new ResultMsg(ResultMsg.MsgType.ERROR,"请选择正确的图片尺寸大小");
 
 
 
