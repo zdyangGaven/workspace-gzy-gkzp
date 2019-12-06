@@ -13,25 +13,25 @@ public class HrRecruitEntryinfoWork implements Serializable {
     @Column(insertable=false)
     private Integer id;
 
-    private Integer baseid;
+    private Integer baseid;//基础信息ID
 
     //不映射数据库字段
     @Transient
     private String[] duration;
 
-    private String unit;
+    private String unit;//工作单位
 
-    private String post;
+    private String post;//职务
 
-    private String leavereason;
+    private String leavereason;//离职原因
 
-    private String remarks;
+    private String remarks;//备注
 
-    private Integer syncstatus;
+    private Integer syncstatus;//是否已同步
     @JsonIgnore
-    private Date starttime;
+    private Date starttime;//开始时间
     @JsonIgnore
-    private Date endtime;
+    private Date endtime;//结束时间
 
     @Override
     public String toString() {

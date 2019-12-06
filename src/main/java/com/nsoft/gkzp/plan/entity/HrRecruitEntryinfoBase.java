@@ -16,75 +16,77 @@ public class HrRecruitEntryinfoBase implements Serializable {
     @Column(insertable=false)
     private Integer id;
 
-    private Integer planid;
+    private Integer planid;//所属招聘计划
 
-    private Integer postid;
+    private Integer postid;//岗位
 
-    private Integer posttypeid;
+    private Integer posttypeid;//岗位类别
 
-    private Integer headimage;
+    private Integer headimage;//头像
 
-    private String name;
+    private String name;//姓名
 
-    private Integer gender;
+    private Integer gender;//性别
 
-    private String idcardno;
+    private String idcardno;//身份证号
 
-    private Integer nation;
+    private Integer nation;//民族
 
-    private Integer politics;
+    private Integer politics;//政治面貌
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
-    private Date birthdate;
+    private Date birthdate;//出生年月
 
     //不映射数据库字段
     @Transient
     private String birthdateStr;
 
-    private Integer maritalstatus;
+    private Integer maritalstatus;//婚姻情况
 
-    private String nativeplace;
+    private String nativeplace;//籍贯
 
-    private String faith;
+    private String faith;//宗教信仰
 
-    private String height;
+    private String height;//身高
 
-    private String fulltimeschooling;
+    private String fulltimeschooling;//全日制教育
 
-    private String degrees1;
+    private String degrees1;//学位(全日制教育)
 
-    private String inserviceedu;
+    private String inserviceedu;//在职教育
 
-    private String degrees2;
+    private String degrees2;//学位(在职教育)
 
-    private String speciality;
+    private String speciality;//特长
 
-    private Integer workingyears;
+    private Integer workingyears;//年限(工龄)
 
-    private String certifiedinfo1;
+    private String certifiedinfo1;//专业资格信息
 
-    private String certifiedinfo2;
+    private String certifiedinfo2;//职业资格信息
 
-    private Integer isobey;
+    private Integer isobey;//是否服从调剂
 
-    private Integer isinternalstaff;
+    private Integer isinternalstaff;//是否编内人员
 
-    private Integer isnewest;
+    private Integer isnewest;//是否最新信息
 
-    private String submitman;
-
-    @JsonIgnore
-    private Date submittime;
+    private String submitman;//提交人
 
     @JsonIgnore
-    private Date modifytime;
+    private Date submittime;//提交时间
 
-    private Integer loginuserid;
+    @JsonIgnore
+    private Date modifytime;//修改时间
+
+    private Integer loginuserid;//所处审查环节
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
-    private Date signuptime;
+    private Date signuptime;//报名时间
 
-    private Integer syncstatus;
+    private Integer syncstatus;//是否已同步
+
+    private Integer finalresult;//最终审核结果
 
     @Override
     public String toString() {
@@ -120,6 +122,14 @@ public class HrRecruitEntryinfoBase implements Serializable {
                 ", modifytime=" + modifytime +
                 ", loginuserid=" + loginuserid +
                 '}';
+    }
+
+    public Integer getFinalresult() {
+        return finalresult;
+    }
+
+    public void setFinalresult(Integer finalresult) {
+        this.finalresult = finalresult;
     }
 
     public String getBirthdateStr() {

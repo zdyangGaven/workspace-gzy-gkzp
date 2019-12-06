@@ -5,37 +5,37 @@ import java.util.Date;
 public class HrRecuritPlanDetails {
     private Integer id;
 
-    private String planId;
+    private String planId;//招聘计划id
 
-    private String deptno;
+    private String deptno;//二级学院ID
 
-    private Integer detailsStatus;
+    private Integer detailsStatus;//计划状态
 
-    private String inputman;
+    private String inputman;//录入人
 
-    private Date inputtime;
+    private Date inputtime;//修改时间
 
-    private String deptexamine;
+    private String deptexamine;//部门审核
 
-    private Date depttime;
+    private Date depttime;//部门审核时间
 
-    private String deptopinion;
+    private String deptopinion;//部门领导意见
 
-    private String leaderman;
+    private String leaderman;//分管领导审核
 
-    private Date leadertime;
+    private Date leadertime;//领导审核时间
 
-    private String leaderopinion;
+    private String leaderopinion;//领导意见
 
-    private String personnel;
+    private String personnel;//人事处复核
 
-    private Date personneltime;
+    private Date personneltime;//人事复核时间
 
-    private String personnelopinion;
+    private String personnelopinion;//人事意见
 
-    private String affixfile;
+    private String affixfile;//附件
 
-    private String deptname;
+    private String deptname;//部门名称
 
     public Integer getId() {
         return id;

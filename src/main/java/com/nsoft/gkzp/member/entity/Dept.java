@@ -8,35 +8,35 @@ public class Dept implements Serializable {
     @Id
     private Integer id;
 
-    private Integer deptno;
+    private Integer deptno;//部门编号
 
-    private String deptname;
+    private String deptname;//部门名称
 
-    private Integer deptlevel;
+    private Integer deptlevel;//部门级别
 
-    private Integer deptright;
+    private Integer deptright;//部门权限
 
-    private String leader;
+    private String leader;//部门领导
 
-    private Integer parentid;
+    private Integer parentid;//上级部门
 
-    private String deptduty;
+    private String deptduty;//部门职责
 
-    private String deptphone;
+    private String deptphone;//部门电话
 
-    private String deptemail;
+    private String deptemail;//部门邮箱
 
-    private Date modifytime;
+    private Date modifytime;//修改时间
 
-    private Integer nserial;
+    private Integer nserial;//顺序号
 
-    private String pym;
+    private String pym;//拼音码
 
-    private Integer deptstatus;
+    private Integer deptstatus;//部门状态
 
-    private String cname;
+    private String cname;//别名
 
-    private String oaid;
+    private String oaid;//部门编号
 
     public Integer getId() {
         return id;

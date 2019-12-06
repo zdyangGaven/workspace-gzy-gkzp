@@ -7,49 +7,49 @@ public class HrRecuritPlanNeeds implements Serializable {
     @Id
     private Integer id;
 
-    private Integer planId;
+    private Integer planId;//招聘计划id
 
-    private Integer dept;
+    private Integer dept;//需求部门
 
-    private String postname;
+    private String postname;//岗位名称
 
-    private String postnum;
+    private String postnum;//招聘人数
 
-    private Integer postintention;
+    private Integer postintention;//需求意向
 
-    private Integer posttype;
+    private Integer posttype;//岗位类别
 
-    private String postconfig;
+    private String postconfig;//岗位设置
 
-    private String specialities;
+    private String specialities;//专业
 
-    private Integer degree;
+    private Integer degree;//学历学位
 
-    private String age;
+    private String age;//年龄
 
-    private Integer title;
+    private Integer title;//职称或职业资格
 
-    private Integer politic;
+    private Integer politic;//政治面貌
 
-    private String condition;
+    private String condition;//其他条件
 
-    private String examination;
+    private String examination;//考试考核方式
 
-    private String interview;
+    private String interview;//面试方式及比例
 
-    private Integer employment;
+    private Integer employment;//用人方式
 
-    private String reason;
+    private String reason;//引进人才理由
 
-    private String remarks;
+    private String remarks;//备注
 
-    private String affixfile;
+    private String affixfile;//附件
 
-    private Integer status;
+    private Integer status;//状态
 
-    private String postnote;
+    private String postnote;//岗位意见
 
-    private String deptname;
+    private String deptname;//部门名称
 
     @Override
     public String toString() {

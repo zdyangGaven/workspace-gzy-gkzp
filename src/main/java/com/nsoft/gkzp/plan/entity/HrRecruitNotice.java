@@ -11,27 +11,27 @@ public class HrRecruitNotice implements Serializable {
     @Id
     private Integer id;
 
-    private Integer planid;
+    private Integer planid;//招聘计划ID
 
-    private Integer baseid;
+    private Integer baseid;//接受通知人ID
 
-    private Integer type;
+    private Integer type;//通知类别
 
-    private Integer status;
+    private Integer status;//状态
 
-    private Integer hasread;
+    private Integer hasread;//是否已读
 
-    private String submitman;
+    private String submitman;//提交人
 
-    private Date submittime;
+    private Date submittime;//提交时间
 
-    private Date modifytime;
+    private Date modifytime;//修改时间
 
-    private String title;
+    private String title;//标题
 
-    private String content;
+    private String content;//是否已同步
 
-    private String affix;
+    private String affix;//附件
 
     private List<FileVo> affixList;
 

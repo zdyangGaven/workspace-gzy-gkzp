@@ -7,11 +7,11 @@ public class Uenumdata implements Serializable {
     @Id
     private Integer id;
 
-    private String enumtypecode;
+    private String enumtypecode;//类别
 
-    private Integer enumvalue;
+    private Integer enumvalue;//key
 
-    private String enumstring;
+    private String enumstring;//value
 
     public Integer getId() {
         return id;

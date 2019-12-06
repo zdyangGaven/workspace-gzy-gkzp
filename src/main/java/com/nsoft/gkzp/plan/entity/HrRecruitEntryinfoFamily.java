@@ -10,21 +10,21 @@ public class HrRecruitEntryinfoFamily implements Serializable {
     @Column(insertable=false)
     private Integer id;
 
-    private Integer baseid;
+    private Integer baseid;//基础信息ID
 
-    private String appellation;
+    private String appellation;//称谓
 
-    private String name;
+    private String name;//姓名
 
-    private String age;
+    private String age;//年龄
 
-    private Integer politics;
+    private Integer politics;//政治面貌
 
-    private String unitsandpost;
+    private String unitsandpost;//工作单位及职务
 
-    private String telephone;
+    private String telephone;//联系电话
 
-    private Integer syncstatus;
+    private Integer syncstatus;//是否已同步
 
     public Integer getSyncstatus() {
         return syncstatus;

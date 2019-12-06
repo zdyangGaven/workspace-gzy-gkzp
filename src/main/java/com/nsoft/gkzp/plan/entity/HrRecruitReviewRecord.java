@@ -6,17 +6,17 @@ import java.util.Date;
 public class HrRecruitReviewRecord implements Serializable {
     private Integer id;
 
-    private Integer baseid;
+    private Integer baseid;//基本信息ID
 
-    private Integer node;
+    private Integer node;//环节
 
-    private String actionman;
+    private String actionman;//审查人
 
-    private Date actiontime;
+    private Date actiontime;//审查时间
 
-    private Integer result;
+    private Integer result;//审查结果
 
-    private String reason;
+    private String reason;//原因
 
     @Override
     public String toString() {

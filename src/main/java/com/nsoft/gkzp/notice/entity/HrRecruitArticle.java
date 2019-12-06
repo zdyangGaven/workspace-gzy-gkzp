@@ -12,37 +12,37 @@ public class HrRecruitArticle implements Serializable {
     @Id
     private Integer id;
 
-    private Integer orderno;
+    private Integer orderno;//排序字段
 
-    private Integer type;
+    private Integer type;//分类
 
-    private String title;
+    private String title;//标题
 
-    private String description;
+    private String description;//简介
 
-    private String dept;
+    private String dept;//部门
 
-    private String source;
+    private String source;//来源
 
-    private Date publishtime;
+    private Date publishtime;//发布时间
 
-    private String author;
+    private String author;//作者
 
-    private Integer clicktimes;
+    private Integer clicktimes;//阅读次数
 
-    private Integer status;
+    private Integer status;//状态
 
-    private String submitman;
+    private String submitman;//提交人
 
-    private Date submittime;
+    private Date submittime;//提交时间
 
-    private Date modifytime;
+    private Date modifytime;//修改时间
 
-    private String content;
+    private String content;//内容
 
-    private String affixfile;
+    private String affixfile;//附件
 
-    private List<FileVo> affixfileList;
+    private List<FileVo> affixfileList;//是否已同步
 
 
     public String getAffixfile() {

@@ -3,15 +3,15 @@ package com.nsoft.gkzp.plan.entity;
 public class HrPostType {
     private Integer id;
 
-    private String typename;
+    private String typename;//类别名称
 
-    private Integer typeorder;
+    private Integer typeorder;//排序
 
-    private String typeremark;
+    private String typeremark;//奋注
 
-    private Integer typeparent;
+    private Integer typeparent;//上级ID
 
-    private String typestring;
+    private String typestring;//类别标识
 
     public Integer getId() {
         return id;
