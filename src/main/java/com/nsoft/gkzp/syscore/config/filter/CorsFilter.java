@@ -54,22 +54,26 @@ public class CorsFilter implements Filter {
         //允许跨域白名单
         String whiteList=myDefinedUtil.SYSTEM_ACCESSCONTROLALLOWORIGIN;
         boolean isValid = false;
-         String temp    = null;
+         String adressIP    = null;//截取地址栏的ip地址
         if(origin != null){
             try {
-                int a = origin.indexOf("://") + 3;
-                temp = origin.substring(origin.indexOf("://") + 3);
-                int b = temp.indexOf(":");
+                adressIP = origin.substring(origin.indexOf("://") + 3);
+                int b = adressIP.indexOf(":");//有端口号情况  eg：https://127.0.0.1:8080
                 if (b > 0) {
-                    temp = temp.substring(0, b);
+                    adressIP = adressIP.substring(0, b);
+                }else{
+                     b = adressIP.indexOf("/");//如果是默认端口号，地址栏不填写端口情况（443 80）eg: https://127.0.0.1
+                    if (b > 0) {
+                        adressIP = adressIP.substring(0, b);
+                    }
                 }
-                isValid = whiteList.contains(temp); //将origin截出ip字符串
+                isValid = whiteList.contains(adressIP); //将origin截出ip字符串
             }catch (Exception e){
                 logger.error("白名单校验出错:"+e.getMessage(),e);
             }
         }
-        logger.info("跨域验证:origin="+origin+"***temp="+temp+"***isValid="+isValid);// 如为跨域请求，下面的"Access-Control-Allow-Origin"值置为null，就无法访问了。。。如果为非跨域请求，这个为null不会受影响，依然允许访问
-        response.setHeader("Access-Control-Allow-Origin", isValid ? origin : origin);// 允许指定域访问跨域资源(这里不能写*，*代表接受所有域名访问，如写*则下面一行代码无效。谨记)
+        logger.info("跨域验证:origin="+origin+"***adressIP="+adressIP+"***isValid="+isValid);// 如为跨域请求，下面的"Access-Control-Allow-Origin"值置为null，就无法访问了。。。如果为非跨域请求，这个为null不会受影响，依然允许访问
+        response.setHeader("Access-Control-Allow-Origin", isValid ? origin : "null");// 允许指定域访问跨域资源(这里不能写*，*代表接受所有域名访问，如写*则下面一行代码无效。谨记)
         response.setHeader("Access-Control-Allow-Credentials", "true");//true代表允许客户端携带cookie(此时origin值不能为“*”，只能为指定单一域名)
         response.setHeader("Access-Control-Allow-Methods", "GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS, PATCH"); /// 允许浏览器在预检请求成功之后发送的实际请求方法名
         response.setHeader("Access-Control-Allow-Headers", "Authorization,Origin, X-Requested-With, Content-Type, Accept,Access-Token");// 允许浏览器发送的请求消息头
