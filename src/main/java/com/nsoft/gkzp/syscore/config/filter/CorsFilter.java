@@ -4,7 +4,7 @@ import com.nsoft.gkzp.syscore.config.MyDefinedUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
+
 
 
 import javax.servlet.*;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Configuration //内置tomcat运行不加它没问题，但后来改为用外置tomcat时，启动后过滤器会失效，后来查明原因需要加上@Configuration才行
+//@Configuration //内置tomcat不加此注解。外置tomcat必须加此注解（内置tomcat运行是自动加载@WebFilter,加上此注解启动报错。外置tomcat不自动加载，不加此注解过滤器不生效）
 @WebFilter(urlPatterns = "/*", filterName = "corsFilter")
 public class CorsFilter implements Filter {
 
