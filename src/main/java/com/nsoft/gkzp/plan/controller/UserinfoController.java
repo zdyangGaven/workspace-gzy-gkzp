@@ -111,7 +111,7 @@ public class UserinfoController extends AbstractController {
             resultMsg.setResultMsg(ResultMsg.MsgType.INFO,"");
             return resultMsg;
         } catch (UnsupportedEncodingException e) {
-            logger.error("基础信息新增报错"+e.getMessage(),e);
+            logger.error("基础信息新增报错"+"数据参数:"+data+e.getMessage(),e);
         }
         //错误信息
         resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"");
@@ -138,7 +138,7 @@ public class UserinfoController extends AbstractController {
 
             return resultMsg;
         } catch (Exception e) {
-            logger.error("信息修改报错"+e.getMessage(),e);
+            logger.error("信息修改报错:"+"数据参数:"+data+e.getMessage(),e);
 
         }
         //错误信息
