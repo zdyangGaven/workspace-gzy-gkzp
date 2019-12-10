@@ -13,27 +13,27 @@ public class HrRecruitEntryinfoEducation implements Serializable {
     @Column(insertable=false)
     private Integer id;
 
-    private Integer baseid;
+    private Integer baseid;//基础信息ID
 
     //不映射数据库字段
     @Transient
     private String[] duration;
 
-    private String trainingagency;
+    private String trainingagency;//培训机构
 
-    private String major;
+    private String major;//专业
 
-    private String inform;
+    private String inform;//形式
 
-    private Integer syncstatus;
-
-    @JsonIgnore
-    private Date starttime;
+    private Integer syncstatus;//是否已同步
 
     @JsonIgnore
-    private Date endtime;
+    private Date starttime;//开始时间
 
-    private String degrees;
+    @JsonIgnore
+    private Date endtime;//结束时间
+
+    private String degrees;//取得学历
 
     public Date getStarttime() {
         return starttime;

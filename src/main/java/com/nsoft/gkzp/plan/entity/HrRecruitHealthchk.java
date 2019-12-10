@@ -8,29 +8,29 @@ public class HrRecruitHealthchk implements Serializable {
     @Id
     private Integer id;
 
-    private Integer planid;
+    private Integer planid;//计划ID
 
-    private Integer baseid;
+    private Integer baseid;//基本信息ID
 
-    private Integer isjoin;
+    private Integer isjoin;//是否参与体检
 
-    private Date actiontime1;
+    private Date actiontime1;//是否体检操作时间
 
-    private String actionman1;
+    private String actionman1;//是否体检操作人
 
-    private Integer issendnotice;
+    private Integer issendnotice;//是否已发送通知
 
-    private String actionman2;
+    private String actionman2;//通知发送人
 
-    private Date actiontime2;
+    private Date actiontime2;//通知发送时间
 
-    private Integer result;
+    private Integer result;//体检结果
 
-    private Date actiontime3;
+    private Date actiontime3;//体检结果操作时间
 
-    private String actionman3;
+    private String actionman3;//体检结果操作人
 
-    private Integer syncisjoin;
+    private Integer syncisjoin;//是否已同步
 
     public Integer getSyncisjoin() {
         return syncisjoin;

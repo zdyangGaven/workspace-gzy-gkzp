@@ -6,35 +6,35 @@ import java.util.Date;
 public class HrRecuritInterview implements Serializable {
     private Integer id;
 
-    private Integer planid;
+    private Integer planid;//招聘计划
 
-    private Integer baseid;
+    private Integer baseid;//应聘者
 
-    private Integer sex;
+    private Integer sex;//性别
 
-    private Integer postid;
+    private Integer postid;//岗位id
 
-    private Integer posttypeid;
+    private Integer posttypeid;//岗位类别
 
-    private String zkzNumber;
+    private String zkzNumber;//准考证号
 
-    private String interRoom;
+    private String interRoom;//面试地点
 
-    private Date interTime;
+    private Date interTime;//面试时间
 
-    private Integer status;
+    private Integer status;//状态
 
-    private String interScore;
+    private String interScore;//分数
 
-    private String interOrder;
+    private String interOrder;//分数排名
 
-    private String lounge;
+    private String lounge;//休息室
 
-    private String waitFor;
+    private String waitFor;//候考地点
 
-    private String skillTest;
+    private String skillTest;//技能测试
 
-    private String remark;
+    private String remark;//备注
 
     private static final long serialVersionUID = 1L;
 

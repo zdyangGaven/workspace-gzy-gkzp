@@ -6,27 +6,27 @@ import java.util.Date;
 public class HrRecuritWrite implements Serializable {
     private Integer id;
 
-    private Integer planid;
+    private Integer planid;//招聘计划
 
-    private Integer baseid;
+    private Integer baseid;//基础id
 
-    private Integer sex;
+    private Integer sex;//性别
 
-    private Integer postid;
+    private Integer postid;//岗位id
 
-    private Integer posttypeid;
+    private Integer posttypeid;//岗位类别
 
-    private String zkzNumber;
+    private String zkzNumber;//准考证号
 
-    private String examRoom;
+    private String examRoom;//考试场地
 
-    private Date examTime;
+    private Date examTime;//考试时间
 
-    private Integer status;
+    private Integer status;//状态
 
-    private String examScore;
+    private String examScore;//分数
 
-    private String examOrder;
+    private String examOrder;//分数排名
 
     private static final long serialVersionUID = 1L;
 

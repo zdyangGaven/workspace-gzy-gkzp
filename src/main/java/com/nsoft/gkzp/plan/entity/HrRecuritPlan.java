@@ -9,23 +9,23 @@ public class HrRecuritPlan implements Serializable {
     @Id
     private Integer id;
 
-    private String years;
+    private String years;//年份
 
-    private String planName;
+    private String planName;//计招聘计划
 
-    private Integer isreport;
-
-    //@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date starttime;
+    private Integer isreport;//开放上报
 
     //@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date endtime;
+    private Date starttime;//应聘开始时间
 
-    private String affixfile;
+    //@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date endtime;//应聘结束时间
 
-    private Date submittime;
+    private String affixfile;//附件
 
-    private String submitman;
+    private Date submittime;//提交时间
+
+    private String submitman;//提交人
 
 
 

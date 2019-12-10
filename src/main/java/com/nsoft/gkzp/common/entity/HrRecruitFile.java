@@ -13,17 +13,17 @@ public class HrRecruitFile implements Serializable {
     @Column(insertable=false)
     private Integer id;
 
-    private String filecname;
+    private String filecname;//名称
 
-    private String fileurl;
+    private String fileurl;//路径
 
-    private Date submittime;
+    private Date submittime;//提交时间
 
-    private Integer loginuserid;
+    private Integer loginuserid;//提交人
 
-    private Integer syncstatus;
+    private Integer syncstatus;//数据同步
 
-    private Integer syncfile;
+    private Integer syncfile;//文件同步
 
     @Override
     public String toString() {

@@ -13,13 +13,13 @@ public class Affixfile implements Serializable {
     @Column(insertable=false)
     private Integer id;
 
-    private String filecname;
+    private String filecname;//文件名称
 
-    private String fileurl;
+    private String fileurl;//文件路径
 
-    private String submitman;
+    private String submitman;//提交人
 
-    private Date submittime;
+    private Date submittime;//提交时间
 
     private static final long serialVersionUID = 1L;
 

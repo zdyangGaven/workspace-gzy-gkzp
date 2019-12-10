@@ -3,13 +3,13 @@ package com.nsoft.gkzp.plan.entity;
 public class HrRecuritPlanReturn {
     private Integer id;
 
-    private String planId;
+    private String planId;//招聘计划id
 
-    private String returnMan;
+    private String returnMan;//退回人
 
-    private Integer returnTime;
+    private Integer returnTime;//退回时间
 
-    private String returnMess;
+    private String returnMess;//退回信息
 
     public Integer getId() {
         return id;

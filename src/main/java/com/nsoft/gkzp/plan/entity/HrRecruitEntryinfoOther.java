@@ -9,27 +9,27 @@ public class HrRecruitEntryinfoOther implements Serializable {
     @Column(insertable=false)
     private Integer id;
 
-    private Integer baseid;
+    private Integer baseid;//基本信息ID
 
-    private String telephone;
+    private String telephone;//联系电话
 
-    private String email;
+    private String email;//电子邮箱
 
-    private String address;
+    private String address;//现居住地址
 
-    private String achievementsandjustice;
+    private String achievementsandjustice;//科研成果及奖惩情况
 
-    private String avoidinfo;
+    private String avoidinfo;//需回避的情况
 
-    private String unitaddress1;
+    private String unitaddress1;//人事档案保存单位及地址
 
-    private String contactsinfo1;
+    private String contactsinfo1;//联系人及联系电话
 
-    private String unitaddress2;
+    private String unitaddress2;//党员档案保存单位及地址
 
-    private String contactsinfo2;
+    private String contactsinfo2;//联系人及联系电话
 
-    private Integer syncstatus;
+    private Integer syncstatus;//是否已同步
 
     public Integer getSyncstatus() {
         return syncstatus;

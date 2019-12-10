@@ -156,6 +156,7 @@ public class UserinfoController extends AbstractController {
         try {
             HashMap<String, Object> result = new HashMap<>();
             //设置默认值为null
+            result.put("HrRecruitEntryinfoBase",null);
             result.put("HrRecuritWrite",null);
             result.put("HrRecuritWriteMsg",null);
             result.put("HrRecuritInterview",null);
@@ -166,9 +167,15 @@ public class UserinfoController extends AbstractController {
             result.put("HrRecruitReviewRecordMsg",null);
 
             UserContext userContext = (UserContext) WebUtils.getSessionAttribute(request,"userContext");
-            int baseId = hrRecruitEntryinfoBaseService.getBaseIdByUser(userContext);
+            //int baseId = hrRecruitEntryinfoBaseService.getBaseIdByUser(userContext);
 
-            if(baseId == 0)return null;
+            HrRecruitEntryinfoBase baseByUser = hrRecruitEntryinfoBaseService.getBaseByUser(userContext);
+
+            if(baseByUser == null) return null;
+
+            result.put("HrRecruitEntryinfoBase",baseByUser);
+
+            int baseId = baseByUser.getId();
 
             //岗位信息
             HrRecuritPlanNeedsVo hrRecuritPlanNeedsVoByUser = hrRecuritPlanNeedsService.getHrRecuritPlanNeedsVoByUser(userContext);
