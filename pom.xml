@@ -141,7 +141,8 @@
  -->
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-jasper</artifactId><!--SpringBoot默认不支持JSP。为了支持JSP，故引入此依赖-->
+            <artifactId>tomcat-embed-jasper</artifactId>
+            <!--    <scope>provided</scope>   --> <!--SpringBoot内置tomcat默认不支持JSP。故在用内置tomcat时为了支持JSP需引入此依赖。  外置tomcat有此jar，故不需要再引入此依赖，此时加上provided参数即可，否则jar冲突-->
             <version>9.0.21</version>
         </dependency>
         <dependency>
