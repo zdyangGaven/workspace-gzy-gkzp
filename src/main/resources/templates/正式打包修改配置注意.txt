@@ -1,0 +1,13 @@
+正式环境打包需要注意以下项
+vue：
+src/main.js                              contentPath:  'http://120.24.253.6:8082/'
+
+springboot：
+
+resources/config.properties				 system.accessControlAllowOrigin = 120.24.253.6,gzzp.gxzjy.com.cn,zhxy.nsoft.com.cn,172.16.1.197,172.16.1.198,172.16.1.32
+
+application.properties					检查： 1.端口号 2.数据库连接地址、账户、密码  3.Redis数据库地址、账户、密码
+
+
+启动服务前不要忘了先启动redis数据库    redis-server.exe redis.windows.conf
+启动服务命令     java -jar gkzp-0.0.1-SNAPSHOT.war
