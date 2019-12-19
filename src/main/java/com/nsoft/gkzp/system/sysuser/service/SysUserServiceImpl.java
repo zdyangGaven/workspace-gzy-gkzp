@@ -5,8 +5,12 @@ import com.nsoft.gkzp.syscore.service.AbstractService;
 import com.nsoft.gkzp.syscore.service.ServiceException;
 import com.nsoft.gkzp.system.sysuser.dao.SysUserDao;
 import com.nsoft.gkzp.system.sysuser.entity.SysUser;
+import com.nsoft.gkzp.util.CheckDataType;
+import com.nsoft.gkzp.util.ResultMsg;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -17,6 +21,9 @@ public class SysUserServiceImpl extends AbstractService implements SysUserServic
 
     @Autowired
     private SysUserDao sysUserDao;
+
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     private static Random random = new Random();
 
@@ -75,6 +82,103 @@ public class SysUserServiceImpl extends AbstractService implements SysUserServic
             throw new ServiceException("向数据库插入注册信息时出错 loginName="+loginName+",password="+password, e);
         }
     }
+
+    /**
+     * 校验用户信息
+     * @param loginName 用户名
+     * @param password  密码
+     * @param rePassword 确认密码
+     * @param checkCode 验证码
+     * @param sessionId session的id值
+     * @param type 注册时参数校验    0 注册操作 全部校验
+     *      *                       1 注册登录名校验
+     *      *                       2 输入密码格式校验
+     *      *                       3 确认密码校验
+     *      *                       4.验证码校验
+     * @throws ServiceException
+     */
+    public ResultMsg checkUserInfo(int type, String loginName, String password, String rePassword, String checkCode,String sessionId) throws ServiceException{
+
+        ResultMsg resultMsg = new ResultMsg();
+        try{
+            logger.info("开始用户信息校验,type="+type+";loginName="+loginName+";checkCode="+checkCode+";sessionId="+sessionId);
+            switch (type){
+                case 0:
+                case 1:
+                    if (StringUtils.isEmpty(loginName)) {
+                        resultMsg.setResultMsg(ResultMsg.MsgType.ERROR, "用户名不能为空,请检查!");
+                        break;
+                    }else if(!CheckDataType.checkName(loginName)) {
+                        resultMsg.setResultMsg(ResultMsg.MsgType.ERROR, "用户名必须是4-10位字母或数字或下划线组成，且不能以数字开头");
+                        break;
+                    }else{
+                        int id = this.findIdByColumn("loginname", loginName);
+                        if (id > 0) {
+                            resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"此账户信息已被注册过");
+                            break;
+                        }
+                    }
+                    if(type ==1)
+                        break;
+                case 2:
+                    if (StringUtils.isEmpty(password)) {
+                        resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"密码不能为空");
+                        break;
+                    }else if (CheckDataType.isChinese(password)) {
+                        resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"密码错误，密码不能包含汉子");
+                        break;
+                    }else if (password.length() < 8 || password.length() > 16) {
+                        resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"密码长度错误，密码必须是8-16位且至少包含字母、数字、特殊字符中的两种");
+                        break;
+                    } if (!StringUtils.isEmpty(loginName) && password.contains(loginName)) {
+                        resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"密码内容错误，密码不能包含账户信息");
+                        break;
+                    }else{
+                        int i = CheckDataType.matcheData(password, 1) ? 1 : 0;
+                        int j = CheckDataType.matcheData(password, 2) ? 1 : 0;
+                        int k = CheckDataType.matcheData(password, 3) ? 1 : 0;
+                        if (i + j + k < 2) {
+                            resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"密码格式错误，密码必须是8-16位且至少包含字母、数字、特殊字符中的两种");
+                           break;
+                        }
+                    }
+                    if(type ==2)
+                        break;
+                case 3:
+                    if(!StringUtils.isEmpty(password) && !password.equals(rePassword)){
+                        resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"密码和确认密码不一致,请检查");
+                       break;
+                    }
+                    if(type == 3)
+                        break;
+                case 4:
+                    //验证码校验
+                    if(StringUtils.isEmpty(checkCode)  ){
+                        resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"验证码不能为空,请检查!");
+                        break;
+                    }else{
+                        String checkCodeByRedis = stringRedisTemplate.opsForValue().get("loginUser:checkCode-"+sessionId);//获取redis里存的验证码
+                        logger.info("session中的验证码="+checkCodeByRedis);
+                        if(StringUtils.isEmpty(checkCodeByRedis)){
+                            resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"验证码已失效");
+                            break;
+                        }else if(!checkCode.toLowerCase().equals(checkCodeByRedis.toLowerCase())){
+                            resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"验证码不正确，请重新填写");
+                            break;
+                        }
+                    }
+                    if(type == 4)
+                        break;
+            }
+
+        }catch (Exception e) {
+            logger.error("校验用户信息时出错，type="+type+";loginName="+loginName+";password="+password+";rePassword="+rePassword+";checkCode="+checkCode+";sessionId="+sessionId+";结果为resultMsg="+resultMsg,e);
+            throw new ServiceException("校验出错", e);
+        }
+        return resultMsg;
+    }
+
+
 
     /**
      * 修改用户密码

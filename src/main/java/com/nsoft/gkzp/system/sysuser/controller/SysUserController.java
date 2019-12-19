@@ -3,7 +3,6 @@ package com.nsoft.gkzp.system.sysuser.controller;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.nsoft.gkzp.plan.service.HrRecruitNoticeService;
-import com.nsoft.gkzp.syscore.web.ControllerException;
 import com.nsoft.gkzp.syscore.web.UserContext;
 import com.nsoft.gkzp.system.sysuser.entity.SysUser;
 import com.nsoft.gkzp.system.sysuser.service.SysUserService;
@@ -67,13 +66,12 @@ public class SysUserController {
      * @param arg1
      * @param model
      * @return
-     * @throws ControllerException
      */
 
     //@RequestMapping("/user/login")
     //@GetMapping（"/user/login"）
     @PostMapping("/user/login") // 发送post请求，代替了RequestMapping（value="/user/login", method="post"）
-    public ResultMsg login(String loginName, String password,String checkCode, HttpServletRequest arg0, HttpServletResponse arg1, Model model) throws ControllerException {
+    public ResultMsg login(String loginName, String password,String checkCode, HttpServletRequest arg0, HttpServletResponse arg1, Model model) {
         try {
 
             UserContext userContext = new UserContext(); //session
@@ -82,24 +80,12 @@ public class SysUserController {
             logger.info("开始用户登录校验");
 
             //验证码校验
-            if(StringUtils.isEmpty(checkCode)  ){
-                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"登录失败，验证码不能为空,请检查!");
+            logger.info("开始用户注册信息校验");
+            resultMsg = sysUserService.checkUserInfo(4,loginName,password,null,checkCode,arg0.getSession().getId());//验证码校验
+            if(resultMsg.getType() == ResultMsg.MsgType.ERROR){
                 return resultMsg;
-            }else{
-                String checkCodeByRedis = stringRedisTemplate.opsForValue().get("loginUser:checkCode-"+arg0.getSession().getId());
-                logger.info("session中的验证码="+checkCodeByRedis);
-                if(StringUtils.isEmpty(checkCodeByRedis)){
-                    resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"验证码已失效，请重新填写!");
-                    return resultMsg;
-                }else if(!checkCode.toLowerCase().equals(checkCodeByRedis.toLowerCase())){
-                    resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"验证码不正确，请重新填写!");
-                    return resultMsg;
-                }
             }
-
             if (StringUtils.isEmpty(loginName) || StringUtils.isEmpty(password)) {
-                //model.addAttribute(MESSAGE, "登录失败，用户名或密码不能为空");
-                //return ERRORPAGE;
                 resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"登录失败，用户名或密码不能为空,请检查!");
                 return resultMsg;
             }
@@ -111,24 +97,16 @@ public class SysUserController {
                     userContext.setLoginDate(new Date(System.currentTimeMillis()));
                     WebUtils.setSessionAttribute(arg0, "userContext", userContext);//生成session信息userContext
                     stringRedisTemplate.opsForValue().set("loginUser:" +sysUser.getId(), arg0.getSession().getId(),1,TimeUnit.HOURS);//向redis里存储 用户ID-sessionID对,失效时间为1h，用于拦截器判断是否重复登录
-//                    //model.addAttribute("sysUser", sysUser);
-//                    logger.info(sysUser);
-//                    return SUCCESSRPAGE;
                 logger.info( "aaaaaaa="+WebUtils.getSessionAttribute(arg0,"userContext"));
                 resultMsg.setResultMsg(ResultMsg.MsgType.NONE,"登录成功");
                 return resultMsg;
             } else {
-//                model.addAttribute("loginName", loginName);
-//                model.addAttribute(MESSAGE, "登录失败，用户名或密码错误");
-//                return ERRORPAGE;
                 resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"登录失败，用户名或密码错误,请检查!");
                 return resultMsg;
             }
 
         }catch (Exception e){
-            logger.error("登录报错喽:参数为：loginName="+loginName,e);
-            //model.addAttribute(MESSAGE, "登录产生异常!");
-            //return ERRORPAGE;
+            logger.error("登录报错喽:参数为：loginName="+loginName+";password="+password+";checkCode="+checkCode,e);
             resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"登录产生异常! 请重新登录");
             return resultMsg;
         }
@@ -141,107 +119,34 @@ public class SysUserController {
      * @param password  密码
      * @param rePassword 确认密码
      * @param checkCode 验证码
+     * @param type 注册时参数校验    0 注册操作
+     *      *                       1 注册登录名校验
+     *      *                       2 输入密码格式校验
+     *      *                       3 确认密码校验
+     *      *                       4.验证码校验
      * @param request
      * @param response
      * @return
      * @throws Exception
      */
     @RequestMapping("/user/register")
-    public ResultMsg register(String loginName,String password,String rePassword,String checkCode, HttpServletRequest request, HttpServletResponse response) throws Exception{
+    public ResultMsg register(String loginName,String password,String rePassword,String checkCode,int type, HttpServletRequest request, HttpServletResponse response) throws Exception{
         int id = -1;
 
         try {
-            logger.info("开始用户注册信息校验");
+            logger.info("开始用户注册信息校验type="+type);
+            resultMsg = sysUserService.checkUserInfo(type,loginName,password,rePassword,checkCode,request.getSession().getId());//进行校验
 
-            //验证码校验
-            if(StringUtils.isEmpty(checkCode)  ){
-                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"注册失败，验证码不能为空,请检查!");
-                return resultMsg;
-            }else{
-                String checkCodeByRedis = stringRedisTemplate.opsForValue().get("loginUser:checkCode-"+request.getSession().getId());
-                logger.info("session中的验证码="+checkCodeByRedis);
-                if(StringUtils.isEmpty(checkCodeByRedis)){
-                    resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"验证码已失效，请重新填写!");
-                    return resultMsg;
-                }else if(!checkCode.toLowerCase().equals(checkCodeByRedis.toLowerCase())){
-                    resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"验证码不正确，请重新填写!");
-                    return resultMsg;
-                }
+            if(type==0 && resultMsg.getType() != ResultMsg.MsgType.ERROR){//进行注册
+                String  SHApassword =  commonCrypto.encryptSHAEncoder(password);//密码加密
+                sysUserService.saveRegister(loginName,SHApassword);
+                resultMsg.setResultMsg(ResultMsg.MsgType.INFO,"注册成功，请登录!");
             }
-
-            if (StringUtils.isEmpty(loginName) || StringUtils.isEmpty(password)) {
-                //model.addAttribute(MESSAGE, "注册失败，用户名或密码不能为空,请检查");
-                //return REGISTER_ERRORPAGE;
-                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"注册失败，用户名或密码不能为空,请检查!");
-                return resultMsg;
-            }
-
-            if(!password.equals(rePassword)){
-                //model.addAttribute(MESSAGE, "注册失败，密码和确认密码不一样,请检查");
-                //return REGISTER_ERRORPAGE;
-                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"注册失败，密码和确认密码不一致,请检查!");
-                return resultMsg;
-            }
-            if (!CheckDataType.checkName(loginName)) {
-                //model.addAttribute(MESSAGE, "注册失败，用户名必须是4-10位字母或数字或下划线组成，且不能以数字开头,请检查");
-                //return REGISTER_ERRORPAGE;
-                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"注册失败，用户名必须是4-10位字母或数字或下划线组成，且不能以数字开头,请检查!");
-                return resultMsg;
-            }
-
-            if (password.length() < 8 || password.length() > 16) {
-                //model.addAttribute(MESSAGE, "注册失败，密码必须是8-16位且至少包含字母、数字、特殊字符中的两种,请检查");
-                //return REGISTER_ERRORPAGE;
-                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"注册失败，密码必须是8-16位且至少包含字母、数字、特殊字符中的两种,请检查!");
-                return resultMsg;
-            }
-            if (CheckDataType.isChinese(password)) {
-                //model.addAttribute(MESSAGE, "注册失败，密码不能包含汉子,请检查");
-                //return REGISTER_ERRORPAGE;
-                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"注册失败，密码不能包含汉子,请检查!");
-                return resultMsg;
-            }
-
-            int i = CheckDataType.matcheData(password, 1) ? 1 : 0;
-            int j = CheckDataType.matcheData(password, 2) ? 1 : 0;
-            int k = CheckDataType.matcheData(password, 3) ? 1 : 0;
-            if (i + j + k < 2) {
-                //model.addAttribute(MESSAGE, "注册失败，密码必须是8-16位且至少包含字母、数字、特殊字符中的两种,请检查");
-                //return REGISTER_ERRORPAGE;
-                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"注册失败，密码必须是8-16位且至少包含字母、数字、特殊字符中的两种,请检查!");
-                return resultMsg;
-            }
-
-            if (password.contains(loginName)) {
-                //model.addAttribute(MESSAGE, "注册失败，密码不能包含账户信息,请检查");
-                //return REGISTER_ERRORPAGE;
-                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"注册失败，密码不能包含账户信息,请检查!");
-                return resultMsg;
-            }
-
-            id = sysUserService.findIdByColumn("loginname", loginName);
-            if (id > 0) {
-                //model.addAttribute(MESSAGE, "注册失败，此账户信息已被注册过,请检查");
-                //return REGISTER_ERRORPAGE;
-                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"注册失败，此账户信息已被注册过,请检查!");
-                return resultMsg;
-            }
-            logger.info("注册信息校验成功");
-
-            String  SHApassword =  commonCrypto.encryptSHAEncoder(password);//密码加密
-            sysUserService.saveRegister(loginName,SHApassword);
-
         }catch (Exception e){
             logger.error("注册报错喽：",e);
-           //model.addAttribute(MESSAGE, "注册产生异常!");
-            //return REGISTER_ERRORPAGE;
             resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"注册产生异常! 请联系管理员");
             return resultMsg;
         }
-
-        //model.addAttribute(MESSAGE, "注册成功，请登录!");
-        //return REGISTER_SUCCESSRPAGE;
-        resultMsg.setResultMsg(ResultMsg.MsgType.INFO,"注册成功，请登录!");
         return resultMsg;
 
     }
@@ -271,6 +176,11 @@ public class SysUserController {
                 return resultMsg;
             }
 
+            resultMsg = sysUserService.checkUserInfo(2,userContext.getLoginName(),password,null,null,null);//进行密码校验
+            if(resultMsg.getType() == ResultMsg.MsgType.ERROR){
+                return resultMsg;
+            }
+
             if(!password.equals(rePassword)){
                 resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"修改密码失败，新密码和确认密码不一致,请检查!");
                 return resultMsg;
@@ -278,28 +188,6 @@ public class SysUserController {
 
             if(password.equals(oldPassword)){
                 resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"修改密码失败，旧密码和新密码相同,请检查!");
-                return resultMsg;
-            }
-
-            if (password.length() < 8 || password.length() > 16) {
-                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"修改密码失败，密码必须是8-16位且至少包含字母、数字、特殊字符中的两种,请检查!");
-                return resultMsg;
-            }
-            if (CheckDataType.isChinese(password)) {
-                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"修改密码失败，密码不能包含汉子,请检查!");
-                return resultMsg;
-            }
-
-            int i = CheckDataType.matcheData(password, 1) ? 1 : 0;
-            int j = CheckDataType.matcheData(password, 2) ? 1 : 0;
-            int k = CheckDataType.matcheData(password, 3) ? 1 : 0;
-            if (i + j + k < 2) {
-                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"修改密码失败，密码必须是8-16位且至少包含字母、数字、特殊字符中的两种,请检查!");
-                return resultMsg;
-            }
-
-            if (password.contains(userContext.getLoginName())) {
-                resultMsg.setResultMsg(ResultMsg.MsgType.ERROR,"修改密码失败，新密码不能包含账户信息,请检查!");
                 return resultMsg;
             }
 

@@ -3,6 +3,7 @@ package com.nsoft.gkzp.system.sysuser.service;
 import com.github.pagehelper.Page;
 import com.nsoft.gkzp.syscore.service.ServiceException;
 import com.nsoft.gkzp.system.sysuser.entity.SysUser;
+import com.nsoft.gkzp.util.ResultMsg;
 
 import java.awt.*;
 
@@ -19,7 +20,7 @@ public interface SysUserService {
 
     /**
      * 查找ID
-     * @param column 表名
+     * @param column 字段名
      * @param value  参数值
      * @return
      */
@@ -32,6 +33,23 @@ public interface SysUserService {
      * @throws ServiceException
      */
     public void saveRegister(String loginName,String  password) throws ServiceException;
+
+    /**
+     * 校验用户信息
+     * @param loginName 用户名
+     * @param password  密码
+     * @param rePassword 确认密码
+     * @param checkCode 验证码
+     * @param sessionId session的id值
+     * @param type 注册时参数校验    0 注册操作
+     *      *                       1 注册登录名校验
+     *      *                       2 输入密码格式校验
+     *      *                       3 确认密码校验
+     *      *                       4.验证码校验
+     * @throws ServiceException
+     */
+    public ResultMsg checkUserInfo(int type, String loginName, String password, String rePassword, String checkCode,String sessionId) throws ServiceException;
+
 
     /**
      * 修改用户密码
