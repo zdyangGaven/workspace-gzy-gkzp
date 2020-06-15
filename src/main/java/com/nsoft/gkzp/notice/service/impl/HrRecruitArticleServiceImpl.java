@@ -89,7 +89,7 @@ public class HrRecruitArticleServiceImpl implements HrRecruitArticleService {
         HrRecruitArticle hrRecruitArticle = hrRecruitArticleDao.selectByPrimaryKey(id);
         //文件
         String affixfile = hrRecruitArticle.getAffixfile();
-        if(affixfile != null && affixfile != ""){
+        if(affixfile != null && !affixfile.equals("")){
             //查询文件
             Integer[] affixArr = dataFormat.stringArrToIntArr(affixfile.split(","));
             List<FileVo> fileList = fileLoad.getFileListByIds(affixArr);
